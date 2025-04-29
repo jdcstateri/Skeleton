@@ -7,7 +7,7 @@ Files have a number pre-fix in the name to show who is working on which file. <b
 3: Evan - Order management system <br>
 4: Inosh - Staff management system <br>
 
-<br><br>
+<br>
 Database - <br>
 Server Name: v00egd00002l.lec-admin.dmu.ac.uk <br>
 Authentication: SQL Server Authentication <br>
