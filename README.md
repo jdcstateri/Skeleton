@@ -8,7 +8,7 @@ Files have a number pre-fix in the name to show who is working on which file. <b
 4: Inosh - Staff management system <br>
 
 <br>
-Database - <br>
+Database login details- <br>
 Server Name: v00egd00002l.lec-admin.dmu.ac.uk <br>
 Authentication: SQL Server Authentication <br>
 User Name: p2792783 <br>
