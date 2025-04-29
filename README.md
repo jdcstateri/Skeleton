@@ -9,5 +9,7 @@ Files have a number pre-fix in the name to show who is working on which file. <b
 
 <br><br>
 Database - <br>
-p2792783 <br>
-ThePassword123ThePassword123
+Server Name: v00egd00002l.lec-admin.dmu.ac.uk <br>
+Authentication: SQL Server Authentication <br>
+User Name: p2792783 <br>
+Password: ThePassword123ThePassword123 <br>
