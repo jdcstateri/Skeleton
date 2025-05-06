@@ -2,96 +2,96 @@
 using ClassLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Testing2
+namespace Testing5
 {
     [TestClass]
-    public class tstCustomer
+    public class tstAddresses
     {
         [TestMethod]
         public void InstanceOK()
         {
             //create an instance of the class we want to create
-            clsCustomer aCustomer = new clsCustomer();
+            clsAddresses anAddress = new clsAddresses();
             //test to see that it exists
-            Assert.IsNotNull(aCustomer);
+            Assert.IsNotNull(anAddress);
         }
 
         [TestMethod]
-        public void IsVerifiedPropertyOK()
+        public void IsActivePropertyOK()
         {
             //create an instance of the class we want to create
-            clsCustomer aCustomer = new clsCustomer();
+            clsAddresses anAddress = new clsAddresses();
             //create some test data to assign to the property
             Boolean TestData = true;
             //assign the data to the property
-            aCustomer.IsVerified = TestData;
+            anAddress.IsActive = TestData;
             //test to see that the two values are the same
-            Assert.AreEqual(aCustomer.IsVerified, TestData);
+            Assert.AreEqual(anAddress.IsActive, TestData);
         }
 
         [TestMethod]
-        public void DateRegisteredPropertyOK()
+        public void DateAddedPropertyOK()
         {
             //create an instance of the class we want to create
-            clsCustomer aCustomer = new clsCustomer();
+            clsAddresses anAddress = new clsAddresses();
             //create some test data to assign to the property
             DateTime TestData = DateTime.Now.Date;
             //assign the data to the property
-            aCustomer.DateRegistered = TestData;
+            anAddress.DateAdded = TestData;
             //test to see that the two values are the same
-            Assert.AreEqual(aCustomer.DateRegistered, TestData);
+            Assert.AreEqual(anAddress.DateAdded, TestData);
+        }
+
+        [TestMethod]
+        public void AddressIDPropertyOK()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //create some test data to assign to the property
+            Int32 TestData = 1;
+            //assign the data to the property
+            anAddress.AddressID = TestData;
+            //test to see that the two values are the same
+            Assert.AreEqual(anAddress.AddressID, TestData);
         }
 
         [TestMethod]
         public void AccountIDPropertyOK()
         {
             //create an instance of the class we want to create
-            clsCustomer aCustomer = new clsCustomer();
+            clsAddresses anAddress = new clsAddresses();
             //create some test data to assign to the property
             Int32 TestData = 1;
             //assign the data to the property
-            aCustomer.AccountID = TestData;
+            anAddress.AccountID = TestData;
             //test to see that the two values are the same
-            Assert.AreEqual(aCustomer.AccountID, TestData);
+            Assert.AreEqual(anAddress.AccountID, TestData);
         }
 
         [TestMethod]
-        public void NamePropertyOK()
+        public void AddressPropertyOK()
         {
             //create an instance of the class we want to create
-            clsCustomer aCustomer = new clsCustomer();
+            clsAddresses anAddress = new clsAddresses();
             //create some test data to assign to the property
-            string TestData = "Joe";
+            string TestData = "Road Strret 21";
             //assign the data to the property
-            aCustomer.Name = TestData;
+            anAddress.Address = TestData;
             //test to see that the two values are the same
-            Assert.AreEqual(aCustomer.Name, TestData);
+            Assert.AreEqual(anAddress.Address, TestData);
         }
 
         [TestMethod]
-        public void EmailPropertyOK()
+        public void PostCodePropertyOK()
         {
             //create an instance of the class we want to create
-            clsCustomer aCustomer = new clsCustomer();
+            clsAddresses anAddress = new clsAddresses();
             //create some test data to assign to the property
-            string TestData = "Joe@email.com";
+            string TestData = "LE6 9ET";
             //assign the data to the property
-            aCustomer.Email = TestData;
+            anAddress.PostCode = TestData;
             //test to see that the two values are the same
-            Assert.AreEqual(aCustomer.Email, TestData);
-        }
-
-        [TestMethod]
-        public void PasswordPropertyOK()
-        {
-            //create an instance of the class we want to create
-            clsCustomer aCustomer = new clsCustomer();
-            //create some test data to assign to the property
-            string TestData = "JoePassword#1";
-            //assign the data to the property
-            aCustomer.Password = TestData;
-            //test to see that the two values are the same
-            Assert.AreEqual(aCustomer.Password, TestData);
+            Assert.AreEqual(anAddress.PostCode, TestData);
         }
     }
 }
