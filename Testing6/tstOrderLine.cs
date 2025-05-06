@@ -19,8 +19,8 @@ namespace Testing6
         {
             clsOrderLine NewOrderLine = new clsOrderLine();
             int TestData = 1;
-            NewOrderLine.OrderId = TestData;
-            Assert.AreEqual(NewOrderLine.OrderId, TestData);
+            NewOrderLine.SetOrderId(TestData);
+            Assert.AreEqual(NewOrderLine.GetOrderId(), TestData);
         }
 
         [TestMethod]
@@ -28,8 +28,8 @@ namespace Testing6
         {
             clsOrderLine NewOrderLine = new clsOrderLine();
             int TestData = 1;
-            NewOrderLine.ItemId = TestData;
-            Assert.AreEqual(NewOrderLine.ItemId, TestData);
+            NewOrderLine.SetItemId(TestData);
+            Assert.AreEqual(NewOrderLine.GetItemId(), TestData);
         }
 
         [TestMethod]
@@ -37,8 +37,8 @@ namespace Testing6
         {
             clsOrderLine NewOrderLine = new clsOrderLine();
             DateTime TestData = DateTime.Now.Date;
-            NewOrderLine.DateAdded = TestData;
-            Assert.AreEqual(NewOrderLine.DateAdded, TestData);
+            NewOrderLine.SetDateAdded(TestData);
+            Assert.AreEqual(NewOrderLine.GetDateAdded(), TestData);
         }
 
         [TestMethod]
@@ -46,8 +46,8 @@ namespace Testing6
         {
             clsOrderLine NewOrderLine = new clsOrderLine();
             bool TestData = true;
-            NewOrderLine.IsDiscounted = TestData;
-            Assert.AreEqual(NewOrderLine.IsDiscounted, TestData);
+            NewOrderLine.SetIsDiscounted(TestData);
+            Assert.AreEqual(NewOrderLine.GetIsDiscounted(), TestData);
         }
 
         [TestMethod]
@@ -55,8 +55,8 @@ namespace Testing6
         {
             clsOrderLine NewOrderLine = new clsOrderLine();
             int TestData = 20;
-            NewOrderLine.DiscountPercentage = TestData;
-            Assert.AreEqual(NewOrderLine.DiscountPercentage, TestData);
+            NewOrderLine.GetDiscountPercentage(TestData);
+            Assert.AreEqual(NewOrderLine.GetDiscountPercentage(), TestData);
         }
 
         [TestMethod]
@@ -64,8 +64,8 @@ namespace Testing6
         {
             clsOrderLine NewOrderLine = new clsOrderLine();
             string TestData = "Out for delivery";
-            NewOrderLine.Status = TestData;
-            Assert.AreEqual(NewOrderLine.Status, TestData);
+            NewOrderLine.SetStatus(TestData);
+            Assert.AreEqual(NewOrderLine.GetStatus(), TestData);
         }
     }
 }

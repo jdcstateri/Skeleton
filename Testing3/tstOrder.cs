@@ -19,8 +19,8 @@ namespace Testing3
         {
             clsOrder NewOrder = new clsOrder();
             int TestData = 1;
-            NewOrder.OrderId = TestData;
-            Assert.AreEqual(NewOrder.OrderId, TestData);
+            NewOrder.SetOrderId(TestData);
+            Assert.AreEqual(NewOrder.GetOrderId(), TestData);
         }
 
         [TestMethod]
@@ -28,8 +28,8 @@ namespace Testing3
         {
             clsOrder NewOrder = new clsOrder();
             int TestData = 1;
-            NewOrder.AccountId = TestData;
-            Assert.AreEqual(NewOrder.AccountId, TestData);
+            NewOrder.SetAccountId(TestData);
+            Assert.AreEqual(NewOrder.GetAccountId(), TestData);
         }
 
         [TestMethod]
@@ -37,8 +37,8 @@ namespace Testing3
         {
             clsOrder NewOrder = new clsOrder();
             float TestData = 399.99f;
-            NewOrder.TotalCost = TestData;
-            Assert.AreEqual(NewOrder.TotalCost, TestData);
+            NewOrder.SetTotalCost(TestData);
+            Assert.AreEqual(NewOrder.GetTotalCost(), TestData);
         }
 
         [TestMethod]
@@ -46,8 +46,8 @@ namespace Testing3
         {
             clsOrder NewOrder = new clsOrder();
             DateTime TestData = DateTime.Now.Date;
-            NewOrder.DateOfDelivery = TestData;
-            Assert.AreEqual(NewOrder.DateOfDelivery, TestData);
+            NewOrder.SetDateOfDelivery(TestData);
+            Assert.AreEqual(NewOrder.GetDateOfDelivery(), TestData);
         }
 
         [TestMethod]
@@ -55,8 +55,8 @@ namespace Testing3
         {
             clsOrder NewOrder = new clsOrder();
             bool TestData = true;
-            NewOrder.Delivered = TestData;
-            Assert.AreEqual(NewOrder.Delivered, TestData);
+            NewOrder.SetDelivered(TestData);
+            Assert.AreEqual(NewOrder.GetDelivered(), TestData);
         }
 
         [TestMethod]
@@ -64,8 +64,8 @@ namespace Testing3
         {
             clsOrder NewOrder = new clsOrder();
             string TestData = "Knock on the window";
-            NewOrder.DeliveryInstructions = TestData;
-            Assert.AreEqual(NewOrder.DeliveryInstructions, TestData);
+            NewOrder.SetDeliveryInstructions(TestData);
+            Assert.AreEqual(NewOrder.GetDeliveryInstructions(), TestData);
         }
     }
 }
