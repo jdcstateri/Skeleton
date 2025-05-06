@@ -26,7 +26,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AdminSystem", "AdminSystem\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary", "ClassLibrary\ClassLibrary.csproj", "{E32146CF-EC09-4709-9881-42ADF1B0735B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing6", "Testing6\Testing6.csproj", "{FDF1944D-85CF-4AAF-AB55-C62255437A06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingOrderLine", "Testing6\TestingOrderLine.csproj", "{FDF1944D-85CF-4AAF-AB55-C62255437A06}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingAddresses", "Testing5\TestingAddresses.csproj", "{6B836712-3706-49E8-A57E-ADD4149D788B}"
 EndProject
