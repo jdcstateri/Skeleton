@@ -18,6 +18,15 @@ namespace Testing4
         }
 
         [TestMethod]
+        public void StaffIDPropertyOK()
+        {
+            clsStaff AStaff = new clsStaff();
+            int TestData = 1;
+            AStaff.StaffId = TestData;
+            Assert.AreEqual(AStaff.StaffId, TestData);
+        }
+
+        [TestMethod]
         public void NamePropertyOK()
         {
             //Create an instance of the class we want to create
