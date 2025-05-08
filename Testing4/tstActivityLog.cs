@@ -16,6 +16,14 @@ namespace Testing4
             //Test to see that is Exist
             Assert.IsNotNull(AnActivityLog);
         }
+        [TestMethod]
+        public void ActivityIDPropertyOK()
+        {
+            clsActivityLog AnActivitiesLog = new clsActivityLog();
+            int TestData = 1;
+            AnActivitiesLog.ActivityID = TestData;
+            Assert.AreEqual(AnActivitiesLog.ActivityID, TestData);
+        }
 
         [TestMethod]
         public void UserIDPropertyOK()

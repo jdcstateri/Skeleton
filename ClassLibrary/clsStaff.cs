@@ -4,6 +4,7 @@ namespace ClassLibrary
 {
     public class clsStaff
     {
+        public int StaffId { get; set; }
         public bool IsAdmin { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
