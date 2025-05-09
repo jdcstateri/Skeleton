@@ -93,16 +93,32 @@ namespace ClassLibrary
 
         public bool Find(int addressID)
         {
-            //set the private data members to the test data value
-            mAddressID = 15;
-            mAccountID = 15;
-            mDateAdded = Convert.ToDateTime("23/12/2022");
-            mIsActive = true;
-            mAddress = "Road Street 15";
-            mPostCode = "LE3 9ET";
+            //create an instance of the data connection
+            clsDataConnection DB = new clsDataConnection();
+            //add the parameter for the id to search for
+            DB.AddParameter("@AddressID", addressID);
+            //execute the stored procedure
+            DB.Execute("sproc_tblAddresses_FilterByAddressID");
+            //if one record is found (there should be either one or zero)
+            if (DB.Count == 1)
+            {
+                //copy the data from the database to the private data members
+                mAddressID = Convert.ToInt32(DB.DataTable.Rows[0]["AddressID"]);
+                mAccountID = Convert.ToInt32(DB.DataTable.Rows[0]["AccountID"]);
+                mDateAdded = Convert.ToDateTime(DB.DataTable.Rows[0]["DateAdded"]);
+                mIsActive = Convert.ToBoolean(DB.DataTable.Rows[0]["IsActive"]);
+                mAddress = Convert.ToString(DB.DataTable.Rows[0]["Address"]);
+                mPostCode = Convert.ToString(DB.DataTable.Rows[0]["PostCode"]);
+                //return that everything worked OK
+                return true;
+            }
+            //if no record was found
+            else
+            {
 
-            //always return true
-            return true;
+                //return false indicating there is a problem
+                return false;
+            }
         }
     }
 }

@@ -102,7 +102,7 @@ namespace Testing2
             //create a Boolean variable to store the results of the validation
             Boolean Found = false;
             //create some test data to use with the method
-            Int32 AccountID = 15;
+            Int32 AccountID = 2;
             //invoke the method
             Found = aCustomer.Find(AccountID);
             //test to see if result is true
@@ -119,11 +119,11 @@ namespace Testing2
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AccountID = 15;
+            Int32 AccountID = 2;
             //invoke the method
             Found = aCustomer.Find(AccountID);
             //check the account id
-            if (aCustomer.AccountID != 15)
+            if (aCustomer.AccountID != 2)
             {
                 OK = false;
             }
@@ -141,11 +141,11 @@ namespace Testing2
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AccountID = 15;
+            Int32 AccountID = 2;
             //invoke the method
             Found = aCustomer.Find(AccountID);
             //check the property
-            if (aCustomer.DateRegistered != Convert.ToDateTime("23/12/2022"))
+            if (aCustomer.DateRegistered != Convert.ToDateTime("30/04/2025"))
             {
                 OK = false;
             }
@@ -163,7 +163,7 @@ namespace Testing2
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AccountID = 15;
+            Int32 AccountID = 2;
             //invoke the method
             Found = aCustomer.Find(AccountID);
             //check the property
@@ -185,11 +185,11 @@ namespace Testing2
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AccountID = 15;
+            Int32 AccountID = 2;
             //invoke the method
             Found = aCustomer.Find(AccountID);
             //check the property
-            if (aCustomer.Name != "Joe")
+            if (aCustomer.Name != "Travis Webber")
             {
                 OK = false;
             }
@@ -207,11 +207,11 @@ namespace Testing2
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AccountID = 15;
+            Int32 AccountID = 2;
             //invoke the method
             Found = aCustomer.Find(AccountID);
             //check the property
-            if (aCustomer.Email != "Joe@email.com")
+            if (aCustomer.Email != "tweb@gmail.com")
             {
                 OK = false;
             }
@@ -229,11 +229,11 @@ namespace Testing2
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AccountID = 15;
+            Int32 AccountID = 2;
             //invoke the method
             Found = aCustomer.Find(AccountID);
             //check the property
-            if (aCustomer.Password != "JoePassword15")
+            if (aCustomer.Password != "twebbb23")
             {
                 OK = false;
             }

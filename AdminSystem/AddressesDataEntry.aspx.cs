@@ -35,4 +35,29 @@ public partial class _1_DataEntry : System.Web.UI.Page
         //navigate to the view page
         Response.Redirect("AddressesViewer.aspx");
     }
+
+    protected void btnFind_Click(object sender, EventArgs e)
+    {
+        //create an instance of the address class
+        clsAddresses aAddress = new clsAddresses();
+        //create a variable to store the primary key
+        Int32 AddressID;
+        //create a variable to store the result of the find operation
+        Boolean Found = false;
+        //get the primary key entered by the user
+        AddressID = Convert.ToInt32(txtAddressID.Text);
+        //find the record
+        Found = aAddress.Find(AddressID);
+        //if found
+        if (Found == true)
+        {
+            //display the values of the properties in the form
+            txtAddressID.Text = aAddress.AddressID.ToString();
+            txtAccountID.Text = aAddress.AccountID.ToString();
+            txtAddress.Text = aAddress.Address;
+            txtPostCode.Text = aAddress.PostCode;
+            txtDateAdded.Text = aAddress.DateAdded.ToString();
+            chkIsActive.Checked = aAddress.IsActive;
+        }
+    }
 }
