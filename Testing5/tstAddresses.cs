@@ -102,7 +102,7 @@ namespace Testing5
             //create a Boolean variable to store the results of the validation
             Boolean Found = false;
             //create some test data to use with the method
-            Int32 AddressID = 15;
+            Int32 AddressID = 2;
             //invoke the method
             Found = anAddress.Find(AddressID);
             //test to see if result is true
@@ -119,11 +119,11 @@ namespace Testing5
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AddressID = 15;
+            Int32 AddressID = 2;
             //invoke the method
             Found = anAddress.Find(AddressID);
             //check the account id
-            if (anAddress.AddressID != 15)
+            if (anAddress.AddressID != 2)
             {
                 OK = false;
             }
@@ -141,11 +141,11 @@ namespace Testing5
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AddressID = 15;
+            Int32 AddressID = 2;
             //invoke the method
             Found = anAddress.Find(AddressID);
             //check the account id
-            if (anAddress.AccountID != 15)
+            if (anAddress.AccountID != 1)
             {
                 OK = false;
             }
@@ -163,11 +163,11 @@ namespace Testing5
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AddressID = 15;
+            Int32 AddressID = 2;
             //invoke the method
             Found = anAddress.Find(AddressID);
             //check the account id
-            if (anAddress.DateAdded != Convert.ToDateTime("23/12/2022"))
+            if (anAddress.DateAdded != Convert.ToDateTime("30/04/2025"))
             {
                 OK = false;
             }
@@ -185,7 +185,7 @@ namespace Testing5
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AddressID = 15;
+            Int32 AddressID = 2;
             //invoke the method
             Found = anAddress.Find(AddressID);
             //check the account id
@@ -207,11 +207,11 @@ namespace Testing5
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AddressID = 15;
+            Int32 AddressID = 2;
             //invoke the method
             Found = anAddress.Find(AddressID);
             //check the account id
-            if (anAddress.Address != "Road Street 15")
+            if (anAddress.Address != "Random 1")
             {
                 OK = false;
             }
@@ -229,11 +229,11 @@ namespace Testing5
             //create a Boolean variable to record if the data is OK (assume it is)
             Boolean OK = true;
             //create some test data to use with the method
-            Int32 AddressID = 15;
+            Int32 AddressID = 2;
             //invoke the method
             Found = anAddress.Find(AddressID);
             //check the account id
-            if (anAddress.PostCode != "LE3 9ET")
+            if (anAddress.PostCode != "LE7 2AD")
             {
                 OK = false;
             }
