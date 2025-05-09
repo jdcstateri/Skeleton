@@ -10,7 +10,7 @@
     <div>
         <form id="form1" runat="server">
             <asp:Label ID="lblAccountID" runat="server" style="z-index: 1; left: 10px; top: 34px; position: absolute" Text="Account ID" width="97px"></asp:Label>
-            <asp:TextBox ID="txtAccountID" runat="server" style="z-index: 1; left: 122px; top: 34px; position: absolute; right: 1145px;"></asp:TextBox>
+            <asp:TextBox ID="txtAccountID" runat="server" style="z-index: 1; left: 122px; top: 34px; position: absolute"></asp:TextBox>
             <asp:Label ID="lblName" runat="server" style="z-index: 1; left: 11px; top: 61px; position: absolute" Text="Name" width="97px"></asp:Label>
             <asp:TextBox ID="txtName" runat="server" style="z-index: 1; left: 122px; top: 61px; position: absolute"></asp:TextBox>
             <asp:Label ID="lblEmail" runat="server" style="z-index: 1; left: 10px; top: 87px; position: absolute" Text="Email" width="97px"></asp:Label>
@@ -23,7 +23,9 @@
             <asp:Label ID="lblError" runat="server" style="z-index: 1; left: 10px; top: 179px; position: absolute"></asp:Label>
             <asp:Button ID="btnOk" runat="server" style="z-index: 1; left: 10px; top: 209px; position: absolute" Text="Ok" OnClick="btnOk_Click" width="60px" />
             <asp:Button ID="btnCancel" runat="server" style="z-index: 1; left: 122px; top: 209px; position: absolute" Text="Cancel" />
-            <asp:Button ID="btnFind" runat="server" style="z-index: 1; left: 280px; top: 34px; position: absolute" Text="Find" height="22px" OnClick="btnFind_Click" width="60px" />
+            <div>
+                <asp:Button ID="btnFind" runat="server" style="z-index: 1; left: 258px; top: 209px; position: absolute" Text="Find" height="26px" OnClick="btnFind_Click" width="60px" />
+            </div>
         </form>
     </div>
 </body>
