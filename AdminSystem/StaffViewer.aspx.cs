@@ -19,14 +19,5 @@ public partial class _1Viewer : System.Web.UI.Page
         Response.Write(AStaff.DateAdded);
         Response.Write(AStaff.LastLogin);
         Response.Write(AStaff.IsAdmin);
-
-        //Following for the Activity Log page
-        clsActivityLog AnActivityLog = new clsActivityLog();
-        AnActivityLog = (clsActivityLog)Session["AnActivityLog"];
-        Response.Write(AnActivityLog.ActivityID);
-        Response.Write(AnActivityLog.UserID);
-        Response.Write(AnActivityLog.Action);
-        Response.Write(AnActivityLog.TimeStamp);
-        Response.Write(AnActivityLog.Detail);
     }
 }

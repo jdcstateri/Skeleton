@@ -25,17 +25,9 @@ public partial class _1_DataEntry : System.Web.UI.Page
         AStaff.DateAdded = Convert.ToDateTime(DateTime.Now);
         AStaff.LastLogin = Convert.ToDateTime(DateTime.Now);   
         AStaff.IsAdmin = ChkAdmin.Checked;
-
-        //Capture Input for the Activity Logs
-        clsActivityLog AnActivityLog = new clsActivityLog();
-        AnActivityLog.ActivityID = Convert.ToInt32(txtActivityID.Text);
-        AnActivityLog.UserID = Convert.ToInt32(txtUserID.Text);
-        AnActivityLog.Action = txtAction.Text;
-        AnActivityLog.TimeStamp = Convert.ToDateTime(DateTime.Now);
-        
+ 
         //Store the ID Session Object
         Session["AStaff"] = AStaff;
-        Session["AnActivityLog"] = AnActivityLog;
 
         //Navigate to the Staff Viewer Page
         Response.Redirect("StaffViewer.aspx");

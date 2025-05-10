@@ -44,30 +44,9 @@
             <asp:Label ID="lblError" runat="server" Style="left: 14px; top: 525px; position: absolute; width: 66px;" Text="[lblError]"></asp:Label>
         </div>
 
-        <h3 style="position: absolute; top: 305px; left: 8px;">This is the ActivityLogs Data Entry Page</h3>
-
-        <div>
-            <asp:Label ID="lblActivityID" runat="server" Style="left: 14px; top: 395px; position: absolute" Text="Activity ID"></asp:Label>
-            <asp:TextBox ID="txtActivityID" runat="server" Style="left: 95px; top: 392px; position: absolute"></asp:TextBox>
-        </div>
-
-        <div>
-            <asp:Label ID="lblUserID" runat="server" Style="left: 14px; top: 354px; position: absolute" Text="User ID"></asp:Label>
-            <asp:TextBox ID="txtUserID" runat="server" Style="left: 95px; top: 353px; position: absolute"></asp:TextBox>
-        </div>
-
-        <div>
-            <asp:Label ID="lblAction" runat="server" Style="left: 17px; top: 437px; position: absolute" Text="Action"></asp:Label>
-            <asp:TextBox ID="txtAction" runat="server" Style="left: 95px; top: 439px; position: absolute"></asp:TextBox>
-        </div>
-        <div>
-            <asp:Label ID="lblDetail" runat="server" Style="left: 15px; top: 480px; position: absolute" Text="Details"></asp:Label>
-            <asp:TextBox ID="txtDetail" runat="server" Style="left: 95px; top: 480px; position: absolute"></asp:TextBox>
-        </div>
         <div>
             <asp:Button ID="Button1" runat="server" Style="left: 14px; top: 569px; position: absolute; width: 66px;" Text="OK" OnClick="btnOK_Click" />
             <asp:Button ID="Button2" runat="server" Style="left: 109px; top: 568px; position: absolute; width: 69px;" Text="Cancel" />
-
         </div>
     </form>
 </body>
