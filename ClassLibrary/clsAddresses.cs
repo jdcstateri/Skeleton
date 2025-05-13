@@ -120,5 +120,67 @@ namespace ClassLibrary
                 return false;
             }
         }
+
+        public string Valid(string dateAdded, string address, string postCode)
+        {
+            //create a string variable to store the error
+            String Error = "";
+            //create a temporary variable to store the date values
+            DateTime DateTemp;
+
+            //create an instance of DateTime to compare to DateTemp
+            //in the if statements
+            DateTime DateComp = DateTime.Now.Date;
+
+            try
+            {
+                //copy the dateRegistered value to the DateTemp variable
+                DateTemp = Convert.ToDateTime(dateAdded);
+
+                //check to see if the date is less than today's date
+                if (DateTemp < DateTime.Now.Date)
+                {
+                    Error = Error + "The date cannot be in the past : ";
+                }
+                //check to see if the date is more than today's date
+                if (DateTemp > DateTime.Now.Date)
+                {
+                    Error = Error + "The date cannot be in the future : ";
+                }
+
+            }
+            catch
+            {
+                //record the error
+                Error = Error + "The date was not a valid date : ";
+            }
+
+            //address
+            //is blank
+            if (address.Length == 0)
+            {
+                Error = Error + "The address must not be blank : ";
+            }
+            //is greater than 50 chars
+            if (address.Length > 50)
+            {
+                Error = Error + "The address must be less than 50 characters : ";
+            }
+            //postcode
+            //is blank
+            if (postCode.Length == 0)
+            {
+                Error = Error + "The postCode must not be blank : ";
+            }
+            //is greater than 50 chars
+            if (postCode.Length > 50)
+            {
+                Error = Error + "The postCode must be less than 50 characters : ";
+            }
+
+
+            //return any error messages
+            return Error;
+        }
     }
 }
