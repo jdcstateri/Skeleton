@@ -10,5 +10,10 @@ namespace ClassLibrary
     {
         public int ProductId { get; set; }
         public int Quantity { get; set; }
+        public float Cost { get; set; }
+
+        public bool IsDiscounted { get; set; }
+        public int DiscountPercentage { get; set; }
+
     }
 }

@@ -10,7 +10,7 @@ namespace ClassLibrary
     {
         public List<clsShoppingCartItem> Items = new List<clsShoppingCartItem>();
 
-        List<clsShoppingCartItem> GetShoppingCart()
+        public List<clsShoppingCartItem> GetShoppingCart()
         {
             return Items;
         }

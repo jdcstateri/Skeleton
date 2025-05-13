@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 
 namespace ClassLibrary
@@ -25,12 +26,37 @@ namespace ClassLibrary
 
         void CreateOrder()
         {
+            clsDataConnection db = new clsDataConnection();
+            db.AddParameter("AccountId", GetAccountId());
+            db.AddParameter("TotalCost", GetTotalCost());
+            db.AddParameter("DateOfDelivery", GetDateOfDelivery());
+            db.AddParameter("Delivered", GetDelivered());
+            db.AddParameter("DeliveryInstructions", GetDeliveryInstructions());
 
+            db.Execute("sproc_tblOrders_Insert");
         }
 
         void CreateOrderLine()
         {
+            clsDataConnection db = new clsDataConnection();
+            db.AddParameter("OrderId", GetOrderId());
+            db.AddParameter("DateAdded", DateTime.Now);
+            float TotalCost = 0f;
 
+            foreach (clsShoppingCartItem item in ShoppingCart.GetShoppingCart())
+            {
+                db.AddParameter("ItemId", item.ProductId);
+                db.AddParameter("IsDiscounted", item.IsDiscounted);
+                db.AddParameter("DiscountPercentage", item.DiscountPercentage);
+                db.AddParameter("Status", "Pending");
+                db.AddParameter("Quantity", item.Quantity);
+
+                TotalCost += item.Cost;
+
+                db.Execute("sproc_tblOrderLines_Insert");
+            }
+
+            SetTotalCost(TotalCost);
         }
 
         // getters
