@@ -7,6 +7,14 @@ namespace Testing4
     [TestClass]
     public class tstStaff
     {
+        //Create some test data to assign to the property
+        string Name = "John Doe";
+        string Email = "johndoe@gmail.com";
+        string Password = "johndoe1234";
+        string IsAdmin = "true";
+        string DateAdded = DateTime.Now.Date.ToString();
+        string LastLogin = DateTime.Now.ToString();
+
         [TestMethod]
         public void InstanceOK()
         {
@@ -319,6 +327,466 @@ namespace Testing4
 
             //Test to see that the result is correct
             Assert.IsTrue(OK);
+        }
+
+
+        [TestMethod]
+        public void ValidMethodOK()
+        {
+            //Create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //Create a string variable to store the error
+            String Error = "";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //Test to see that the result is correct
+            Assert.AreEqual(Error, ""); 
+
+
+        }
+        [TestMethod]
+        public void DateAddedExtremeMin()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store test data
+            DateTime TestDate;
+            //Set time to todays date`
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever the date is less 100 years
+            TestDate = TestDate.AddYears(-100); //should fail
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedMinLessOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store test data
+            DateTime TestDate;
+            //Set time to todays date
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever the date is less 1 day
+            TestDate = TestDate.AddDays(-1); //should fail
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedMin()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store test data
+            DateTime TestDate;
+            //Set time to todays date
+            TestDate = DateTime.Now.Date; //should pass
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedMinPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store test data
+            DateTime TestDate;
+            //Set time to todays date
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever the date is plus 1 day
+            TestDate = TestDate.AddDays(1); //should fail
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedExtremeMax()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store test data
+            DateTime TestDate;
+            //Set time to todays date
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever the date is plus 100 years
+            TestDate = TestDate.AddYears(100); //should fail
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedInvalidData()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the DateRegistered to a non date value
+            string DateAdded = "This is not a date!";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void NameMinLessOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the name
+            string Name = "";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void NameMin()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the name
+            string Name = "a";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void NameMinPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the name
+            string Name = "aa";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void NameMaxLessOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the name
+            string Name = "";
+            Name = Name.PadRight(49, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void NameMax()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the name
+            string Name = "";
+            Name = Name.PadRight(50, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void NameMaxPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the name
+            string Name = "";
+            Name = Name.PadRight(51, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void NameMid()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the name
+            string Name = "";
+            Name = Name.PadRight(25, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void EmailMinLessOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Email
+            string Email = "";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void EmailMin()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Email
+            string Email = "a";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void EmailMinPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Email
+            string Email = "aa";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void EmailMaxLessOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Email
+            string Email = "";
+            Email = Email.PadRight(49, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void EmailMax()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Email
+            string Email = "";
+            Email = Email.PadRight(50, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void EmailMaxPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Email
+            string Email = "";
+            Email = Email.PadRight(51, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void EmailMid()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Email
+            string Email = "";
+            Email = Email.PadRight(25, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PasswordMinLessOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Password
+            string Password = "";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PasswordMin()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Password
+            string Password = "a";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PasswordMinPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Password
+            string Password = "aa";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PasswordMaxLessOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Password
+            string Password = "";
+            Password = Password.PadRight(49, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PasswordMax()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Password
+            string Password = "";
+            Password = Password.PadRight(50, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PasswordMaxPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Password
+            string Password = "";
+            Password = Password.PadRight(51, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PasswordMid()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Password
+            string Password = "";
+            Password = Password.PadRight(25, 'a');
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
         }
     }
 }
