@@ -18,19 +18,40 @@ public partial class _1_DataEntry : System.Web.UI.Page
     {
         clsStaff AStaff = new clsStaff();
         //Capture the Staff
-        AStaff.StaffId = Convert.ToInt32(txtStaffID.Text);
-        AStaff.Name = txtName.Text;
-        AStaff.Email = txtEmail.Text;
-        AStaff.Password = txtPassword.Text;
-        AStaff.DateAdded = Convert.ToDateTime(DateTime.Now);
-        AStaff.LastLogin = Convert.ToDateTime(DateTime.Now);   
-        AStaff.IsAdmin = ChkAdmin.Checked;
- 
-        //Store the ID Session Object
-        Session["AStaff"] = AStaff;
+        string StaffId = txtStaffID.Text;
+        string Name = txtName.Text;
+        string Email = txtEmail.Text;
+        string Password = txtPassword.Text;
+        string DateAdded = txtDateAdded.Text;
+        string LastLogin = txtLastLogin.Text;   
+        string IsAdmin = ChkAdmin.Text;
 
-        //Navigate to the Staff Viewer Page
-        Response.Redirect("StaffViewer.aspx");
+        string Error = "";
+        //valdiate the data
+        Error = AStaff.Valid(Name, Email, Password, DateAdded);
+        //if there is no error
+        if (Error == "")
+        {
+            AStaff.Name = Name;
+            AStaff.Email = Email;
+            AStaff.Password = Password;
+            AStaff.DateAdded = Convert.ToDateTime(DateAdded);
+            AStaff.LastLogin = Convert.ToDateTime(LastLogin);
+            AStaff.IsAdmin = ChkAdmin.Checked;
+            //Store the ID Session Object
+            Session["AStaff"] = AStaff;
+
+            //Navigate to the Staff Viewer Page
+            Response.Redirect("StaffViewer.aspx");
+
+        }
+        else
+        {
+            //display the error message
+            lblError.Text = Error;
+        }
+
+
     }
 
 
