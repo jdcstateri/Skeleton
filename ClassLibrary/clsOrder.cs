@@ -11,9 +11,26 @@ namespace ClassLibrary
         private DateTime DateOfDelivery;
         private bool Delivered;
         private string DeliveryInstructions;
+        private clsShoppingCart ShoppingCart;
 
-        public clsOrder()
+        // constructor for creating a new order to add to the database
+        public clsOrder(clsShoppingCart ShoppingCart, int AccountId, DateTime DateOfDelivery, string DeliveryInstructions)
         {
+            this.AccountId = AccountId;
+            this.DateOfDelivery = DateOfDelivery;
+            this.DeliveryInstructions = DeliveryInstructions;
+            this.ShoppingCart = ShoppingCart;
+
+        }
+
+        void CreateOrder()
+        {
+
+        }
+
+        void CreateOrderLine()
+        {
+
         }
 
         // getters
@@ -29,6 +46,8 @@ namespace ClassLibrary
 
         public string GetDeliveryInstructions(){ return this.DeliveryInstructions; }
 
+        public clsShoppingCart GetShoppingCart() { return this.ShoppingCart; }
+
         // setters
         public void SetOrderId(int id){ this.OrderId = id; }
 
@@ -40,6 +59,8 @@ namespace ClassLibrary
 
         public void SetDelivered(bool delivered){ this.Delivered = delivered; }
 
-        public void SetDeliveryInstructions(string deliveryInstructions) { this.DeliveryInstructions = deliveryInstructions; } 
+        public void SetDeliveryInstructions(string deliveryInstructions) { this.DeliveryInstructions = deliveryInstructions; }
+
+        public void SetShoppingCart(clsShoppingCart shoppingCart) { this.ShoppingCart = shoppingCart; }
     }
 }

@@ -9,8 +9,8 @@
 <body>
     This is the Order Data Entry Page
     <form id="form1" runat="server">
-        <div>
-        </div>
+        <asp:Label ID="lblOrderId" runat="server" Text="Order ID"></asp:Label>
+        <asp:TextBox ID="txtAccountID" runat="server" style="z-index: 1; left: 122px; top: 34px; position: absolute"></asp:TextBox>
     </form>
 </body>
 </html>
