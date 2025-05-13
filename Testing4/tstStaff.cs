@@ -115,7 +115,7 @@ namespace Testing4
             Boolean Found = false;
 
             //Create some test data to use with the method
-            Int32 StaffId = 21;
+            Int32 StaffId = 2;
 
             //Invoke the method
             Found = AStaff.Find(StaffId);
@@ -137,13 +137,13 @@ namespace Testing4
             Boolean OK = true;
 
             //Create Some test data to use with the method
-            Int32 StaffId = 21;
+            Int32 StaffId = 2;
 
             //invoke the method
             Found = AStaff.Find(StaffId);
 
             //Check the Staff Id
-            if (AStaff.StaffId != 21)
+            if (AStaff.StaffId != 2)
             {
                 OK = false;
             }
@@ -165,7 +165,7 @@ namespace Testing4
             Boolean OK = true;
 
             //Create Some test data to use with the method
-            Int32 StaffId = 21;
+            Int32 StaffId = 2;
 
             //invoke the method
             Found = AStaff.Find(StaffId);
@@ -193,13 +193,13 @@ namespace Testing4
             Boolean OK = true;
 
             //Create Some test data to use with the method
-            Int32 StaffId = 21;
+            Int32 StaffId = 2;
 
             //invoke the method
             Found = AStaff.Find(StaffId);
 
             //Check the Staff Id
-            if (AStaff.Email != "john@gmail.com")
+            if (AStaff.Email != "Johndoe@gmail.com")
             {
                 OK = false;
             }
@@ -221,13 +221,13 @@ namespace Testing4
             Boolean OK = true;
 
             //Create Some test data to use with the method
-            Int32 StaffId = 21;
+            Int32 StaffId = 2;
 
             //invoke the method
             Found = AStaff.Find(StaffId);
 
             //Check the Staff Id
-            if (AStaff.Password != "12345678")
+            if (AStaff.Password != "johndoe1234")
             {
                 OK = false;
             }
@@ -249,7 +249,7 @@ namespace Testing4
             Boolean OK = true;
 
             //Create Some test data to use with the method
-            Int32 StaffId = 21;
+            Int32 StaffId = 2;
 
             //invoke the method
             Found = AStaff.Find(StaffId);
@@ -277,13 +277,13 @@ namespace Testing4
             Boolean OK = true;
 
             //Create Some test data to use with the method
-            Int32 StaffId = 21;
+            Int32 StaffId = 2;
 
             //invoke the method
             Found = AStaff.Find(StaffId);
 
             //Check the Staff Id
-            if (AStaff.DateAdded != Convert.ToDateTime("25/12/2022"))
+            if (AStaff.DateAdded != Convert.ToDateTime("25/12/2024"))
             {
                 OK = false;
             }
@@ -306,13 +306,13 @@ namespace Testing4
             Boolean OK = true;
 
             //Create Some test data to use with the method
-            Int32 StaffId = 21;
+            Int32 StaffId = 2;
 
             //invoke the method
             Found = AStaff.Find(StaffId);
 
             //Check the Staff Id
-            if (AStaff.LastLogin != Convert.ToDateTime("25/12/2022"))
+            if (AStaff.LastLogin != Convert.ToDateTime("25/12/2024 00:20:00"))
             {
                 OK = false;
             }
