@@ -56,16 +56,41 @@ namespace ClassLibrary
 
         public bool Find(int StaffId)
         {
-            //Set the private data members to the test data value
-            mStaffId = 21;
-            mStaffName = "John Doe";
-            mStaffEmail = "john@gmail.com";
-            mPassword = "12345678";
-            mIsAdmin = true;
-            mDateAdded = Convert.ToDateTime("25/12/2022");
-            mLastLogin = Convert.ToDateTime("25/12/2022");
-            //always return true
-            return true;
+            ////Set the private data members to the test data value
+            //mStaffId = 21;
+            //mStaffName = "John Doe";
+            //mStaffEmail = "john@gmail.com";
+            //mPassword = "12345678";
+            //mIsAdmin = true;
+            //mDateAdded = Convert.ToDateTime("25/12/2022");
+            //mLastLogin = Convert.ToDateTime("25/12/2022");
+            ////always return true
+            //return true;
+
+            clsDataConnection DB = new clsDataConnection();
+            //add the parameter for the Staff id to search for
+            DB.AddParameter("@StaffId", StaffId);
+            //execute the stored procedure
+            DB.Execute("sproc_tblStaff_FilterByStaffId");
+            //if one record is found (there should be either 1 or 0)
+            if (DB.Count == 1)
+            {
+                //copy the data from the database to the private data members
+                mStaffId = Convert.ToInt32(DB.DataTable.Rows[0]["StaffID"]);
+                mStaffName = Convert.ToString(DB.DataTable.Rows[0]["Name"]);
+                mStaffEmail = Convert.ToString(DB.DataTable.Rows[0]["Email"]);
+                mPassword = Convert.ToString(DB.DataTable.Rows[0]["Password"]);
+                mIsAdmin = Convert.ToBoolean(DB.DataTable.Rows[0]["IsAdmin"]);
+                mDateAdded = Convert.ToDateTime(DB.DataTable.Rows[0]["DateAdded"]);
+                mLastLogin = Convert.ToDateTime(DB.DataTable.Rows[0]["LastLogin"]);
+                //return that everything worked OK
+                return true;
+            }
+            else
+            {
+                //if no record was found, return false
+                return false;
+            }
         }
     }
 }
