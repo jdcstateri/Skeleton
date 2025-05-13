@@ -7,6 +7,24 @@ namespace Testing1
     [TestClass]
     public class tstproduct
     {
+        // Goood Test Data
+        // Create some test data to pass to the method
+        string ProductTitle = "Product Title";
+        string ProductDescription = "Product Description";
+        string Price = "1299";
+        string StockNumber = "1";
+        string DateAdded = DateTime.Now.ToShortDateString();
+        string IsPublished = "true";
+
+
+
+
+
+
+
+
+
+
         /******************INSTANCE OF THE CLASS TEST******************/
         [TestMethod]
         public void InstanceOK()
@@ -147,5 +165,530 @@ namespace Testing1
             //test to see that the result is correct
             Assert.IsTrue(OK);
         }
+        [TestMethod]
+        public void ValidMethodOK() 
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // create a string variable to store the error message
+            string Error = "";
+            // Invoke the method
+            Error = clsProduct.Valid(ProductTitle,ProductDescription,Price,StockNumber,DateAdded,IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+
+        }
+        [TestMethod]
+        public void ProductTitleMinLessOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // create a string variable to store the error message
+            string Error = "";
+            // create some test data to pass to the method
+            string ProductTitle = "";
+            // Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductTitleMin()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // String variable to strore any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductTitle = "a"; // This should be the minimum length
+            // Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductTitleMinPlusOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // String variable to strore any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductTitle = "aa"; // This should be the minimum length + 1
+            // Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductTitleMaxLessOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // String variable to strore any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductTitle = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"; // This should be the maximum length - 1
+            // Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductTitleMax()
+        {
+            //  create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // String variable to strore any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductTitle = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"; // This should be the maximum length
+            // Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductTitleMaxPlusOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // String variable to strore any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductTitle = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"; // This should be the maximum length + 1
+            // Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductTitleMid()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // String variable to strore any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductTitle = "aaaaaaaaaaaaaaaaaaaaaaaaa"; // This should be the mid of max length
+            // Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductTitleExtremeMax()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to strore any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductTitle = "";
+            ProductTitle = ProductTitle.PadLeft(500, 'a'); // This should be extreme max length
+            // Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductDescriptionMinLessOne()
+        {
+            // create an instance of the class we want to create 
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductDescription = "";
+            //Invoke the method 
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductDescriptionMin()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductDescription = "a"; // This should be the minimum length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductDescriptionMinPlusOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductDescription = "aa"; // This should be the minimum length + 1
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductDescriptionMaxLessOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message 
+            String Error = "";
+            // Create some test data to pass to the method
+            string ProductDescription = "".PadRight(249, 'a'); // This should be the maximum length - 1
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductDescriptionMax()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductDescription = "".PadRight(250, 'a'); // This should be the maximum length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductDescriptionMaxPlusOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductDescription = "".PadRight(251, 'a'); // This should be the maximum length + 1
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductDescriptionMid()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductDescription = "".PadRight(125, 'a'); // This should be the mid of max length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void ProductDescriptionExtremeMax()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string ProductDescription = "".PadRight(500, 'a'); // This should be extreme max length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void PriceMinLessOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string Price = "0"; // This should be the minimum length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void PriceMin()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string Price = "1"; // This should be the minimum length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void PriceMinPlusOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string Price = "2"; // This should be the minimum length + 1
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void PriceMaxLessOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string Price = "".PadRight(7, '9'); // This should be the maximum length - 1
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void PriceMax()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string Price = "".PadRight(8, '9'); // This should be the maximum length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void PriceMaxPlusOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string Price = "".PadRight(9, '9'); // This should be the maximum length + 1
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void PriceMid()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string Price = "".PadRight(4, '9'); // This should be the mid of max length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void PriceExtremeMax()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string Price = "".PadRight(500, '9'); // This should be extreme max length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void StockNumberMinLessOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string StockNumber = "0"; // This should be the minimum length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void StockNumberMin()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string StockNumber = "1"; // This should be the minimum length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void StockNumberMinPlusOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string StockNumber = "2"; // This should be the minimum length + 1
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void StockNumberMaxLessOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string StockNumber = "".PadRight(7, '9'); // This should be the maximum length - 1
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void StockNumberMax()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string StockNumber = "".PadRight(8, '9'); // This should be the maximum length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void StockNumberMaxPlusOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string StockNumber = "".PadRight(9, '9'); // This should be the maximum length + 1
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void StockNumberMid()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string StockNumber = "".PadRight(4, '9'); // This should be the mid of max length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void StockNumberExtremeMax()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create some test data to pass to the method
+            string StockNumber = "".PadRight(500, '9'); // This should be extreme max length
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedExtremeMin()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create a variable to store the date
+            DateTime TestDate;
+            // set the date to todays date
+            TestDate = DateTime.Now.Date;
+            // change the date to whatever date is less than 100 years
+            TestDate = TestDate.AddYears(-100);
+            // convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void DateAddedMinLessOne()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create a variable to store the date
+            DateTime TestDate;
+            // set the date to todays date
+            TestDate = DateTime.Now.Date;
+            // change the date to whatever date is less than 100 years
+            TestDate = TestDate.AddYears(-100).AddDays(-1);
+            // convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void DateAddedMinLessTwo()
+        {
+            // create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            // string variable to store any message
+            String Error = "";
+            // create a variable to store the date
+            DateTime TestDate;
+            // set the date to todays date
+            TestDate = DateTime.Now.Date;
+            // change the date to whatever date is less than 100 years
+            TestDate = TestDate.AddYears(-100).AddDays(2);
+            // convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //Invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            // test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
     }
 }
+    

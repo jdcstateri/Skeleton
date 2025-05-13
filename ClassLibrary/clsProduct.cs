@@ -116,5 +116,35 @@ namespace ClassLibrary
             // always return true for now
             return true;
         }
+
+        public string Valid(string productTitle, string productDescription, string price, string stockNumber, string dateAdded, string isPublished)
+        {
+            // create a string variable to store the error message
+            String Error = "";
+            // create a temporary variable to store the date values.
+            DateTime DateTemp;
+            // If the product title is blank
+            if (productTitle.Length == 0)
+            {
+                // record the error 
+                Error = Error + "The product title may not be blank : ";
+            }
+            // If the product title is greater than 50 characters
+            if (productTitle.Length > 50)
+            {
+                // record the error 
+                Error = Error + "The product title must be less 50 : ";
+            }
+            // copy the dateAdded value to the DateTemp variable
+            DateTemp = Convert.ToDateTime(dateAdded);
+            //check to see if the date is less than today's date
+            if (DateTemp < DateTime.Now.Date)
+            {
+                // record the error 
+                Error = Error + "The date added cannot be in the past : ";
+            }
+            // return any error messages
+            return Error;
+        }
     }
 }
