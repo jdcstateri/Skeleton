@@ -8,12 +8,19 @@ namespace ClassLibrary
 {
     public class clsShoppingCartItem
     {
-        public int ProductId { get; set; }
-        public int Quantity { get; set; }
-        public float Cost { get; set; }
+        public int ProductId;
+        public int Quantity;
+        public float Cost;
+        public bool IsDiscounted;
+        public float DiscountPercentage;
 
-        public bool IsDiscounted { get; set; }
-        public int DiscountPercentage { get; set; }
-
+        public clsShoppingCartItem(int ProductId, int Quantity, float Cost, bool IsDiscounted, float DiscountPercentage)
+        {
+            this.ProductId = ProductId;
+            this.Quantity = Quantity;
+            this.Cost = Cost;
+            this.IsDiscounted = IsDiscounted;
+            this.DiscountPercentage = DiscountPercentage;
+        }
     }
 }

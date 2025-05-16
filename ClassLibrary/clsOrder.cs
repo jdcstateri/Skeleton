@@ -21,10 +21,21 @@ namespace ClassLibrary
             this.DateOfDelivery = DateOfDelivery;
             this.DeliveryInstructions = DeliveryInstructions;
             this.ShoppingCart = ShoppingCart;
+        }
+
+        public clsOrder()
+        {
 
         }
 
-        void CreateOrder()
+        public void CreateNewOrder()
+        {
+            CalculateTotalCost();
+            AddOrderToDatabase();
+            AddOrderLinesToDatabase();
+        }
+
+        public void AddOrderToDatabase()
         {
             clsDataConnection db = new clsDataConnection();
             db.AddParameter("AccountId", GetAccountId());
@@ -32,31 +43,37 @@ namespace ClassLibrary
             db.AddParameter("DateOfDelivery", GetDateOfDelivery());
             db.AddParameter("Delivered", GetDelivered());
             db.AddParameter("DeliveryInstructions", GetDeliveryInstructions());
+            db.Execute("sproc_tblOrder_Insert");
 
-            db.Execute("sproc_tblOrders_Insert");
+            // get OrderID through output somehow
         }
 
-        void CreateOrderLine()
+        public void AddOrderLinesToDatabase()
         {
-            clsDataConnection db = new clsDataConnection();
-            db.AddParameter("OrderId", GetOrderId());
-            db.AddParameter("DateAdded", DateTime.Now);
-            float TotalCost = 0f;
-
             foreach (clsShoppingCartItem item in ShoppingCart.GetShoppingCart())
             {
+                clsDataConnection db = new clsDataConnection();
+                db.AddParameter("OrderId", GetOrderId());
+                db.AddParameter("DateAdded", DateTime.Now);
                 db.AddParameter("ItemId", item.ProductId);
                 db.AddParameter("IsDiscounted", item.IsDiscounted);
                 db.AddParameter("DiscountPercentage", item.DiscountPercentage);
                 db.AddParameter("Status", "Pending");
                 db.AddParameter("Quantity", item.Quantity);
-
-                TotalCost += item.Cost;
-
                 db.Execute("sproc_tblOrderLines_Insert");
             }
+        }
 
-            SetTotalCost(TotalCost);
+        public float CalculateTotalCost()
+        {
+            float totalCost = 0f;
+
+            foreach (clsShoppingCartItem item in ShoppingCart.GetShoppingCart())
+            {
+                totalCost += item.Cost * item.Quantity;
+            }
+
+            return totalCost;
         }
 
         // getters

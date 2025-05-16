@@ -14,5 +14,15 @@ namespace ClassLibrary
         {
             return Items;
         }
+
+        public void AddItem(clsShoppingCartItem item)
+        {
+            Items.Add(item);
+        }
+
+        public void RemoveItem(clsShoppingCartItem item)
+        {
+            Items.Remove(item);
+        }
     }
 }
