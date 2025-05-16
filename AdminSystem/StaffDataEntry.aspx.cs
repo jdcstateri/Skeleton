@@ -32,11 +32,12 @@ public partial class _1_DataEntry : System.Web.UI.Page
         //if there is no error
         if (Error == "")
         {
+            AStaff.StaffId = Convert.ToInt32(txtStaffID.Text);
             AStaff.Name = Name;
             AStaff.Email = Email;
             AStaff.Password = Password;
-            AStaff.DateAdded = Convert.ToDateTime(DateAdded);
-            AStaff.LastLogin = Convert.ToDateTime(LastLogin);
+            AStaff.DateAdded = Convert.ToDateTime(DateTime.Now);
+            AStaff.LastLogin = DateTime.Now;
             AStaff.IsAdmin = ChkAdmin.Checked;
             //Store the ID Session Object
             Session["AStaff"] = AStaff;
@@ -77,6 +78,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
         {
             {
                 //display the values of the properties in the form
+                txtStaffID.Text = AStaff.StaffId.ToString();
                 txtName.Text = AStaff.Name;
                 txtEmail.Text = AStaff.Email;
                 txtPassword.Text = AStaff.Password;
