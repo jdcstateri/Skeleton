@@ -10,6 +10,9 @@
     <form id="form1" runat="server">
     &nbsp;<div>
             <asp:TextBox ID="txtItemID" runat="server" style="z-index: 1; left: 102px; top: 24px; position: absolute; " BorderStyle="Solid" width="128"></asp:TextBox>
+           <asp:Button ID="btnFind" runat="server" Text="Find" Style="position:relative; left:445px; top: -14px; height: 26px; width: 39px;" OnClick="btnFind_Click" />
+
+
         </div>
 
         <div>
@@ -30,8 +33,14 @@
         <asp:Label ID="lblPrice" runat="server" style="z-index: 1; left: 14px; top: 199px; position: absolute" Text="Price"></asp:Label>
         <div>
             <asp:Label ID="lblDateAdded" runat="server" style="z-index: 1; left: 11px; top: 249px; position: absolute" Text="Date Added"></asp:Label>
-            <asp:TextBox ID="txtDateAdded" runat="server" type="datetime-local" style="z-index: 1; left: 102px; top: 250px; position: absolute"  BorderStyle="Solid"></asp:TextBox>
-        <asp:Button ID="btnOk" runat="server" OnClick="btnOk_Click" style=" left: 403px; top: 273px; position: absolute; right: 945px; height: 24px" Text="OK" />
+            <asp:TextBox ID="txtDateAdded" runat="server"
+    Style="z-index: 1; left: 102px; top: 250px; position: absolute; width: 180px;"
+    BorderStyle="Solid" TextMode="DateTime" />
+
+        <asp:Button ID="btnOk" runat="server" OnClick="btnOk_Click"
+    Style="position: absolute; left: 403px; top: 273px; height: 30px; width: 60px;"
+    Text="OK" />
+
         </div>
 
         <div>
