@@ -120,5 +120,81 @@ namespace ClassLibrary
                 return false;
             }
         }
+
+        public string Valid(string dateRegistered, string name, string email, string password)
+        {
+            //create a string variable to store the error
+            String Error = "";
+            //create a temporary variable to store the date values
+            DateTime DateTemp;
+
+            //create an instance of DateTime to compare to DateTemp
+            //in the if statements
+            DateTime DateComp = DateTime.Now.Date;
+
+            try
+            {
+                //copy the dateRegistered value to the DateTemp variable
+                DateTemp = Convert.ToDateTime(dateRegistered);
+
+                //check to see if the date is less than today's date
+                if (DateTemp < DateTime.Now.Date)
+                {
+                    Error = Error + "The date cannot be in the past : ";
+                }
+                //check to see if the date is more than today's date
+                if (DateTemp > DateTime.Now.Date)
+                {
+                    Error = Error + "The date cannot be in the future : ";
+                }
+
+            }
+            catch
+            {
+                //record the error
+                Error = Error + "The date was not a valid date : ";
+            }
+
+            //if name is blank
+            if (name.Length == 0)
+            {
+                //record error
+                Error = Error + "The name must not be blank : ";
+            }
+            //if name is greater than _ characters
+            if (name.Length > 50)
+            {
+                //record error
+                Error = Error + "The name must be less than 50 characters : ";
+            }
+
+            //if email is blank
+            if (email.Length == 0)
+            {
+                //record error
+                Error = Error + "The email must not be blank : ";
+            }
+            //if email is greater than _ characters
+            if (email.Length > 50)
+            {
+                //record error
+                Error = Error + "The email must be less than 50 characters : ";
+            }
+            //if password is blank
+            if (password.Length == 0)
+            {
+                //record error
+                Error = Error + "The password must not be blank : ";
+            }
+            //if password is greater than _ characters
+            if (password.Length > 50)
+            {
+                //record error
+                Error = Error + "The password must be less than 50 characters : ";
+            }
+
+            //return any error messages
+            return Error;
+        }
     }
 }

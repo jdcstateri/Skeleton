@@ -16,24 +16,48 @@ public partial class _1_DataEntry : System.Web.UI.Page
 
     protected void btnOk_Click(object sender, EventArgs e)
     {
-        //create an instance of clsCustomer
+        //create an instance of clsAddresses
         clsAddresses aAddress = new clsAddresses();
         //capture address id
-        aAddress.AddressID = Convert.ToInt32(txtAddressID.Text);
+        string AddressID = txtAddress.Text;
         //capture account id
-        aAddress.AccountID = Convert.ToInt32(txtAccountID.Text);
+        string AccountID = txtAccountID.Text;
         //capture address
-        aAddress.Address = txtAddress.Text;
+        string Address = txtAddress.Text;
         //capture post code
-        aAddress.PostCode = txtPostCode.Text;
+        string PostCode = txtPostCode.Text;
         //capture date added
-        aAddress.DateAdded = Convert.ToDateTime(DateTime.Now);
+        string DateAdded = txtDateAdded.Text;
         //capture check box
-        aAddress.IsActive = chkIsActive.Checked;
-        //store the name in the session object
-        Session["aAddress"] = aAddress;
-        //navigate to the view page
-        Response.Redirect("AddressesViewer.aspx");
+        string IsActive = chkIsActive.Text;
+        //variable to store any error messages
+        string Error = "";
+        //validate the data
+        Error = aAddress.Valid(DateAdded, Address, PostCode);
+        if (Error == "")
+        {
+            //capture address id
+            aAddress.AddressID = Convert.ToInt32(txtAddressID.Text);
+            //capture account id
+            aAddress.AccountID = Convert.ToInt32(txtAccountID.Text);
+            //capture address
+            aAddress.Address = txtAddress.Text;
+            //capture post code
+            aAddress.PostCode = txtPostCode.Text;
+            //capture date added
+            aAddress.DateAdded = Convert.ToDateTime(DateTime.Now);
+            //capture check box
+            aAddress.IsActive = chkIsActive.Checked;
+            //store the name in the session object
+            Session["aAddress"] = aAddress;
+            //navigate to the view page
+            Response.Redirect("AddressesViewer.aspx");
+        }
+        else
+        {
+            //display the error message
+            lblError.Text = Error;
+        }
     }
 
     protected void btnFind_Click(object sender, EventArgs e)

@@ -1,5 +1,4 @@
-﻿using System;
-
+using System;
 
 namespace ClassLibrary
 {
@@ -20,100 +19,60 @@ namespace ClassLibrary
         // private data member for is published
         private bool isPublished;
 
-
         public Int32 ItemID
         {
-            get
-            {
-                // This line of code sends the data out of the property
-                return itemID;
-            }
-            // This line of code allows the data to be entered in property
-            set
-            {
-                itemID = value;
-            }
-        }
-        public string ProductTitle
-        {
-            get
-            {
-                return productTitle;
-            }
-            set
-            {
-                productTitle = value;
-            }
-        }
-        public string ProductDescription
-        {
-            get
-            {
-                return productDescription;
-            }
-            set
-            {
-                productDescription = value;
-            }
-        }
-        public float Price
-        {
-            get
-            {
-                return price;
-            }
-            set
-            {
-                price = value;
-            }
-        }
-        public int StockNumber
-        {
-            get
-            {
-                return stockNumber;
-            }
-            set
-            {
-                stockNumber = value;
-            }
-        }
-        public DateTime DateAdded
-        {
-            get
-            {
-                return dateAdded;
-            }
-            set
-            {
-                dateAdded = value;
-            }
-        }
-        public bool IsPublished
-        {
-            get
-            {
-                return isPublished;
-            }
-            set
-            {
-                isPublished = value;
-            }
+            get { return itemID; }
+            set { itemID = value; }
         }
 
+        public string ProductTitle
+        {
+            get { return productTitle; }
+            set { productTitle = value; }
+        }
+
+        public string ProductDescription
+        {
+            get { return productDescription; }
+            set { productDescription = value; }
+        }
+
+        public float Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+
+        public int StockNumber
+        {
+            get { return stockNumber; }
+            set { stockNumber = value; }
+        }
+
+        public DateTime DateAdded
+        {
+            get { return dateAdded; }
+            set { dateAdded = value; }
+        }
+
+        public bool IsPublished
+        {
+            get { return isPublished; }
+            set { isPublished = value; }
+        }
 
         public bool Find(int ItemID)
         {
-            // create and instance of the data connection
+            // create an instance of the data connection
             clsDataConnection DB = new clsDataConnection();
-            // add the parameter for the address id to serach for
+            // add the parameter for the ItemID to search for
             DB.AddParameter("@ItemID", ItemID);
-            // excute the stored procedure
+            // execute the stored procedure
             DB.Execute("sproc_tblProduct_FilterByItemID");
-            // one record is found (there should be either one or zero)
+            // if one record is found (should be 0 or 1)
             if (DB.Count == 1)
             {
-                //Copy the data from the database to private data members
+                // copy data from database to class fields
                 this.ItemID = Convert.ToInt32(DB.DataTable.Rows[0]["ItemID"]);
                 this.ProductTitle = Convert.ToString(DB.DataTable.Rows[0]["ProductTitle"]);
                 this.ProductDescription = Convert.ToString(DB.DataTable.Rows[0]["ProductDescription"]);
@@ -121,13 +80,10 @@ namespace ClassLibrary
                 this.StockNumber = Convert.ToInt32(DB.DataTable.Rows[0]["StockNumber"]);
                 this.DateAdded = Convert.ToDateTime(DB.DataTable.Rows[0]["DateAdded"]);
                 this.IsPublished = Convert.ToBoolean(DB.DataTable.Rows[0]["IsPublished"]);
-                //return that everything worked ok
                 return true;
             }
-            // if no record was found
             else
             {
-                //return false indicating a problem
                 return false;
             }
         }

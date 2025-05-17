@@ -12,6 +12,7 @@
         <div>
             <asp:Label ID="lblStaffId" runat="server" Style="left: 14px; top: 53px; position: absolute; bottom: 602px;" Text="Staff ID"></asp:Label>
             <asp:TextBox ID="txtStaffID" runat="server" Style="left: 95px; top: 50px; position: absolute"></asp:TextBox>
+            <asp:Button ID="Button3" runat="server" Text="Find" Style="left: 230px; top: 50px; position: absolute" OnClick="Button3_Click"/>
         </div>
 
         <div>
@@ -29,25 +30,25 @@
             <asp:TextBox ID="txtPassword" runat="server" Style="left: 95px; top: 145px; position: absolute"></asp:TextBox>
         </div>
         <div>
-            <asp:Label ID="lblDateAdded" runat="server" Style="left: 14px; top: 265px; position: absolute" Text="Date Added"></asp:Label>
-            <asp:TextBox ID="txtDateAdded" runat="server" Style="left: 95px; top: 260px; position: absolute"></asp:TextBox>
+            <asp:Label ID="lblDateAdded" runat="server" Style="left: 14px; top: 231px; position: absolute" Text="Date Added"></asp:Label>
+            <asp:TextBox ID="txtDateAdded" runat="server" Style="left: 95px; top: 224px; position: absolute"></asp:TextBox>
         </div>
 
         <div>
-            <asp:Label ID="lblLastLogin" runat="server" Style="left: 14px; top: 231px; position: absolute; width: 95px;" Text="Last Login"></asp:Label>
-            <asp:TextBox ID="txtLastLogin" runat="server" Style="left: 95px; top: 224px; position: absolute"></asp:TextBox>
+            <asp:Label ID="lblLastLogin" runat="server" Style="left: 14px; top: 265px; position: absolute; width: 95px;" Text="Last Login"></asp:Label>
+            <asp:TextBox ID="txtLastLogin" runat="server" Style="left: 95px; top: 260px; position: absolute"></asp:TextBox>
         </div>
         <div>
             <asp:CheckBox ID="ChkAdmin" runat="server" Style="left: 95px; top: 184px; position: absolute" Text="IsAdmin" />
         </div>
         <div>
-            <asp:Label ID="lblError" runat="server" Style="left: 14px; top: 525px; position: absolute; width: 66px;" Text="[lblError]"></asp:Label>
         </div>
 
         <div>
             <asp:Button ID="Button1" runat="server" Style="left: 14px; top: 569px; position: absolute; width: 66px;" Text="OK" OnClick="btnOK_Click" />
             <asp:Button ID="Button2" runat="server" Style="left: 109px; top: 568px; position: absolute; width: 69px;" Text="Cancel" />
         </div>
+             <asp:Label ID="lblError" runat="server" Style="left: 14px; top: 320px; position: absolute; width: 271px; height: 224px;" Text="[lblError]"></asp:Label>
     </form>
 </body>
 </html>
