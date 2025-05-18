@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ClassLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -129,6 +130,9 @@ namespace Testing1
             Assert.AreEqual(Error, "");
 
         }
+        /***Validation***/
+
+        // Product Title
         [TestMethod]
         public void ProductTitleMinLessOne()
         {
@@ -143,6 +147,8 @@ namespace Testing1
             // test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
+        
+
         [TestMethod]
         public void ProductTitleMin()
         {
@@ -157,6 +163,7 @@ namespace Testing1
             // test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
+        
         [TestMethod]
         public void ProductTitleMinPlusOne()
         {
@@ -242,6 +249,7 @@ namespace Testing1
             // test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
+        // Product Description
         [TestMethod]
         public void ProductDescriptionMinLessOne()
         {
@@ -620,23 +628,61 @@ namespace Testing1
             Assert.AreNotEqual(Error, "");
         }
         [TestMethod]
-        public void DateAddedMinLessTwo()
+        public void DateAddedMin()
         {
-            // create an instance of the class we want to create
+            //create an instance of the class we want to create
             clsProduct clsProduct = new clsProduct();
-            // string variable to store any message
+            //string variable to store any error message
             String Error = "";
-            // create a variable to store the date
+            //create a variable to store the test date data
             DateTime TestDate;
-            // set the date to todays date
+            //set the date totodays date
             TestDate = DateTime.Now.Date;
-            // change the date to whatever date is less than 100 years
-            TestDate = TestDate.AddYears(-100).AddDays(2);
-            // convert the date variable to a string variable
+            //convert the date variable to a string variable
             string DateAdded = TestDate.ToString();
-            //Invoke the method
+            //invoke the method
             Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
-            // test to see that the result is correct
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void DateAddedMinPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store the test date data
+            DateTime TestDate;
+            //set the date totodays date
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever date is less than 100 years
+            TestDate = TestDate.AddDays(1);
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void DateAddedExtremeMax()
+        {
+            //create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store the test date data
+            DateTime TestDate;
+            //set the date totodays date
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever date is greater than 100 years
+            TestDate = TestDate.AddYears(100);
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
 

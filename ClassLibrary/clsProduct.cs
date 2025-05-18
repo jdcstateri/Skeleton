@@ -1,6 +1,7 @@
 ﻿using System;
 
 
+
 namespace ClassLibrary
 {
     public class clsProduct
@@ -132,9 +133,9 @@ namespace ClassLibrary
         {
             // create a string variable to store the error message
             String Error = "";
-            // create a temporary variable to store the date values.
-            DateTime DateTemp;
-            // If the product title is blank
+          
+
+            // # 1 If the product title is blank
             if (productTitle.Length == 0)
             {
                 // record the error 
@@ -144,16 +145,87 @@ namespace ClassLibrary
             if (productTitle.Length > 50)
             {
                 // record the error 
-                Error = Error + "The product title must be less 50 : ";
+                Error = Error + "The product title must be less than 50 characters : ";
             }
-            // copy the dateAdded value to the DateTemp variable
-            DateTemp = Convert.ToDateTime(dateAdded);
-            //check to see if the date is less than today's date
-            if (DateTemp < DateTime.Now.Date)
+            // # 2 If the product description is blank
+            if (productDescription.Length == 0)
+
+                Error += "The product description may not be blank : ";
+
+            else if (productDescription.Length > 250)
+
+                Error += "The product description cannot exceed 250 characters. : ";
+
+            // # 3 Price should not be blank, numeric, and greater than 0, max 8 digits
+            if (price.Length == 0)
             {
                 // record the error 
-                Error = Error + "The date added cannot be in the past : ";
+                Error += "The price may not be blank : ";
             }
+            else if (!decimal.TryParse(price, out decimal dP))
+            {
+                Error += "The price must be a number : ";
+            }
+            else
+            {
+                if (dP < 1m)
+                
+                    // record the error 
+                    Error += "The price must be at least 1. : ";
+                
+                if (price.Length > 8)
+                
+                    // record the error 
+                    Error += "The price must be less than 8 digits : ";
+                
+            }
+
+            // # 4 Stock number should not be blank, non-numeric, < 1, > 8 digits
+            if (stockNumber.Length == 0)
+            {
+                // record the error 
+                Error += "The stock number may not be blank : ";
+            }
+            else if (!int.TryParse(stockNumber, out int dSN))
+            {
+                Error += "The stock number must be a number : ";
+            }
+            else
+            {
+                if (dSN < 1)
+                {
+                    // record the error 
+                    Error += "The stock number must be at least 1. : ";
+                }
+                else if (stockNumber.Length > 8)
+                {
+                    // record the error 
+                    Error += "The stock number must be less than 8 digits : ";
+                }
+            }
+
+            // # 5 DATE ADDED (valid, not >100 years ago, not in future)
+            // copy the dateAdded value to the DateTemp variable
+
+            DateTime DateTemp;
+            if (!DateTime.TryParse(dateAdded, out DateTemp))
+            {
+                // not even a date
+                Error += "The date added is not a valid date : ";
+            }
+            else
+            {
+                // too far in the past?
+                DateTime lower = DateTime.Now.Date.AddYears(-100);
+                if (DateTemp <= lower)
+                    Error += "The date added cannot be more than 100 years ago : ";
+
+                // too far in the future?
+                DateTime upper = DateTime.Now.Date.AddYears(100);
+                if (DateTemp >= upper)
+                    Error += "The date added cannot be more than 100 years in the future : ";
+            }
+
             // return any error messages
             return Error;
         }
