@@ -207,24 +207,28 @@ namespace ClassLibrary
             // # 5 DATE ADDED (valid, not >100 years ago, not in future)
             // copy the dateAdded value to the DateTemp variable
 
-            DateTime DateTemp;
-            if (!DateTime.TryParse(dateAdded, out DateTemp))
+            // #5 DATE ADDED (valid, not ≥100 years ago, not >100 years in future)
+            if (!DateTime.TryParse(dateAdded, out DateTime DateTemp))
             {
                 // not even a date
                 Error += "The date added is not a valid date : ";
             }
             else
             {
-                // too far in the past?
-                DateTime lower = DateTime.Now.Date.AddYears(-100);
+                
+                DateTime today = DateTime.Now.Date;
+                DateTime lower = today.AddYears(-100);
+                DateTime upper = today.AddYears(100);
+
+                // exactly 100 years ago or earlier → fail Extrememin & MinLessOne
                 if (DateTemp <= lower)
                     Error += "The date added cannot be more than 100 years ago : ";
 
-                // too far in the future?
-                DateTime upper = DateTime.Now.Date.AddYears(100);
-                if (DateTemp >= upper)
+                // beyond 100 years in the future → fail ExtremeMax & MaxPlusOne
+                if (DateTemp >=  upper)
                     Error += "The date added cannot be more than 100 years in the future : ";
             }
+
 
             // return any error messages
             return Error;

@@ -2,6 +2,7 @@
 using System.IO;
 using ClassLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework.Internal;
 
 namespace Testing1
 {
@@ -586,7 +587,7 @@ namespace Testing1
             // test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
-
+        // Date Added
         [TestMethod]
         public void DateAddedExtremeMin()
         {
@@ -665,8 +666,29 @@ namespace Testing1
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
+
         [TestMethod]
-        public void DateAddedExtremeMax()
+        public void DateAddedMaxLessOne()
+        {
+            //create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store the test date data
+            DateTime TestDate;
+            //set the date to today's date
+            TestDate = DateTime.Now.Date;
+            //change the date to 1 day less than 100 years in the future
+            TestDate = TestDate.AddYears(100).AddDays(-1);
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void DateAddedMax()
         {
             //create an instance of the class we want to create
             clsProduct clsProduct = new clsProduct();
@@ -685,6 +707,67 @@ namespace Testing1
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
+        [TestMethod]
+        public void DateAddedMaxPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store the test date data
+            DateTime TestDate;
+            //set the date totodays date
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever date is greater than 100 years
+            TestDate = TestDate.AddYears(100).AddDays(1);
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+        [TestMethod]
+        public void DateAddedMid()
+        {
+            //create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store the test date data
+            DateTime TestDate;
+            //set the date totodays date
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever date is greater than 100 years
+            TestDate = TestDate.AddYears(50);
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+        [TestMethod]
+        public void DateAddedExtremeMax()
+        {
+            //create an instance of the class we want to create
+            clsProduct clsProduct = new clsProduct();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store the test date data
+            DateTime TestDate;
+            //set the date totodays date
+            TestDate = DateTime.Now.Date;
+            //change the date to 200 years in the future (well beyond the limit)
+            TestDate = TestDate.AddYears(200);
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = clsProduct.Valid(ProductTitle, ProductDescription, Price, StockNumber, DateAdded, IsPublished);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
 
     }
 }
