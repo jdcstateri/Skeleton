@@ -192,8 +192,6 @@ namespace ClassLibrary
                 }
             }
 
-            // # 5 DATE ADDED (valid, not >100 years ago, not in future)
-            // copy the dateAdded value to the DateTemp variable
 
             // #5 DATE ADDED (valid, not ≥100 years ago, not >100 years in future)
             if (!DateTime.TryParse(dateAdded, out DateTime DateTemp))
