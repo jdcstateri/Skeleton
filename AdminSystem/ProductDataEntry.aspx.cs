@@ -70,10 +70,10 @@ public partial class _1_DataEntry : System.Web.UI.Page
 
 
 
- P_Validation
 
 
-master
+
+
     protected void btnFind_Click(object sender, EventArgs e)
     {
         // create and instance of the product class
@@ -104,7 +104,7 @@ master
         }
 
     }
- P_Validation
+ 
 }
 }
- master
+ 
