@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 
@@ -43,9 +44,10 @@ namespace ClassLibrary
             db.AddParameter("DateOfDelivery", GetDateOfDelivery());
             db.AddParameter("Delivered", GetDelivered());
             db.AddParameter("DeliveryInstructions", GetDeliveryInstructions());
+            db.AddOutputParameter("OrderId", System.Data.SqlDbType.Int);
             db.Execute("sproc_tblOrder_Insert");
 
-            // get OrderID through output somehow
+            SetOrderId(Convert.ToInt32(db.GetOutputParameterValue("OrderId")));
         }
 
         public void AddOrderLinesToDatabase()

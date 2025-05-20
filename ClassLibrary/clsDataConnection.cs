@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.SqlClient;
 using System.Data.OleDb;
 using System.Data;
+using Microsoft.SqlServer.Server;
 //using ClassControlLib; -> class lib 
 
 ///This class uses the ado.net sql classes to provide a connection to an Azure sql server database.
@@ -147,6 +148,22 @@ public class clsDataConnection
         SqlParameter AParam = new SqlParameter(ParamName, ParamValue);
         //add the parameter to the list
         SQLParams.Add(AParam);
+    }
+
+    public void AddOutputParameter(string ParamName, object ParamValue)
+    {
+        SqlParameter AParam = new SqlParameter(ParamName, ParamValue)
+        {
+            Direction = ParameterDirection.Output
+        };
+
+        SQLParams.Add(AParam);
+    }
+
+    public object GetOutputParameterValue(string ParamName)
+    {
+        var param = SQLParams.Find(p => p.ParameterName == ParamName && p.Direction == ParameterDirection.Output);
+        return param?.Value;
     }
 
     public Int32 Execute(string SProcName)

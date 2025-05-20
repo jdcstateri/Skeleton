@@ -8,7 +8,17 @@ namespace ClassLibrary
 {
     public class clsShoppingCart
     {
-        public List<clsShoppingCartItem> Items = new List<clsShoppingCartItem>();
+        private List<clsShoppingCartItem> Items = new List<clsShoppingCartItem>();
+
+        public clsShoppingCart() 
+        { 
+        
+        }
+
+        public clsShoppingCart(List<clsShoppingCartItem> items)
+        {
+            Items = items;
+        }
 
         public List<clsShoppingCartItem> GetShoppingCart()
         {
