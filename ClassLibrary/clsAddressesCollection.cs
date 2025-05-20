@@ -99,6 +99,17 @@ namespace ClassLibrary
             return DB.Execute("sproc_tblAddresses_Insert");
         }
 
+        public void Delete()
+        {
+            //deletes the record pointed to by thisRecord
+            //connect to database
+            clsDataConnection DB = new clsDataConnection();
+            //set the parameters for the stored procedure
+            DB.AddParameter("AddressID", mThisAddress.AddressID);
+            //execute the stored procedure
+            DB.Execute("sproc_tblAddresses_Delete");
+        }
+
         public void Update()
         {
             //update an existing record based on the values of thisRecord
