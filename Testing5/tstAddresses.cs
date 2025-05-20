@@ -7,6 +7,13 @@ namespace Testing5
     [TestClass]
     public class tstAddresses
     {
+        //good test date
+        //create some test data to pass the method
+        string DateAdded = DateTime.Now.ToShortDateString();
+        string Address = "Road Street 9";
+        string PostCode = "LE2 9FR";
+        string AccountID = "5";
+
         [TestMethod]
         public void InstanceOK()
         {
@@ -239,6 +246,355 @@ namespace Testing5
             }
             //test to see that the result is correct
             Assert.IsTrue(OK);
+        }
+
+        [TestMethod]
+        public void ValidMethodOK()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedExtremeMin()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store test data
+            DateTime TestDate;
+            //Set time to todays date
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever the date is less 100 years
+            TestDate = TestDate.AddYears(-100); //should fail
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedMinLessOne()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store test data
+            DateTime TestDate;
+            //Set time to todays date
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever the date is less 1 day
+            TestDate = TestDate.AddDays(-1); //should fail
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedMin()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store test data
+            DateTime TestDate;
+            //Set time to todays date
+            TestDate = DateTime.Now.Date; //should pass
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedMinPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store test data
+            DateTime TestDate;
+            //Set time to todays date
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever the date is plus 1 day
+            TestDate = TestDate.AddDays(1); //should fail
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedExtremeMax()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //create a variable to store test data
+            DateTime TestDate;
+            //Set time to todays date
+            TestDate = DateTime.Now.Date;
+            //change the date to whatever the date is plus 100 years
+            TestDate = TestDate.AddYears(100); //should fail
+            //convert the date variable to a string variable
+            string DateAdded = TestDate.ToString();
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void DateAddedInvalidData()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the DateAdded to a non date value
+            string DateAdded = "This is not a date!";
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void AddressMinLessOne()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the Address
+            string Address = "";
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void AddressMin()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the Address
+            string Address = "a";
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void AddressMinPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the Address
+            string Address = "aa";
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void AddressMaxLessOne()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the Address
+            string Address = "";
+            Address = Address.PadRight(49, 'a');
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void AddressMax()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the Address
+            string Address = "";
+            Address = Address.PadRight(50, 'a');
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void AddressMaxPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the Address
+            string Address = "";
+            Address = Address.PadRight(51, 'a');
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void AddressMid()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the Address
+            string Address = "";
+            Address = Address.PadRight(25, 'a');
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PostCodeMinLessOne()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the PostCode
+            string PostCode = "";
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PostCodeMin()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the PostCode
+            string PostCode = "a";
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PostCodeMinPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the PostCode
+            string PostCode = "aa";
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PostCodeMaxLessOne()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the PostCode
+            string PostCode = "";
+            PostCode = PostCode.PadRight(49, 'a');
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PostCodeMax()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the PostCode
+            string PostCode = "";
+            PostCode = PostCode.PadRight(50, 'a');
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PostCodeMaxPlusOne()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the PostCode
+            string PostCode = "";
+            PostCode = PostCode.PadRight(51, 'a');
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void PostCodeMid()
+        {
+            //create an instance of the class we want to create
+            clsAddresses anAddress = new clsAddresses();
+            //string variable to store any error message
+            String Error = "";
+            //set the PostCode
+            string PostCode = "";
+            PostCode = PostCode.PadRight(25, 'a');
+            //invoke the method
+            Error = anAddress.Valid(DateAdded, Address, PostCode);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
         }
 
 
