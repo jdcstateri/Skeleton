@@ -15,9 +15,13 @@
             <asp:Button ID="btnAdd" runat="server" OnClick="btnAdd_Click" style="z-index: 1; left: 12px; top: 405px; position: absolute" Text="Add" />
             <asp:Button ID="btnEdit" runat="server" style="z-index: 1; left: 78px; top: 405px; position: absolute" Text="Edit" OnClick="btnEdit_Click" />
             <asp:Button ID="btnDelete" runat="server" style="z-index: 1; left: 153px; top: 405px; position: absolute" Text="Delete" OnClick="btnDelete_Click" />
+            <asp:Label ID="lblPostCode" runat="server" Text="Enter a Post Code" style="z-index: 1; left: 10px; top: 460px; position: absolute; right: 1531px;"></asp:Label>
+            <asp:TextBox ID="txtPostCode" runat="server" style="z-index: 1; left: 152px; top: 458px; position: absolute"></asp:TextBox>
+            <asp:Button ID="btnApply" runat="server" Text="Apply Filter" style="z-index: 1; left: 10px; top: 493px; position: absolute" OnClick="btnApply_Click" />
+            <asp:Button ID="btnClear" runat="server" Text="Clear Filter" style="z-index: 1; left: 145px; top: 493px; position: absolute" OnClick="btnClear_Click" />
         </div>
         <p>
-            <asp:Label ID="lblError" runat="server"></asp:Label>
+            <asp:Label ID="lblError" runat="server" style="z-index: 1; left: 15px; top: 535px; position: absolute"></asp:Label>
         </p>
     </form>
 </body>

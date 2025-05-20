@@ -79,4 +79,38 @@ public partial class _1_List : System.Web.UI.Page
             lblError.Text = "Please select a record from the list to delete";
         }
     }
+
+    protected void btnApply_Click(object sender, EventArgs e)
+    {
+        //create an instance of address object
+        clsAddressesCollection AnAddress = new clsAddressesCollection();
+        //retrieve the value of the post code from the presentation layer
+        AnAddress.ReportByPostCode(txtPostCode.Text);
+        //set the data source to the list of addresses in the collection
+        lstAddressesList.DataSource = AnAddress.AddressesList;
+        //set the name of the primary key
+        lstAddressesList.DataValueField = "AddressID";
+        //set the name of the field to display
+        lstAddressesList.DataTextField = "Address";
+        //bind the data to the list
+        lstAddressesList.DataBind();
+    }
+
+    protected void btnClear_Click(object sender, EventArgs e)
+    {
+        //create an instance of address object
+        clsAddressesCollection AnAddress = new clsAddressesCollection();
+        //set empty string
+        AnAddress.ReportByPostCode("");
+        //clera any existing filter to tidy up itnerface
+        txtPostCode.Text = "";
+        //set the data source to the list of addresses in the collection
+        lstAddressesList.DataSource = AnAddress.AddressesList;
+        //set the name of the primary key
+        lstAddressesList.DataValueField = "AddressID";
+        //set the name of the field to display
+        lstAddressesList.DataTextField = "Address";
+        //bind the data to the list
+        lstAddressesList.DataBind();
+    }
 }
