@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
@@ -9,19 +10,19 @@ namespace ClassLibrary
     {
         private int OrderId;
         private int AccountId;
-        private float TotalCost;
+        private double TotalCost;
         private DateTime DateOfDelivery;
         private bool Delivered;
         private string DeliveryInstructions;
-        private clsShoppingCart ShoppingCart;
+        private List<clsOrderLine> OrderLines = new List<clsOrderLine>();
 
         // constructor for creating a new order to add to the database
-        public clsOrder(clsShoppingCart ShoppingCart, int AccountId, DateTime DateOfDelivery, string DeliveryInstructions)
+        public clsOrder(int AccountId, DateTime DateOfDelivery, bool Delivered, string DeliveryInstructions)
         {
             this.AccountId = AccountId;
             this.DateOfDelivery = DateOfDelivery;
+            this.Delivered = Delivered;
             this.DeliveryInstructions = DeliveryInstructions;
-            this.ShoppingCart = ShoppingCart;
         }
 
         public clsOrder()
@@ -29,53 +30,14 @@ namespace ClassLibrary
 
         }
 
-        public void CreateNewOrder()
+        public void AddOrderline(clsOrderLine line)
         {
-            CalculateTotalCost();
-            AddOrderToDatabase();
-            AddOrderLinesToDatabase();
+            OrderLines.Add(line);
         }
 
-        public void AddOrderToDatabase()
+        public void RemoveOrderline(clsOrderLine line)
         {
-            clsDataConnection db = new clsDataConnection();
-            db.AddParameter("AccountId", GetAccountId());
-            db.AddParameter("TotalCost", GetTotalCost());
-            db.AddParameter("DateOfDelivery", GetDateOfDelivery());
-            db.AddParameter("Delivered", GetDelivered());
-            db.AddParameter("DeliveryInstructions", GetDeliveryInstructions());
-            db.AddOutputParameter("OrderId", System.Data.SqlDbType.Int);
-            db.Execute("sproc_tblOrder_Insert");
-
-            SetOrderId(Convert.ToInt32(db.GetOutputParameterValue("OrderId")));
-        }
-
-        public void AddOrderLinesToDatabase()
-        {
-            foreach (clsShoppingCartItem item in ShoppingCart.GetShoppingCart())
-            {
-                clsDataConnection db = new clsDataConnection();
-                db.AddParameter("OrderId", GetOrderId());
-                db.AddParameter("DateAdded", DateTime.Now);
-                db.AddParameter("ItemId", item.ProductId);
-                db.AddParameter("IsDiscounted", item.IsDiscounted);
-                db.AddParameter("DiscountPercentage", item.DiscountPercentage);
-                db.AddParameter("Status", "Pending");
-                db.AddParameter("Quantity", item.Quantity);
-                db.Execute("sproc_tblOrderLines_Insert");
-            }
-        }
-
-        public float CalculateTotalCost()
-        {
-            float totalCost = 0f;
-
-            foreach (clsShoppingCartItem item in ShoppingCart.GetShoppingCart())
-            {
-                totalCost += item.Cost * item.Quantity;
-            }
-
-            return totalCost;
+            OrderLines.Remove(line);
         }
 
         // getters
@@ -83,7 +45,7 @@ namespace ClassLibrary
 
         public int GetAccountId() { return this.AccountId; }
 
-        public float GetTotalCost() {return this.TotalCost; }
+        public double GetTotalCost() {return this.TotalCost; }
 
         public DateTime GetDateOfDelivery(){ return this.DateOfDelivery; }
 
@@ -91,21 +53,17 @@ namespace ClassLibrary
 
         public string GetDeliveryInstructions(){ return this.DeliveryInstructions; }
 
-        public clsShoppingCart GetShoppingCart() { return this.ShoppingCart; }
-
         // setters
         public void SetOrderId(int id){ this.OrderId = id; }
 
         public void SetAccountId(int accountId){ this.AccountId = accountId; }
 
-        public void SetTotalCost(float totalCost){ this.TotalCost = totalCost; }
+        public void SetTotalCost(double totalCost){ this.TotalCost = totalCost; }
 
         public void SetDateOfDelivery(DateTime dateOfDelivery) { this.DateOfDelivery = dateOfDelivery; }
 
         public void SetDelivered(bool delivered){ this.Delivered = delivered; }
 
         public void SetDeliveryInstructions(string deliveryInstructions) { this.DeliveryInstructions = deliveryInstructions; }
-
-        public void SetShoppingCart(clsShoppingCart shoppingCart) { this.ShoppingCart = shoppingCart; }
     }
 }
