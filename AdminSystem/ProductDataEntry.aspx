@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ProductDataEntry.aspx.cs" Inherits="_1_DataEntry" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ProductDataEntry.aspx.cs" Inherits="_1_DataEntry" %>
 
 <!DOCTYPE html>
 
@@ -8,7 +8,7 @@
 </head>
 <body style="height: 398px">
     <form id="form1" runat="server">
-    &nbsp;<div>
+   &nbsp;<div>
             <asp:TextBox ID="txtItemID" runat="server" style="z-index: 1; left: 102px; top: 24px; position: absolute; " BorderStyle="Solid" width="128"></asp:TextBox>
            <asp:Button ID="btnFind" runat="server" Text="Find" Style="position:relative; left:445px; top: -14px; height: 26px; width: 39px;" OnClick="btnFind_Click" />
 
