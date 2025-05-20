@@ -5,7 +5,6 @@ namespace ClassLibrary
 {
     public class clsAddressesCollection
     {
-
         //private data member for the list
         List<clsAddresses> mAddressesList = new List<clsAddresses>();
         //private member data for this record
