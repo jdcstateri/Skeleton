@@ -8,9 +8,36 @@ using ClassLibrary;
 
 public partial class _1_DataEntry : System.Web.UI.Page
 {
+    //variable to store the primary key with page level scope
+    Int32 AccountID;
     protected void Page_Load(object sender, EventArgs e)
     {
+        //get the number of the address to be processed
+        AccountID = Convert.ToInt32(Session["AccountID"]);
+        if (IsPostBack == false)
+        {
+            //if this is not a new record
+            if (AccountID != -1)
+            {
+                //display the current data for the record
+                DisplayCustomer();
+            }
+        }
+    }
 
+    void DisplayCustomer()
+    {
+        //create an instance of the class
+        clsCustomerCollection aCustomer = new clsCustomerCollection();
+        //find the record to update
+        aCustomer.ThisCustomer.Find(AccountID);
+        //display the data for the record
+        txtAccountID.Text = aCustomer.ThisCustomer.AccountID.ToString();
+        txtName.Text = aCustomer.ThisCustomer.Name.ToString();
+        txtEmail.Text = aCustomer.ThisCustomer.Email.ToString();
+        txtPassword.Text = aCustomer.ThisCustomer.Password.ToString();
+        txtDateRegistered.Text = aCustomer.ThisCustomer.DateRegistered.ToString();
+        chkVerified.Checked = aCustomer.ThisCustomer.IsVerified;
     }
 
     protected void btnOk_Click(object sender, EventArgs e)
@@ -18,7 +45,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
         //create an instance of clsCustomer
         clsCustomer aCustomer = new clsCustomer();
         //capture id
-        string AccountID = txtAccountID.Text;
+        //String AccountID = txtAccountID.Text;
         //capture name
        string Name = txtName.Text;
         //capture email
@@ -36,7 +63,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
         if (Error == "")
         {
             //capture id
-            //aCustomer.AccountID = Convert.ToInt32(txtAccountID.Text);
+            aCustomer.AccountID = AccountID; //dont miss this bit
             //capture name
             aCustomer.Name = Name;
             //capture email
@@ -49,10 +76,26 @@ public partial class _1_DataEntry : System.Web.UI.Page
             aCustomer.IsVerified = chkVerified.Checked;
             //create a new instance of the class collection
             clsCustomerCollection CustomerList = new clsCustomerCollection();
-            //set the record property
-            CustomerList.ThisCustomer = aCustomer;
-            //add the new record
-            CustomerList.Add();
+
+            //if this is a new record i.e. ID = -1 then add the data
+            if (AccountID == -1)
+            {
+                //set the thisdata property
+                CustomerList.ThisCustomer = aCustomer;
+                //add the new record
+                CustomerList.Add();
+            }
+            //otherwise it must be an update
+            else
+            {
+                //find the record to update
+                CustomerList.ThisCustomer.Find(AccountID);
+                //set thisdata property
+                CustomerList.ThisCustomer = aCustomer;
+                //update the record
+                CustomerList.Update();
+            }
+
             //redirect back to the list page
             Response.Redirect("CustomerList.aspx");
         } 

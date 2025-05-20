@@ -99,5 +99,20 @@ namespace ClassLibrary
             return DB.Execute("sproc_tblAddresses_Insert");
         }
 
+        public void Update()
+        {
+            //update an existing record based on the values of thisRecord
+            //connect to the database
+            clsDataConnection DB = new clsDataConnection();
+            //set the parameters for the new stored procedure
+            DB.AddParameter("@AddressID", mThisAddress.AddressID);
+            DB.AddParameter("@AccountID", mThisAddress.AccountID);
+            DB.AddParameter("@Address", mThisAddress.Address);
+            DB.AddParameter("@PostCode", mThisAddress.PostCode);
+            DB.AddParameter("@DateAdded", mThisAddress.DateAdded);
+            DB.AddParameter("@IsActive", mThisAddress.IsActive);
+            //execute the stored procedure
+            DB.Execute("sproc_tblAddresses_Update");
+        }
     }
 }
