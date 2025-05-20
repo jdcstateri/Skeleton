@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-
 using System;
-master
 using ClassLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework.Internal;
@@ -770,8 +768,6 @@ namespace Testing1
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
-
-
     }
 }
     
