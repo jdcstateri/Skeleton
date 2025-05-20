@@ -8,6 +8,8 @@ namespace ClassLibrary
 
         //private data member for the list
         List<clsAddresses> mAddressesList = new List<clsAddresses>();
+        //private member data for this record
+        clsAddresses mThisAddress = new clsAddresses();
 
         public clsAddressesCollection()
         {
@@ -66,7 +68,36 @@ namespace ClassLibrary
 
             }
         }
-        public clsAddresses ThisAddress { get; set; }
+        public clsAddresses ThisAddress
+        {
+            get
+            {
+                //return the private data
+                return mThisAddress;
+            }
+            set
+            {
+                //set the private data
+                mThisAddress = value;
+
+            }
+        }
+
+        public int Add()
+        {
+            //adds a record to the database based on the values of mThisRecord
+            //connection to the database
+            clsDataConnection DB = new clsDataConnection();
+            //set the parameters for the stored procedured
+            DB.AddParameter("@AccountID", mThisAddress.AccountID);
+            DB.AddParameter("@Address", mThisAddress.Address);
+            DB.AddParameter("@PostCode", mThisAddress.PostCode);
+            DB.AddParameter("@DateAdded", mThisAddress.DateAdded);
+            DB.AddParameter("@IsActive", mThisAddress.IsActive);
+
+            //execute the query returning the primary key value
+            return DB.Execute("sproc_tblAddresses_Insert");
+        }
 
     }
 }

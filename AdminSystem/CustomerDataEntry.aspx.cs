@@ -36,21 +36,25 @@ public partial class _1_DataEntry : System.Web.UI.Page
         if (Error == "")
         {
             //capture id
-            aCustomer.AccountID = Convert.ToInt32(txtAccountID.Text);
+            //aCustomer.AccountID = Convert.ToInt32(txtAccountID.Text);
             //capture name
-            aCustomer.Name = txtName.Text;
+            aCustomer.Name = Name;
             //capture email
-            aCustomer.Email = txtEmail.Text;
+            aCustomer.Email = Email;
             //capture password
-            aCustomer.Password = txtPassword.Text;
+            aCustomer.Password = Password;
             //capture date
-            aCustomer.DateRegistered = Convert.ToDateTime(DateTime.Now);
+            aCustomer.DateRegistered = Convert.ToDateTime(DateRegistered);
             //capture check box
             aCustomer.IsVerified = chkVerified.Checked;
-            //store the name in the session object
-            Session["aCustomer"] = aCustomer;
-            //navigate to the view page
-            Response.Redirect("CustomerViewer.aspx");
+            //create a new instance of the class collection
+            clsCustomerCollection CustomerList = new clsCustomerCollection();
+            //set the record property
+            CustomerList.ThisCustomer = aCustomer;
+            //add the new record
+            CustomerList.Add();
+            //redirect back to the list page
+            Response.Redirect("CustomerList.aspx");
         } 
         else
         {

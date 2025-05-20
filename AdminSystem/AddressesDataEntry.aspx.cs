@@ -37,21 +37,25 @@ public partial class _1_DataEntry : System.Web.UI.Page
         if (Error == "")
         {
             //capture address id
-            aAddress.AddressID = Convert.ToInt32(txtAddressID.Text);
+            //aAddress.AddressID = Convert.ToInt32(txtAddressID.Text);
             //capture account id
-            aAddress.AccountID = Convert.ToInt32(txtAccountID.Text);
+            aAddress.AccountID = Convert.ToInt32(AccountID);
             //capture address
-            aAddress.Address = txtAddress.Text;
+            aAddress.Address = Address;
             //capture post code
-            aAddress.PostCode = txtPostCode.Text;
+            aAddress.PostCode = PostCode;
             //capture date added
-            aAddress.DateAdded = Convert.ToDateTime(DateTime.Now);
+            aAddress.DateAdded = Convert.ToDateTime(DateAdded);
             //capture check box
             aAddress.IsActive = chkIsActive.Checked;
-            //store the name in the session object
-            Session["aAddress"] = aAddress;
-            //navigate to the view page
-            Response.Redirect("AddressesViewer.aspx");
+            //create a new instance of the class collection
+            clsAddressesCollection AddressList = new clsAddressesCollection();
+            //set the record property
+            AddressList.ThisAddress = aAddress;
+            //add the new record
+            AddressList.Add();
+            //redirect back to the list page
+            Response.Redirect("AddressesList.aspx");
         }
         else
         {
