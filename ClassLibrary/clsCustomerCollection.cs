@@ -7,6 +7,8 @@ namespace ClassLibrary
     {
         //private data member for the list
         List<clsCustomer> mCustomerList = new List<clsCustomer>();
+        //private member data for this record
+        clsCustomer mThisCustomer = new clsCustomer();
 
         public clsCustomerCollection()
         {
@@ -65,6 +67,62 @@ namespace ClassLibrary
                 
             }
         }
-        public clsCustomer ThisCustomer { get; set; }
+        public clsCustomer ThisCustomer
+        {
+            get
+            {
+                //return the private data
+                return mThisCustomer;
+            }
+            set
+            {
+                //set the private data
+                mThisCustomer = value;
+
+            }
+        }
+
+        public int Add()
+        {
+            //adds a record to the database based on the values of mThisRecord
+            //connection to the database
+            clsDataConnection DB = new clsDataConnection();
+            //set the parameters for the stored procedured
+            DB.AddParameter("@Name", mThisCustomer.Name);
+            DB.AddParameter("@Email", mThisCustomer.Email);
+            DB.AddParameter("@Password", mThisCustomer.Password);
+            DB.AddParameter("@DateRegistered", mThisCustomer.DateRegistered);
+            DB.AddParameter("@IsVerified", mThisCustomer.IsVerified);
+
+            //execute the query returning the primary key value
+            return DB.Execute("sproc_tblCustomer_Insert");
+        }
+
+        public void Delete()
+        {
+            //deletes the record pointed to by thisRecord
+            //connect to database
+            clsDataConnection DB = new clsDataConnection();
+            //set the parameters for the stored procedure
+            DB.AddParameter("AccountID", mThisCustomer.AccountID);
+            //execute the stored procedure
+            DB.Execute("sproc_tblCustomer_Delete");
+        }
+
+        public void Update()
+        {
+            //update an existing record based on the values of thisRecord
+            //connect to the database
+            clsDataConnection DB = new clsDataConnection();
+            //set the parameters for the new stored procedure
+            DB.AddParameter("@AccountID", mThisCustomer.AccountID);
+            DB.AddParameter("@Name", mThisCustomer.Name);
+            DB.AddParameter("@Email", mThisCustomer.Email);
+            DB.AddParameter("@Password", mThisCustomer.Password);
+            DB.AddParameter("@DateRegistered", mThisCustomer.DateRegistered);
+            DB.AddParameter("@IsVerified", mThisCustomer.IsVerified);
+            //execute the stored procedure
+            DB.Execute("sproc_tblCustomer_Update");
+        }
     }
 }

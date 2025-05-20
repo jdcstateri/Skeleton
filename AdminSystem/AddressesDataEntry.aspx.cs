@@ -9,9 +9,36 @@ using System.Xml.Linq;
 
 public partial class _1_DataEntry : System.Web.UI.Page
 {
+    //variable to store the primary key with page level scope
+    Int32 AddressID;
     protected void Page_Load(object sender, EventArgs e)
     {
+        //get the number of the address to be processed
+        AddressID = Convert.ToInt32(Session["AddressID"]);
+        if (IsPostBack == false)
+        {
+            //if this is not a new record
+            if (AddressID != -1)
+            {
+                //display the current data for the record
+                DisplayAddress();
+            }
+        }
+    }
 
+    void DisplayAddress()
+    {
+        //create an instance of the class
+        clsAddressesCollection aAddress = new clsAddressesCollection();
+        //find the record to update
+        aAddress.ThisAddress.Find(AddressID);
+        //display the data for the record
+        txtAddressID.Text = aAddress.ThisAddress.AddressID.ToString();
+        txtAccountID.Text = aAddress.ThisAddress.AccountID.ToString();
+        txtAddress.Text = aAddress.ThisAddress.Address.ToString();
+        txtPostCode.Text = aAddress.ThisAddress.PostCode.ToString();
+        txtDateAdded.Text = aAddress.ThisAddress.DateAdded.ToString();
+        chkIsActive.Checked = aAddress.ThisAddress.IsActive;
     }
 
     protected void btnOk_Click(object sender, EventArgs e)
@@ -19,7 +46,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
         //create an instance of clsAddresses
         clsAddresses aAddress = new clsAddresses();
         //capture address id
-        string AddressID = txtAddress.Text;
+        //string AddressID = txtAddress.Text;
         //capture account id
         string AccountID = txtAccountID.Text;
         //capture address
@@ -37,21 +64,41 @@ public partial class _1_DataEntry : System.Web.UI.Page
         if (Error == "")
         {
             //capture address id
-            aAddress.AddressID = Convert.ToInt32(txtAddressID.Text);
+            aAddress.AddressID = AddressID;
             //capture account id
-            aAddress.AccountID = Convert.ToInt32(txtAccountID.Text);
+            aAddress.AccountID = Convert.ToInt32(AccountID);
             //capture address
-            aAddress.Address = txtAddress.Text;
+            aAddress.Address = Address;
             //capture post code
-            aAddress.PostCode = txtPostCode.Text;
+            aAddress.PostCode = PostCode;
             //capture date added
-            aAddress.DateAdded = Convert.ToDateTime(DateTime.Now);
+            aAddress.DateAdded = Convert.ToDateTime(DateAdded);
             //capture check box
             aAddress.IsActive = chkIsActive.Checked;
-            //store the name in the session object
-            Session["aAddress"] = aAddress;
-            //navigate to the view page
-            Response.Redirect("AddressesViewer.aspx");
+            //create a new instance of the class collection
+            clsAddressesCollection AddressList = new clsAddressesCollection();
+
+            //if this is a new record i.e. ID = -1 then add the data
+            if (AddressID == -1)
+            {
+                //set the thisdata property
+                AddressList.ThisAddress = aAddress;
+                //add the new record
+                AddressList.Add();
+            }
+            //otherwise it must be an update
+            else
+            {
+                //find the record to update
+                AddressList.ThisAddress.Find(AddressID);
+                //set thisdata property
+                AddressList.ThisAddress = aAddress;
+                //update the record
+                AddressList.Update();
+            }
+
+            //redirect back to the list page
+            Response.Redirect("AddressesList.aspx");
         }
         else
         {
