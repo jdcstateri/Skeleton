@@ -8,9 +8,20 @@ using ClassLibrary;
 
 public partial class _1_DataEntry : System.Web.UI.Page
 {
+    Int32 StaffID;
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        //get the number of the staff to be processed
+        StaffID = Convert.ToInt32(Session["StaffID"]);
+        if (IsPostBack == false)
+        {
+            //if this is not a new record
+            if (StaffID != -1)
+            {
+                //display the current data for the record
+                DisplayStaff();
+            }
+        }
     }
 
     //Navigate to the Staff View Page
@@ -39,12 +50,29 @@ public partial class _1_DataEntry : System.Web.UI.Page
             AStaff.DateAdded = Convert.ToDateTime(DateTime.Now);
             AStaff.LastLogin = DateTime.Now;
             AStaff.IsAdmin = ChkAdmin.Checked;
-            //Store the ID Session Object
-            Session["AStaff"] = AStaff;
 
-            //Navigate to the Staff Viewer Page
-            Response.Redirect("StaffViewer.aspx");
+            //create a new instance of the staff collection
+            clsStaffColletion StaffList = new clsStaffColletion();
+            
+            if(StaffId != "-1")
+            {
+                //set the ThisStaff property
+                StaffList.ThisStaff = AStaff;
+                //add the new record
+                StaffList.Add();
+            }
+            //Othewrwise it must be an update   
+            else
+            {
+                //Find the record
+                StaffList.ThisStaff.Find(StaffID);
+                //Set the ThisStaff property
+                StaffList.ThisStaff = AStaff;
+                //Update the record
+                StaffList.Update();
 
+            }
+            Response.Redirect("StaffList.aspx");
         }
         else
         {
@@ -88,5 +116,26 @@ public partial class _1_DataEntry : System.Web.UI.Page
 
             }
         }
+    }
+
+    protected void BtnCancel_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("StaffList.aspx");
+    }
+
+    void DisplayStaff()
+    {
+        //create an instance of the Staff Collection
+        clsStaffColletion Staff = new clsStaffColletion();
+        //Find the record to be updated
+        Staff.ThisStaff.Find(StaffID);
+        //display the data for the record
+        txtStaffID.Text = Staff.ThisStaff.StaffId.ToString();
+        txtName.Text = Staff.ThisStaff.Name;
+        txtEmail.Text = Staff.ThisStaff.Email;
+        txtPassword.Text = Staff.ThisStaff.Password;
+        txtDateAdded.Text = Staff.ThisStaff.DateAdded.ToString();
+        txtLastLogin.Text = Staff.ThisStaff.LastLogin.ToString();
+        ChkAdmin.Checked = Staff.ThisStaff.IsAdmin;
     }
 }
