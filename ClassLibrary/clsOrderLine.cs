@@ -14,6 +14,7 @@ namespace ClassLibrary
         private bool IsDiscounted;
         private int DiscountPercentage;
         public string Status;
+        public int Quantity;
 
         public clsOrderLine()
         {
@@ -26,6 +27,7 @@ namespace ClassLibrary
         public bool GetIsDiscounted() { return this.IsDiscounted; }
         public int GetDiscountPercentage() { return this.DiscountPercentage; }
         public string GetStatus() { return this.Status; }
+        public int GetQuantity() { return this.Quantity; }
 
         public void SetOrderId(int orderId) { this.OrderId = orderId; }
         public void SetItemId(int itemId) { this.ItemId = itemId; }
@@ -33,6 +35,6 @@ namespace ClassLibrary
         public void SetIsDiscounted(bool isDiscounted) { this.IsDiscounted = isDiscounted; }
         public void GetDiscountPercentage(int discountPercentage) { this.DiscountPercentage = discountPercentage; }
         public void SetStatus(string status) { this.Status = status; }
-
+        public void SetQuantity(int quantity) { this.Quantity = quantity; }
     }
 }
