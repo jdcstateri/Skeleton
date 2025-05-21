@@ -25,8 +25,8 @@ namespace ClassLibrary
                 mIsVerified = value;
             }
         }
-        public int AccountID 
-        { 
+        public int AccountID
+        {
             get
             {
                 //this line of code sends data out of the property

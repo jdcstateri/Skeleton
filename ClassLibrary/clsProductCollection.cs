@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-
 namespace ClassLibrary
 {
     public class clsProductCollection
     {
+        // private data member for the product list
+        private List<clsProduct> mProductList = new List<clsProduct>();
 
+        // private data member for this product
+        private clsProduct mThisProduct;
+
+        // constructor for the class
         // constructor for the class
         public clsProductCollection()
         {
@@ -13,7 +18,7 @@ namespace ClassLibrary
             Int32 Index = 0;
             //variable for the record count
             Int32 RecordCount = 0;
-            // onject for the data connection
+            // object for the data connection
             clsDataConnection DB = new clsDataConnection();
             // execute the stored procedure
             DB.Execute("sproc_tblProducts_SelectAll");
@@ -38,8 +43,10 @@ namespace ClassLibrary
                 Index++;
             }
         }
-        // private data member for the product list
-        public List<clsProduct> mProductList
+
+
+        // property for the product list
+        public List<clsProduct> ProductList
         {
             get
             {
@@ -52,6 +59,7 @@ namespace ClassLibrary
                 mProductList = value;
             }
         }
+
         public int Count
         {
             get
@@ -64,6 +72,19 @@ namespace ClassLibrary
                 // do nothing
             }
         }
-        public clsProduct ThisProduct { get; set; }
+
+        public clsProduct ThisProduct
+        {
+            get
+            {
+                // return the private data member
+                return mThisProduct;
+            }
+            set
+            {
+                // set the private data member
+                mThisProduct = value;
+            }
+        }
     }
 }

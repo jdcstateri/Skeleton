@@ -1,4 +1,4 @@
-﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ProductDataEntry.aspx.cs" Inherits="_1_DataEntry" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ProductDataEntry.aspx.cs" Inherits="_1_DataEntry" %>
 
 <!DOCTYPE html>
 
@@ -8,9 +8,9 @@
 </head>
 <body style="height: 398px">
     <form id="form1" runat="server">
-   &nbsp;<div>
+ &nbsp;<div>
             <asp:TextBox ID="txtItemID" runat="server" style="z-index: 1; left: 102px; top: 24px; position: absolute; " BorderStyle="Solid" width="128"></asp:TextBox>
-           <asp:Button ID="btnFind" runat="server" Text="Find" Style="position:relative; left:445px; top: -14px; height: 26px; width: 39px;" OnClick="btnFind_Click" />
+           <asp:Button ID="btnFind" runat="server" Text="Find" Style="position:relative; left:286px; top: -4px; height: 30px; width: 60px;" OnClick="btnFind_Click" />
 
 
         </div>
@@ -27,30 +27,32 @@
         <div style="height: 84px; width: 1561px; margin-top: 0px;" dir="auto">
             <asp:Label ID="lblProductTitle" runat="server" style="z-index: 1; left: 10px; top: 53px; position: absolute; bottom: 598px" Text="Product Title"></asp:Label>
             <asp:TextBox ID="txtProductDescription" runat="server" style="z-index: 1; left: 7px; top: 99px; position: absolute; height: 89px; width: 340px" BorderStyle="Solid"></asp:TextBox>
-            <asp:TextBox ID="txtPrice" runat="server" style="z-index: 1; left: 102px; top: 200px; position: absolute; margin-top: 0px" BorderStyle="Solid"></asp:TextBox>
+            <asp:TextBox ID="txtPrice" runat="server" style="z-index: 1; left: 102px; top: 200px; position: absolute; margin-top: 0px; width: 129px;" BorderStyle="Solid"></asp:TextBox>
         </div>
 
         <asp:Label ID="lblPrice" runat="server" style="z-index: 1; left: 14px; top: 199px; position: absolute" Text="Price"></asp:Label>
         <div>
             <asp:Label ID="lblDateAdded" runat="server" style="z-index: 1; left: 11px; top: 249px; position: absolute" Text="Date Added"></asp:Label>
             <asp:TextBox ID="txtDateAdded" runat="server"
-    Style="z-index: 1; left: 102px; top: 250px; position: absolute; width: 180px;"
-    BorderStyle="Solid" TextMode="DateTime" />
+    Style="z-index: 1; left: 102px; top: 250px; position: absolute; width: 128px;"
+    BorderStyle="Solid" TextMode="DateTime"></asp:TextBox>
 
         <asp:Button ID="btnOk" runat="server" OnClick="btnOk_Click"
-    Style="position: absolute; left: 403px; top: 273px; height: 30px; width: 60px;"
+    Style="position: absolute; left: 245px; top: 279px; height: 30px; width: 60px;"
     Text="OK" />
 
         </div>
 
         <div>
-        <asp:CheckBox ID="chkIsPublished" runat="server" style="z-index: 1; left: 295px; top: 274px; position: absolute" Text="IsPublished" />
-        <asp:Button ID="btnCancel" runat="server" style= "left: 827px; top: 272px; position: absolute; " Text="Cancel" width="60" />
+        <asp:CheckBox ID="chkIsPublished" runat="server" style="z-index: 1; left: 15px; top: 284px; position: absolute" Text="IsPublished" />
         </div>
 
         <asp:Label ID="lblStockNumber" runat="server" style="z-index: 1; left: 8px; top: 228px; position: absolute" Text="Stock Number"></asp:Label>
-        <asp:TextBox ID="txtStockNumber" runat="server" style="z-index: 1; left: 102px; top: 226px; position: absolute" BorderStyle="Solid"></asp:TextBox>
+        <asp:TextBox ID="txtStockNumber" runat="server" style="z-index: 1; left: 102px; top: 226px; position: absolute" BorderStyle="Solid" width="128px"></asp:TextBox>
         <asp:Label ID="lblError" runat="server" style="z-index: 1; left: 10px; top: 329px; position: absolute"></asp:Label>
+        <p>
+        <asp:Button ID="btnCancel" runat="server" style= "left: 317px; top: 279px; position: absolute; " Text="Cancel" width="60px" height="30px" />
+        </p>
     </form>
 
 </body>
