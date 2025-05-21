@@ -88,8 +88,6 @@ namespace ClassLibrary
                 return false;
             }
         }
- 
-      
 
         public string Valid(string productTitle, string productDescription, string price, string stockNumber, string dateAdded, string isPublished)
         {
@@ -193,7 +191,5 @@ namespace ClassLibrary
             // return any error messages
             return Error;
         }
-
-
     }
 }

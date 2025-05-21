@@ -107,6 +107,63 @@ namespace Testing4
             //Test to see the two values are the same
             Assert.AreEqual(AllStaff.Count, TestList.Count);
         }
+
+        [TestMethod]
+        public void AddMethodOK()
+        {
+            //Create a instance of a class we want to create
+            clsStaffColletion AllStaff = new clsStaffColletion();
+            //Create the item of the test data
+            clsStaff TestItem = new clsStaff();
+            //Variable to store the primary key
+            Int32 PrimaryKey = 0;
+            //Set its properties
+            TestItem.StaffId = 1;
+            TestItem.Name = "John Doe";
+            TestItem.Email = "JohnDoe@gmail.com";
+            TestItem.Password = "john1234";
+            TestItem.IsAdmin = true;
+            TestItem.DateAdded = DateTime.Now;
+            TestItem.LastLogin = DateTime.Now;
+            //Set ThisStaff to the test data
+            AllStaff.ThisStaff = TestItem;
+            //Add the record
+            PrimaryKey = AllStaff.Add();
+            //Set the primary key to the test data
+            TestItem.StaffId = PrimaryKey;
+            //Find the record
+            AllStaff.ThisStaff.Find(PrimaryKey);
+            //Test to see the two values are the same
+            Assert.AreEqual(AllStaff.ThisStaff, TestItem);
+        }
+
+        [TestMethod]
+        public void UpdateMethodOK()
+        {
+            //Create a instance of a class we want to create
+            clsStaffColletion AllStaff = new clsStaffColletion();
+            //Create the item of the test data
+            clsStaff TestItem = new clsStaff();
+            //Variable to store the primary key
+            Int32 PrimaryKey = 0;
+            //Set its properties
+            TestItem.StaffId = PrimaryKey;
+            TestItem.Name = "John Doe";
+            TestItem.Email = "JohnDoe@gmail.com";
+            TestItem.Password = "john1234";
+            TestItem.IsAdmin = true;
+            TestItem.DateAdded = DateTime.Now;
+            TestItem.LastLogin = DateTime.Now;
+            //Set ThisStaff to the test data
+            AllStaff.ThisStaff = TestItem;
+            //Add the record
+            PrimaryKey = AllStaff.Update();
+            //Find the record
+            AllStaff.ThisStaff.Find(PrimaryKey);
+            //Test to see the two values are the same
+            Assert.AreEqual(AllStaff.ThisStaff, TestItem);
+        }
+
     }
 
    

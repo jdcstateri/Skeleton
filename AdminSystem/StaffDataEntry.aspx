@@ -46,7 +46,7 @@
 
         <div>
             <asp:Button ID="Button1" runat="server" Style="left: 14px; top: 569px; position: absolute; width: 66px;" Text="OK" OnClick="btnOK_Click" />
-            <asp:Button ID="Button2" runat="server" Style="left: 109px; top: 568px; position: absolute; width: 69px;" Text="Cancel" />
+            <asp:Button ID="Button2" runat="server" Style="left: 109px; top: 568px; position: absolute; width: 69px;" Text="Cancel" OnClick="BtnCancel_Click" />
         </div>
              <asp:Label ID="lblError" runat="server" Style="left: 14px; top: 320px; position: absolute; width: 271px; height: 224px;" Text="[lblError]"></asp:Label>
     </form>

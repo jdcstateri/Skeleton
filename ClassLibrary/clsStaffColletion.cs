@@ -9,6 +9,24 @@ namespace ClassLibrary
 
         //Private data member for the list
         List<clsStaff> mStaffList = new List<clsStaff>();
+        //Private data member for the thisStaff property
+        clsStaff mThisStaff = new clsStaff();
+
+        //Public property for the staff list
+        public clsStaff ThisStaff
+        {
+            get
+            {
+                //Return the private data
+                return mThisStaff;
+            }
+            set
+            {
+                //set the private data
+                mThisStaff = value;
+            }
+        }
+
         public List<clsStaff> StaffList 
         {
             get
@@ -33,8 +51,39 @@ namespace ClassLibrary
                 //Ammend later
             }
         }
-        public clsStaff ThisStaff { get; set; }
+        public int Add()
+        {
+            //Adds a new record to the database based on the values of thisStaff
+            //Connect the database
+            clsDataConnection DB = new clsDataConnection();
+            //Set the parameters for the stored procedure
+            DB.AddParameter("@Name", mThisStaff.Name);
+            DB.AddParameter("@Email", mThisStaff.Email);
+            DB.AddParameter("@Password", mThisStaff.Password);
+            DB.AddParameter("@IsAdmin", mThisStaff.IsAdmin);
+            DB.AddParameter("@DateAdded", mThisStaff.DateAdded);
+            DB.AddParameter("@LastLogin", mThisStaff.LastLogin);
+            //Execute the stored procedure
+            return DB.Execute("sproc_tblStaff_Insert");
 
+        }
+
+        public int Update()
+        {
+            //update an existing record based on the values of thisStaff
+            //Connect the database
+            clsDataConnection DB = new clsDataConnection();
+            //Set the parameters for the stored procedure
+            DB.AddParameter("@StaffId", mThisStaff.StaffId);
+            DB.AddParameter("@Name", mThisStaff.Name);
+            DB.AddParameter("@Email", mThisStaff.Email);
+            DB.AddParameter("@Password", mThisStaff.Password);
+            DB.AddParameter("@IsAdmin", mThisStaff.IsAdmin);
+            DB.AddParameter("@DateAdded", mThisStaff.DateAdded);
+            DB.AddParameter("@LastLogin", mThisStaff.LastLogin);
+            //Execute the stored procedure
+            return DB.Execute("sproc_tblStaff_Update");
+        }
 
         //Constructor for the class
         public clsStaffColletion()
