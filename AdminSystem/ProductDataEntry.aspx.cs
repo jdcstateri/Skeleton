@@ -43,7 +43,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
 
         if (Error == "")
         {
-            
+
 
             // capture the itemID
             AnProduct.ItemID = Convert.ToInt32(itemIDText);
@@ -104,7 +104,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
         }
 
     }
- 
+
 }
 
  
