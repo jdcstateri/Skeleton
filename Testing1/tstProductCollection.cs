@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ClassLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework.Constraints;
 
 namespace Testing1
 {
@@ -91,6 +92,35 @@ namespace Testing1
             //test to see that it exists
             Assert.AreEqual(AllProducts.Count, AllProducts.ProductList.Count);
         }
-    
+        [TestMethod]
+        public void AddMethodOK()
+        {
+            // create a new instance of the data connection
+            clsProductCollection AllProducts = new clsProductCollection();
+            // create the item of test data
+            clsProduct TestItem = new clsProduct();
+            // variable to store the primary key
+            Int32 PrimaryKey = 0;
+            // set its properties
+            TestItem.ItemID = 1;
+            TestItem.ProductTitle = "GMZ 480z";
+            TestItem.ProductDescription = "Best Personal Computer";
+            TestItem.Price = 1580f;
+            TestItem.StockNumber = 3;
+            TestItem.DateAdded = DateTime.Now;
+            TestItem.IsPublished = true;
+            // set thisproduct to the test data
+            AllProducts.ThisProduct = TestItem;
+            // add the record
+            PrimaryKey = AllProducts.Add();
+            // set the primary key of the test data
+            TestItem.ItemID = PrimaryKey;
+            // find the record
+            AllProducts.ThisProduct.Find(PrimaryKey);
+            // Test to see if the two values are the same
+            Assert.AreEqual(AllProducts.ThisProduct, TestItem);
+        }
+
     }
+
 }
