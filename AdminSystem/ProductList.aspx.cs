@@ -10,6 +10,7 @@ public partial class _1_List : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+
         // if thiis the first time the page is displayed
         if (IsPostBack == false)
         {
@@ -37,5 +38,26 @@ public partial class _1_List : System.Web.UI.Page
         Session["ItemID"] = -1;
         // redirect to the data entry page
         Response.Redirect("ProductDataEntry.aspx");
+    }
+
+    protected void btn_Edit_Click(object sender, EventArgs e)
+    {
+        //varaiable to store the primary key value of the recored edit
+        Int32 ItemID;
+        // if a record has been selected from the list
+        if (lstProductList.SelectedIndex != -1)
+        {
+            // get the primary key value of the record to be edited
+            ItemID = Convert.ToInt32(lstProductList.SelectedValue);
+            // store the data in the session object
+            Session["ItemID"] = ItemID;
+            // redirect to the data entry page
+            Response.Redirect("ProductDataEntry.aspx");
+        }
+        else
+        {
+            // display an error message
+            lblError.Text = "Please select a record to edit from the list";
+        }   
     }
 }

@@ -105,6 +105,22 @@ namespace ClassLibrary
             return DB.Execute("sproc_tblProduct_Insert");
 
         }
+        public void Update()
+        {
+            //update an existing record based on the values of ThisProduct
+            //connect to the database
+            clsDataConnection DB = new clsDataConnection();
+            //set the parameters for the new stored procedure
+            DB.AddParameter("@ItemID", mThisProduct.ItemID);
+            DB.AddParameter("@ProductTitle", mThisProduct.ProductTitle);
+            DB.AddParameter("@ProductDescription", mThisProduct.ProductDescription);
+            DB.AddParameter("@Price", mThisProduct.Price);
+            DB.AddParameter("@StockNumber", mThisProduct.StockNumber);
+            DB.AddParameter("@DateAdded", mThisProduct.DateAdded);
+            DB.AddParameter("@IsPublished", mThisProduct.IsPublished);
+            // execute the stored procedure
+            DB.Execute("sproc_tblProducts_Update");
+        }
     }
 
 }
