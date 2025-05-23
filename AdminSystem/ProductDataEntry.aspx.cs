@@ -43,7 +43,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
 
         if (Error == "")
         {
-            
+
 
             // capture the itemID
             AnProduct.ItemID = Convert.ToInt32(itemIDText);
@@ -54,11 +54,16 @@ public partial class _1_DataEntry : System.Web.UI.Page
             AnProduct.StockNumber = Convert.ToInt32(stockNumberText);
             AnProduct.DateAdded = Convert.ToDateTime(dateAddedText);
             AnProduct.IsPublished = chkIsPublished.Checked;
+            // create a new instance of the product collection
+            clsProductCollection ProductList = new clsProductCollection();
+            // set the ThisProduct property
+            ProductList.ThisProduct = AnProduct;
+            // add new record
+            ProductList.Add();
+            // redirect back to the list page
+            Response.Redirect("ProductList.aspx");  
 
-            // store the product object in session
-            Session["AnProduct"] = AnProduct;
-            // navigate to the viewer page
-            Response.Redirect("ProductViewer.aspx");
+
         }
         else
         {
@@ -104,7 +109,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
         }
 
     }
- 
+
 }
 
  
