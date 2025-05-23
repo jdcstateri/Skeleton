@@ -21,7 +21,7 @@ namespace ClassLibrary
         public void CreateNewOrder(int AccountId, DateTime DateOfDelivery, string DeliveryInstructions)
         {
             clsOrder order = new clsOrder(AccountId, DateOfDelivery, false, DeliveryInstructions);
-            order.SetTotalCost(CalculateTotalCost());
+            //order.SetTotalCost(CalculateTotalCost());
             AddOrderToDatabase(order);
             AddOrderLinesToDatabase(order);
         }
@@ -30,7 +30,6 @@ namespace ClassLibrary
         {
             clsDataConnection db = new clsDataConnection();
             db.AddParameter("AccountId", order.GetAccountId());
-            db.AddParameter("TotalCost", order.GetTotalCost());
             db.AddParameter("DateOfDelivery", order.GetDateOfDelivery());
             db.AddParameter("Delivered", order.GetDelivered());
             db.AddParameter("DeliveryInstructions", order.GetDeliveryInstructions());
@@ -48,26 +47,28 @@ namespace ClassLibrary
                 db.AddParameter("OrderId", order.GetOrderId());
                 db.AddParameter("DateAdded", DateTime.Now);
                 db.AddParameter("ItemId", item.ProductId);
-                db.AddParameter("IsDiscounted", item.IsDiscounted);
-                db.AddParameter("DiscountPercentage", item.DiscountPercentage);
                 db.AddParameter("Status", "Pending");
                 db.AddParameter("Quantity", item.Quantity);
                 db.Execute("sproc_tblOrderLines_Insert");
             }
         }
 
-        public double CalculateTotalCost()
+        public void UpdateOrder(clsOrder order)
         {
-            double totalCost = 0f;
-
-            foreach (clsShoppingCartItem item in cart.GetShoppingCart())
-            {
-                totalCost += item.Cost * item.Quantity;
-            }
-
-            return totalCost;
+            clsDataConnection db = new clsDataConnection();
+            db.AddParameter("OrderId", order.GetOrderId());
+            db.AddParameter("DateOfDelivery", order.GetDateOfDelivery());
+            db.AddParameter("Delivered", order.GetDelivered());
+            db.AddParameter("DeliveryInstructions", order.GetDeliveryInstructions());
+            db.Execute("sproc_tblOrder_Update");
         }
 
+        public void DeleteOrder(clsOrder order)
+        {
+            clsDataConnection db = new clsDataConnection();
+            db.AddParameter("OrderId", order.GetOrderId());
+            db.Execute("sproc_tblOrder_Delete");
+        }
 
         public bool FindOrderById(clsOrder order)
         {
@@ -78,7 +79,6 @@ namespace ClassLibrary
             if (db.Count == 1)
             {
                 order.SetAccountId(Convert.ToInt32(db.DataTable.Rows[0]["AccountId"]));
-                order.SetTotalCost(Convert.ToDouble(db.DataTable.Rows[0]["TotalCost"]));
                 order.SetDateOfDelivery(Convert.ToDateTime(db.DataTable.Rows[0]["DateOfDelivery"]));
                 order.SetDelivered(Convert.ToBoolean(db.DataTable.Rows[0]["Delivered"]));
                 order.SetDeliveryInstructions(Convert.ToString(db.DataTable.Rows[0]["DeliveryInstructions"]));
@@ -107,8 +107,6 @@ namespace ClassLibrary
                     clsOrderLine line = new clsOrderLine();
                     line.SetItemId(Convert.ToInt32(db.DataTable.Rows[index]["AccountId"]));
                     line.SetDateAdded(Convert.ToDateTime(db.DataTable.Rows[index]["TotalCost"]));
-                    line.SetIsDiscounted(Convert.ToBoolean(db.DataTable.Rows[index]["DateOfDelivery"]));
-                    line.GetDiscountPercentage(Convert.ToInt32(db.DataTable.Rows[index]["Delivered"]));
                     line.SetStatus(Convert.ToString(db.DataTable.Rows[index]["DeliveryInstructions"]));
                     line.SetQuantity(Convert.ToInt32(db.DataTable.Rows[index]["DeliveryInstructions"]));
                     order.AddOrderline(line);
@@ -122,6 +120,19 @@ namespace ClassLibrary
             {
                 return false;
             }
+        }
+
+        // no longer works as intended due to Order and Orderlines database table rework
+        public double CalculateTotalCost()
+        {
+            double totalCost = 0f;
+
+            foreach (clsShoppingCartItem item in cart.GetShoppingCart())
+            {
+                totalCost += item.Cost * item.Quantity;
+            }
+
+            return totalCost;
         }
     }
 }
