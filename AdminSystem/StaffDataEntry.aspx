@@ -36,7 +36,7 @@
 
         <div>
             <asp:Label ID="lblLastLogin" runat="server" Style="left: 14px; top: 265px; position: absolute; width: 95px;" Text="Last Login"></asp:Label>
-            <asp:TextBox ID="txtLastLogin" runat="server" Style="left: 95px; top: 260px; position: absolute"></asp:TextBox>
+            <asp:TextBox ID="txtLastLogin" runat="server" Style="left: 95px; top: 260px; position: absolute" ReadOnly="true"></asp:TextBox>
         </div>
         <div>
             <asp:CheckBox ID="ChkAdmin" runat="server" Style="left: 95px; top: 184px; position: absolute" Text="IsAdmin" />
