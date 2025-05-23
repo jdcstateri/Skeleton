@@ -137,7 +137,7 @@ namespace Testing4
             Assert.AreEqual(AllStaff.ThisStaff, TestItem);
         }
 
-        [TestMethod]
+       [TestMethod]
         public void UpdateMethodOK()
         {
             //Create a instance of a class we want to create
