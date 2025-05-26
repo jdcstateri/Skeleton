@@ -12,21 +12,22 @@ namespace ClassLibrary
         private List<clsOrder> orderList = new List<clsOrder>();
         private clsShoppingCart cart = new clsShoppingCart();
         private int count = 0;
+        private clsOrder thisOrder = new clsOrder();
 
+        // consider setting a shopping cart instance optional
         public clsOrderCollection(clsShoppingCart ShoppingCart) 
         { 
             cart = ShoppingCart;
         }
 
-        public void CreateNewOrder(int AccountId, DateTime DateOfDelivery, string DeliveryInstructions)
+        public void InsertNewOrderInfo(int AccountId, DateTime DateOfDelivery, string DeliveryInstructions)
         {
-            clsOrder order = new clsOrder(AccountId, DateOfDelivery, false, DeliveryInstructions);
-            //order.SetTotalCost(CalculateTotalCost());
-            AddOrderToDatabase(order);
-            AddOrderLinesToDatabase(order);
+            thisOrder = new clsOrder(AccountId, DateOfDelivery, false, DeliveryInstructions);
+            InsertOrderIntoDatabase(thisOrder);
+            InsertOrderLinesIntoDatabase(thisOrder);
         }
 
-        public void AddOrderToDatabase(clsOrder order)
+        public void InsertOrderIntoDatabase(clsOrder order)
         {
             clsDataConnection db = new clsDataConnection();
             db.AddParameter("AccountId", order.GetAccountId());
@@ -39,7 +40,7 @@ namespace ClassLibrary
             order.SetOrderId(Convert.ToInt32(db.GetOutputParameterValue("OrderId")));
         }
 
-        public void AddOrderLinesToDatabase(clsOrder order)
+        public void InsertOrderLinesIntoDatabase(clsOrder order)
         {
             foreach (clsShoppingCartItem item in cart.GetShoppingCart())
             {
@@ -123,6 +124,7 @@ namespace ClassLibrary
         }
 
         // no longer works as intended due to Order and Orderlines database table rework
+        // consider moving inside clsOrder or clsOrderLineCollection (when added on Tuesday)
         public double CalculateTotalCost()
         {
             double totalCost = 0f;
@@ -133,6 +135,17 @@ namespace ClassLibrary
             }
 
             return totalCost;
+        }
+
+        // tests not written for these yet
+        public void SetThisOrder(clsOrder order) 
+        {
+            this.thisOrder = order;
+        }
+
+        public clsOrder GetThisOrder()
+        {
+            return this.thisOrder;
         }
     }
 }
