@@ -159,6 +159,40 @@ namespace Testing1
             // test to see that the two values are the same
             Assert.AreEqual(AllProducts.ThisProduct, TestItem);
         }
+        [TestMethod]
+        public void DeleteMethodOK()
+        {
+            // create a new instance of the data connection
+            clsProductCollection AllProducts = new clsProductCollection();
+            // create the item of test data
+            clsProduct TestItem = new clsProduct();
+            // variable to store the primary key
+            Int32 PrimaryKey = 0;
+            // set its properties
+            TestItem.ItemID = 1;
+            TestItem.ProductTitle = "GMZ 480z";
+            TestItem.ProductDescription = "Best Personal Computer";
+            TestItem.Price = 1580f;
+            TestItem.StockNumber = 3;
+            TestItem.DateAdded = DateTime.Now;
+            TestItem.IsPublished = true;
+            // set thisproduct to the test data
+            AllProducts.ThisProduct = TestItem;
+            // add the record
+            PrimaryKey = AllProducts.Add();
+            // set the primary key of the test data
+            TestItem.ItemID = PrimaryKey;
+            // find the record
+            AllProducts.ThisProduct.Find(PrimaryKey);
+            // delete the record
+            AllProducts.Delete();
+            // now find the record again
+            Boolean Found = AllProducts.ThisProduct.Find(PrimaryKey);
+            // test to see that it does not exist
+            Assert.IsFalse(Found);
+        }
+
+
 
 
     }
