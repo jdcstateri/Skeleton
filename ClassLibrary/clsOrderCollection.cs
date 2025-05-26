@@ -23,10 +23,12 @@ namespace ClassLibrary
         public void InsertNewOrderInfo(int AccountId, DateTime DateOfDelivery, string DeliveryInstructions)
         {
             thisOrder = new clsOrder(AccountId, DateOfDelivery, false, DeliveryInstructions);
-            InsertOrderIntoDatabase(thisOrder);
-            InsertOrderLinesIntoDatabase(thisOrder);
+            InsertOrderIntoDatabase(thisOrder); // change to AddOrder()
+            InsertOrderLinesIntoDatabase(thisOrder); // change to ThisOrder.OrderLineCollection.AddOrderLines()
         }
 
+        // rename to AddOrder, after clsOrderLineCollection is made and InsertOrderLinesIntoDatabase() is migrated there
+        // dont pass order as param, use the one set in the clsOrderCollection
         public void InsertOrderIntoDatabase(clsOrder order)
         {
             clsDataConnection db = new clsDataConnection();
@@ -40,6 +42,8 @@ namespace ClassLibrary
             order.SetOrderId(Convert.ToInt32(db.GetOutputParameterValue("OrderId")));
         }
 
+        // needs moving to clsOrderLinesCollection when its created on tuesday
+        // do something like ThisOrder.OrderLineCollection.AddOrderLines()
         public void InsertOrderLinesIntoDatabase(clsOrder order)
         {
             foreach (clsShoppingCartItem item in cart.GetShoppingCart())
