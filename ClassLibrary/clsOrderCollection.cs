@@ -20,6 +20,10 @@ namespace ClassLibrary
             cart = ShoppingCart;
         }
 
+        // consider removing
+        // inside AdminSystem script, do
+        // clsOrderCollection.Add()
+        // clsOrder.clsOrderLineCollection.Add()
         public void InsertNewOrderInfo(int AccountId, DateTime DateOfDelivery, string DeliveryInstructions)
         {
             thisOrder = new clsOrder(AccountId, DateOfDelivery, false, DeliveryInstructions);
