@@ -16,7 +16,6 @@ namespace ClassLibrary
         private string DeliveryInstructions;
         private List<clsOrderLine> OrderLines = new List<clsOrderLine>();
 
-        // constructor for creating a new order to add to the database
         public clsOrder(int AccountId, DateTime DateOfDelivery, bool Delivered, string DeliveryInstructions)
         {
             this.AccountId = AccountId;
@@ -25,19 +24,32 @@ namespace ClassLibrary
             this.DeliveryInstructions = DeliveryInstructions;
         }
 
-        public clsOrder()
-        {
+        public clsOrder(){}
 
+        public bool Find()
+        {
+            clsDataConnection db = new clsDataConnection();
+            db.AddParameter("OrderId", this.GetOrderId());
+            db.Execute("sproc_tblOrder_Find");
+
+            if (db.Count == 1)
+            {
+                this.SetAccountId(Convert.ToInt32(db.DataTable.Rows[0]["AccountId"]));
+                this.SetDateOfDelivery(Convert.ToDateTime(db.DataTable.Rows[0]["DateOfDelivery"]));
+                this.SetDelivered(Convert.ToBoolean(db.DataTable.Rows[0]["Delivered"]));
+                this.SetDeliveryInstructions(Convert.ToString(db.DataTable.Rows[0]["DeliveryInstructions"]));
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public void AddOrderline(clsOrderLine line)
+        public string Validate()
         {
-            OrderLines.Add(line);
-        }
 
-        public void RemoveOrderline(clsOrderLine line)
-        {
-            OrderLines.Remove(line);
         }
 
         // getters

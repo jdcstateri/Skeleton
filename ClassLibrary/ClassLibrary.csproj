@@ -58,6 +58,7 @@
     <Compile Include="clsActivityLog.cs" />
     <Compile Include="clsOrderCollection.cs" />
     <Compile Include="clsOrderLine.cs" />
+    <Compile Include="clsOrderLineCollection.cs" />
     <Compile Include="clsShoppingCart.cs" />
     <Compile Include="clsShoppingCartItem.cs" />
     <Compile Include="clsStaff.cs" />

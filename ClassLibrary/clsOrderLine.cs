@@ -15,8 +15,42 @@ namespace ClassLibrary
         public string Status;
         public int Quantity;
 
-        public clsOrderLine()
+        public clsOrderLine(){}
+
+        public bool Find(clsOrderLineCollection orderLineCollection)
         {
+            clsDataConnection db = new clsDataConnection();
+            db.AddParameter("OrderId", this.GetOrderId());
+            db.Execute("sproc_tblOrderLines_Find");
+
+            if (db.Count > 0)
+            {
+                int index = 0;
+                int count = db.Count;
+
+                while (index < count)
+                {
+                    clsOrderLine line = new clsOrderLine();
+                    line.SetItemId(Convert.ToInt32(db.DataTable.Rows[index]["AccountId"]));
+                    line.SetDateAdded(Convert.ToDateTime(db.DataTable.Rows[index]["TotalCost"]));
+                    line.SetStatus(Convert.ToString(db.DataTable.Rows[index]["DeliveryInstructions"]));
+                    line.SetQuantity(Convert.ToInt32(db.DataTable.Rows[index]["DeliveryInstructions"]));
+                    orderLineCollection.AddOrderline(line);
+
+                    index++;
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public string Validate()
+        {
+
         }
 
         // getters
