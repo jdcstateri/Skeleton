@@ -16,8 +16,6 @@ namespace ClassLibrary
 
         public clsOrderCollection(){}
 
-        // rename to AddOrder, after clsOrderLineCollection is made and InsertOrderLinesIntoDatabase() is migrated there
-        // dont pass order as param, use the one set in the clsOrderCollection
         public void Add()
         {
             clsOrder order = GetThisOrder();
@@ -32,9 +30,6 @@ namespace ClassLibrary
 
             order.SetOrderId(Convert.ToInt32(db.GetOutputParameterValue("OrderId")));
         }
-
-        // needs moving to clsOrderLinesCollection when its created on tuesday
-        // do something like ThisOrder.OrderLineCollection.AddOrderLines()
 
         public void Edit()
         {
@@ -62,7 +57,6 @@ namespace ClassLibrary
             this.cart = cart;
         }
 
-        // tests not written for these yet
         public void SetThisOrder(clsOrder order) 
         {
             this.thisOrder = order;
