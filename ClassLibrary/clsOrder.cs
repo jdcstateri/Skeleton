@@ -14,7 +14,7 @@ namespace ClassLibrary
         private DateTime DateOfDelivery;
         private bool Delivered;
         private string DeliveryInstructions;
-        private List<clsOrderLine> OrderLines = new List<clsOrderLine>();
+        private clsOrderLineCollection orderLineCollection = new clsOrderLineCollection();
 
         public clsOrder(int AccountId, DateTime DateOfDelivery, bool Delivered, string DeliveryInstructions)
         {
@@ -24,7 +24,7 @@ namespace ClassLibrary
             this.DeliveryInstructions = DeliveryInstructions;
         }
 
-        public clsOrder(){}
+        public clsOrder() { }
 
         public bool Find()
         {
@@ -47,30 +47,73 @@ namespace ClassLibrary
             }
         }
 
+        public string Valid(int AccountId, DateTime DateOfDelivery, bool Delivered, string DeliveryInstructions, clsOrderLineCollection orderLineCollection)
+        {
+            string error = "";
+
+            try
+            {
+                if (AccountId <= 0)
+                {
+                    error += "Account ID must be greater than zero. ";
+                }
+                if (DateOfDelivery < DateTime.Now)
+                {
+                    error += "Date of delivery cannot be in the past. ";
+                }
+                if (string.IsNullOrWhiteSpace(DeliveryInstructions))
+                {
+                    error += "Delivery instructions cannot be empty. ";
+                }
+                if (Delivered == true)
+                {
+                    error += "Order cannot be marked as delivered at the time of creation. ";
+                }
+                if (DeliveryInstructions.Length > 50)
+                {
+                    error += "Delivery instructions cannot exceed 50 characters. ";
+                }
+                if (orderLineCollection.GetCount() == 0)
+                {
+                    error += "Order must contain at least one order line. ";
+                }
+            }
+            catch (Exception ex)
+            {
+                error += "An error occurred: " + ex.Message;
+            }
+
+            return error;
+        }
+
         // getters
         public int GetOrderId() { return this.OrderId; }
 
         public int GetAccountId() { return this.AccountId; }
 
-        public double GetTotalCost() {return this.TotalCost; }
+        public double GetTotalCost() { return this.TotalCost; }
 
-        public DateTime GetDateOfDelivery(){ return this.DateOfDelivery; }
+        public DateTime GetDateOfDelivery() { return this.DateOfDelivery; }
 
-        public bool GetDelivered(){ return this.Delivered; }
+        public bool GetDelivered() { return this.Delivered; }
 
-        public string GetDeliveryInstructions(){ return this.DeliveryInstructions; }
+        public string GetDeliveryInstructions() { return this.DeliveryInstructions; }
+
+        public clsOrderLineCollection GetOrderLineCollection() { return this.orderLineCollection; }
 
         // setters
-        public void SetOrderId(int id){ this.OrderId = id; }
+        public void SetOrderId(int id) { this.OrderId = id; }
 
-        public void SetAccountId(int accountId){ this.AccountId = accountId; }
+        public void SetAccountId(int accountId) { this.AccountId = accountId; }
 
-        public void SetTotalCost(double totalCost){ this.TotalCost = totalCost; }
+        public void SetTotalCost(double totalCost) { this.TotalCost = totalCost; }
 
         public void SetDateOfDelivery(DateTime dateOfDelivery) { this.DateOfDelivery = dateOfDelivery; }
 
-        public void SetDelivered(bool delivered){ this.Delivered = delivered; }
+        public void SetDelivered(bool delivered) { this.Delivered = delivered; }
 
         public void SetDeliveryInstructions(string deliveryInstructions) { this.DeliveryInstructions = deliveryInstructions; }
+
+        public void SetOrderLineCollection(clsOrderLineCollection orderLineCollection) { this.orderLineCollection = orderLineCollection; }
     }
 }

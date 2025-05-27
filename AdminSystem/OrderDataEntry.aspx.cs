@@ -31,6 +31,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
             orderLineCollection.AddOrderline(newOrderLine);
         }
 
+        newOrder.SetOrderLineCollection(orderLineCollection);
         orderCollection.SetThisOrder(newOrder);
         orderCollection.Add();
 
