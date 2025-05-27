@@ -47,11 +47,6 @@ namespace ClassLibrary
             }
         }
 
-        public string Validate()
-        {
-
-        }
-
         // getters
         public int GetOrderId() { return this.OrderId; }
 

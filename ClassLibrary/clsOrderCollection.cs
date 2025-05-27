@@ -7,10 +7,9 @@ using System.Xml.Schema;
 
 namespace ClassLibrary
 {
-    class clsOrderCollection
+    public class clsOrderCollection
     {
         private List<clsOrder> orderList = new List<clsOrder>();
-        private clsShoppingCart cart = new clsShoppingCart();
         private int count = 0;
         private clsOrder thisOrder = new clsOrder();
 
@@ -52,24 +51,14 @@ namespace ClassLibrary
             db.Execute("sproc_tblOrder_Delete");
         }
 
-        public void SetThisShoppingCart(clsShoppingCart cart)
+        public clsOrder GetThisOrder()
         {
-            this.cart = cart;
+            return thisOrder;
         }
 
         public void SetThisOrder(clsOrder order) 
         {
-            this.thisOrder = order;
-        }
-
-        public clsShoppingCart GetThisShoppingCart()
-        {
-            return this.cart;
-        }
-
-        public clsOrder GetThisOrder()
-        {
-            return this.thisOrder;
+            thisOrder = order;
         }
     }
 }

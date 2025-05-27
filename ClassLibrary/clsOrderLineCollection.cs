@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    class clsOrderLineCollection
+    public class clsOrderLineCollection
     {
         private List<clsOrderLine> orderLineList = new List<clsOrderLine>();
         private int count = 0;
@@ -23,7 +23,7 @@ namespace ClassLibrary
                 db.AddParameter("DateAdded", DateTime.Now);
                 db.AddParameter("ItemId", item.ProductId);
                 db.AddParameter("Status", "Pending");
-                db.AddParameter("AgreedPrice", (item.Quanity * item.Cost))
+                db.AddParameter("AgreedPrice", (item.Quantity * item.Cost));
                 db.AddParameter("Quantity", item.Quantity);
                 db.Execute("sproc_tblOrderLines_Insert");
             }
@@ -36,10 +36,10 @@ namespace ClassLibrary
             clsDataConnection db = new clsDataConnection();
             db.AddParameter("OrderId", line.GetOrderId());
             db.AddParameter("DateAdded", line.GetDateAdded());
-            db.AddParameter("ItemId", line.GetItemId);
+            db.AddParameter("ItemId", line.GetItemId());
             db.AddParameter("Status", line.GetStatus());
-            db.AddParameter("AgreedPrice", line.GetAgreedPrice())
-            db.AddParameter("Quantity", line.GetQuantity);
+            db.AddParameter("AgreedPrice", line.GetAgreedPrice());
+            db.AddParameter("Quantity", line.GetQuantity());
             db.Execute("sproc_tblOrderLines_Update");
         }
 
@@ -48,7 +48,7 @@ namespace ClassLibrary
             clsOrderLine line = GetThisOrderLine();
             clsDataConnection db = new clsDataConnection();
             db.AddParameter("OrderId", line.GetOrderId());
-            db.AddParameter("ItemId", line.GetItemId()):
+            db.AddParameter("ItemId", line.GetItemId());
             db.Execute("sproc_tblOrderLines_Delete");
         }
 
@@ -67,9 +67,9 @@ namespace ClassLibrary
             this.thisOrderLine = line;
         }
 
-        public clsOrder GetThisOrderLine()
+        public clsOrderLine GetThisOrderLine()
         {
-            return this.thisOrder;
+            return this.thisOrderLine;
         }
     }
 }
