@@ -36,7 +36,7 @@ namespace Testing3
         public void TotalCostPropertyOK()
         {
             clsOrder NewOrder = new clsOrder();
-            float TestData = 399.99f;
+            double TestData = 499.99;
             NewOrder.SetTotalCost(TestData);
             Assert.AreEqual(NewOrder.GetTotalCost(), TestData);
         }

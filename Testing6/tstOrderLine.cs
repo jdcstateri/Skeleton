@@ -42,21 +42,12 @@ namespace Testing6
         }
 
         [TestMethod]
-        public void IsDiscountedPropertyOK()
+        public void AgreedPricePropertyOK()
         {
             clsOrderLine NewOrderLine = new clsOrderLine();
-            bool TestData = true;
-            NewOrderLine.SetIsDiscounted(TestData);
-            Assert.AreEqual(NewOrderLine.GetIsDiscounted(), TestData);
-        }
-
-        [TestMethod]
-        public void DiscountPercentagePropertyOK()
-        {
-            clsOrderLine NewOrderLine = new clsOrderLine();
-            int TestData = 20;
-            NewOrderLine.GetDiscountPercentage(TestData);
-            Assert.AreEqual(NewOrderLine.GetDiscountPercentage(), TestData);
+            double TestData = 499.99;
+            NewOrderLine.SetAgreedPrice(TestData);
+            Assert.AreEqual(NewOrderLine.GetAgreedPrice(), TestData);
         }
 
         [TestMethod]

@@ -13,11 +13,9 @@ namespace TestingShoppingCartItem
             int testId = 1;
             int testQuantity = 1;
             float testCost = 499.99f;
-            bool testIsDiscounted = false;
-            float testDiscountPercentage = 0f;
 
             //Create a instance of the class we want to create
-            clsShoppingCartItem item = new clsShoppingCartItem(testId, testQuantity, testCost, testIsDiscounted, testDiscountPercentage);
+            clsShoppingCartItem item = new clsShoppingCartItem(testId, testQuantity, testCost);
 
             //Test to see that is Exist
             Assert.IsNotNull(item);
@@ -29,11 +27,9 @@ namespace TestingShoppingCartItem
             int testId = 1;
             int testQuantity = 1;
             float testCost = 499.99f;
-            bool testIsDiscounted = false;
-            float testDiscountPercentage = 0f;
 
             //Create a instance of the class we want to create
-            clsShoppingCartItem item = new clsShoppingCartItem(testId, testQuantity, testCost, testIsDiscounted, testDiscountPercentage);
+            clsShoppingCartItem item = new clsShoppingCartItem(testId, testQuantity, testCost);
 
             Assert.AreEqual(testId, item.ProductId);
         }
@@ -44,11 +40,9 @@ namespace TestingShoppingCartItem
             int testId = 1;
             int testQuantity = 1;
             float testCost = 499.99f;
-            bool testIsDiscounted = false;
-            float testDiscountPercentage = 0f;
 
             //Create a instance of the class we want to create
-            clsShoppingCartItem item = new clsShoppingCartItem(testId, testQuantity, testCost, testIsDiscounted, testDiscountPercentage);
+            clsShoppingCartItem item = new clsShoppingCartItem(testId, testQuantity, testCost);
 
             Assert.AreEqual(testQuantity, item.Quantity);
         }
@@ -59,43 +53,11 @@ namespace TestingShoppingCartItem
             int testId = 1;
             int testQuantity = 1;
             float testCost = 499.99f;
-            bool testIsDiscounted = false;
-            float testDiscountPercentage = 0f;
 
             //Create a instance of the class we want to create
-            clsShoppingCartItem item = new clsShoppingCartItem(testId, testQuantity, testCost, testIsDiscounted, testDiscountPercentage);
+            clsShoppingCartItem item = new clsShoppingCartItem(testId, testQuantity, testCost);
 
             Assert.AreEqual(testCost, item.Cost);
-        }
-
-        [TestMethod]
-        public void TestIsDiscountedPropertyOK()
-        {
-            int testId = 1;
-            int testQuantity = 1;
-            float testCost = 499.99f;
-            bool testIsDiscounted = false;
-            float testDiscountPercentage = 0f;
-
-            //Create a instance of the class we want to create
-            clsShoppingCartItem item = new clsShoppingCartItem(testId, testQuantity, testCost, testIsDiscounted, testDiscountPercentage);
-
-            Assert.AreEqual(testIsDiscounted, item.IsDiscounted);
-        }
-
-        [TestMethod]
-        public void TestDiscountPercentagePropertyOK()
-        {
-            int testId = 1;
-            int testQuantity = 1;
-            float testCost = 499.99f;
-            bool testIsDiscounted = false;
-            float testDiscountPercentage = 0f;
-
-            //Create a instance of the class we want to create
-            clsShoppingCartItem item = new clsShoppingCartItem(testId, testQuantity, testCost, testIsDiscounted, testDiscountPercentage);
-
-            Assert.AreEqual(testDiscountPercentage, item.DiscountPercentage);
         }
     }
 }

@@ -22,8 +22,8 @@ namespace Testing7
         public void ShoppingCartListPropertyOK()
         {
             // test items
-            clsShoppingCartItem testItem1 = new clsShoppingCartItem(6, 1, 1200.0f, false, 0f);
-            clsShoppingCartItem testItem2 = new clsShoppingCartItem(8, 2, 600.0f, false, 0f);
+            clsShoppingCartItem testItem1 = new clsShoppingCartItem(6, 1, 1200.0f);
+            clsShoppingCartItem testItem2 = new clsShoppingCartItem(8, 2, 600.0f);
             
             List<clsShoppingCartItem> items = new List<clsShoppingCartItem>()
             {
@@ -39,7 +39,7 @@ namespace Testing7
         public void TestAddItem()
         {
             // test item
-            clsShoppingCartItem testItem1 = new clsShoppingCartItem(6, 1, 1200.0f, false, 0f);
+            clsShoppingCartItem testItem1 = new clsShoppingCartItem(6, 1, 1200.0f);
 
             List<clsShoppingCartItem> items = new List<clsShoppingCartItem>()
             {
@@ -55,8 +55,8 @@ namespace Testing7
         public void TestRemoveItem()
         {
             // test items
-            clsShoppingCartItem testItem1 = new clsShoppingCartItem(6, 1, 1200.0f, false, 0f);
-            clsShoppingCartItem testItem2 = new clsShoppingCartItem(8, 2, 600.0f, false, 0f);
+            clsShoppingCartItem testItem1 = new clsShoppingCartItem(6, 1, 1200.0f);
+            clsShoppingCartItem testItem2 = new clsShoppingCartItem(8, 2, 600.0f);
 
             List<clsShoppingCartItem> items = new List<clsShoppingCartItem>()
             { 

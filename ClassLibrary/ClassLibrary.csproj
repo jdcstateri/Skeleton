@@ -61,7 +61,9 @@
     <Compile Include="clsCustomerCollection.cs" />
     <Compile Include="clsDataConnection.cs" />
     <Compile Include="clsActivityLog.cs" />
+    <Compile Include="clsOrderCollection.cs" />
     <Compile Include="clsOrderLine.cs" />
+    <Compile Include="clsOrderLineCollection.cs" />
     <Compile Include="clsProductCollection.cs" />
     <Compile Include="clsShoppingCart.cs" />
     <Compile Include="clsShoppingCartItem.cs" />
