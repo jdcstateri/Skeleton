@@ -27,6 +27,8 @@ public partial class CustomerLogin : System.Web.UI.Page
         Password = Convert.ToString(txtPassword.Text);
         //find the record
         Found = AnUser.FindUser(Email, Password);
+        //add session to capture the user name
+        Session["CustomerUser"] = AnUser;
         //if email and/or password is empty
         if (txtEmail.Text == "")
         {
@@ -41,7 +43,16 @@ public partial class CustomerLogin : System.Web.UI.Page
         else if (Found == true)
         {
             //redirect to the list Page
-            Response.Redirect("CustomerList.aspx");
+            Int32 CustomerLogin = Convert.ToInt32(Session["CustomerLogin"]);
+            if (CustomerLogin == 1) //customer button was clicked in menu
+            {
+                Response.Redirect("CustomerList.aspx");
+            }
+            else if (CustomerLogin == 2) //addresses button was clicked in menu
+            {
+                Response.Redirect("AddressesList.aspx");
+            }
+            
         }
         else if (Found == false)
         {
@@ -52,6 +63,6 @@ public partial class CustomerLogin : System.Web.UI.Page
 
     protected void btnCancel_Click(object sender, EventArgs e)
     {
-
+        Response.Redirect("TeamMainMenu.aspx");
     }
 }

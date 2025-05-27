@@ -131,4 +131,14 @@ public partial class _1_DataEntry : System.Web.UI.Page
             chkIsActive.Checked = aAddress.IsActive;
         }
     }
+
+    protected void btnReturn_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("TeamMainMenu.aspx");
+    }
+
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AddressesList.aspx");
+    }
 }
