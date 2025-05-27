@@ -25,8 +25,8 @@ namespace ClassLibrary
                 mIsVerified = value;
             }
         }
-        public int AccountID 
-        { 
+        public int AccountID
+        {
             get
             {
                 //this line of code sends data out of the property
@@ -99,6 +99,37 @@ namespace ClassLibrary
             DB.AddParameter("@AccountID", accountID);
             //execute the stored procedure
             DB.Execute("sproc_tblCustomer_FilterByAccoundID");
+            //if one record is found (there should be either one or zero)
+            if (DB.Count == 1)
+            {
+                //copy the data from the database to the private data members
+                mAccountID = Convert.ToInt32(DB.DataTable.Rows[0]["AccountID"]);
+                mDateRegistered = Convert.ToDateTime(DB.DataTable.Rows[0]["DateRegistered"]);
+                mIsVerified = Convert.ToBoolean(DB.DataTable.Rows[0]["IsVerified"]);
+                mName = Convert.ToString(DB.DataTable.Rows[0]["Name"]);
+                mEmail = Convert.ToString(DB.DataTable.Rows[0]["Email"]);
+                mPassword = Convert.ToString(DB.DataTable.Rows[0]["Password"]);
+                //return that everything worked OK
+                return true;
+            }
+            //if no record was found
+            else
+            {
+
+                //return false indicating there is a problem
+                return false;
+            }
+        }
+
+        public bool FindUser(string Email, string Password)
+        {
+            //create an instance of the data connection
+            clsDataConnection DB = new clsDataConnection();
+            //add the parameter for the id to search for
+            DB.AddParameter("@Email", Email);
+            DB.AddParameter("@Password", Password);
+            //execute the stored procedure
+            DB.Execute("sproc_tblCustomer_FindUserEmailPW");
             //if one record is found (there should be either one or zero)
             if (DB.Count == 1)
             {

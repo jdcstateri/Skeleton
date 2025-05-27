@@ -196,7 +196,7 @@ namespace Testing2
             //invoke the method
             Found = aCustomer.Find(AccountID);
             //check the property
-            if (aCustomer.Name != "Travis Webber")
+            if (aCustomer.Name != "Tray Webber")
             {
                 OK = false;
             }
