@@ -16,6 +16,12 @@ public partial class _1_List : System.Web.UI.Page
             //update the list box
             DisplayAddresses();
         }
+
+        //create an instance of the class we want to create
+        clsCustomer AnUser = new clsCustomer();
+        //get data from session object
+        AnUser = (clsCustomer)Session["CustomerUser"];
+        Response.Write("Logged in as: " + AnUser.Email);
     }
 
     void DisplayAddresses()
@@ -112,5 +118,10 @@ public partial class _1_List : System.Web.UI.Page
         lstAddressesList.DataTextField = "Address";
         //bind the data to the list
         lstAddressesList.DataBind();
+    }
+
+    protected void btnReturn_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("TeamMainMenu.aspx");
     }
 }
