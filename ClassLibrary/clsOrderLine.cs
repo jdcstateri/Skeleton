@@ -57,6 +57,45 @@ namespace ClassLibrary
             }
         }
 
+        public string Valid(int orderId, int itemId, DateTime dateAdded, double agreedPrice, string status, int quantity)
+        {
+            string error = "";
+
+            try
+            {
+                if (orderId <= 0)
+                {
+                    error += "Order ID must be greater than zero. ";
+                }
+                if (itemId <= 0)
+                {
+                    error += "Item ID must be greater than zero. ";
+                }
+                if (agreedPrice < 0)
+                {
+                    error += "Agreed price cannot be negative. ";
+                }
+                if (string.IsNullOrEmpty(status))
+                {
+                    error += "Status cannot be empty. ";
+                }
+                if (status.Length > 50)
+                {
+                    error += "Status cannot exceed 50 characters. ";
+                }
+                if (quantity <= 0)
+                {
+                    error += "Quantity must be greater than zero. ";
+                }
+            }
+            catch (Exception ex)
+            {
+                error += "An error occurred: " + ex.Message;
+            }
+
+            return error;
+        }
+
         // getters
         public int GetOrderId() { return this.OrderId; }
         public int GetItemId() { return this.ItemId; }

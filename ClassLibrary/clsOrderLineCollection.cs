@@ -55,6 +55,7 @@ namespace ClassLibrary
         public void AddOrderline(clsOrderLine line)
         {
             orderLineList.Add(line);
+            count++;
         }
 
         public void RemoveOrderline(clsOrderLine line)
@@ -70,6 +71,11 @@ namespace ClassLibrary
         public clsOrderLine GetThisOrderLine()
         {
             return this.thisOrderLine;
+        }
+
+        public int GetCount()
+        {
+            return count;
         }
     }
 }
