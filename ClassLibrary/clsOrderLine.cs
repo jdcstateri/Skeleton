@@ -15,7 +15,16 @@ namespace ClassLibrary
         public string Status;
         public int Quantity;
 
-        public clsOrderLine(){}
+        public clsOrderLine(int itemId, DateTime dateAdded, string status, double agreedPrice, int quantity)
+        {
+            SetItemId(itemId);
+            SetDateAdded(dateAdded);
+            SetStatus(status);
+            SetAgreedPrice(agreedPrice);
+            SetStatus(status);
+        }
+
+        public clsOrderLine() {}
 
         public bool Find(clsOrderLineCollection orderLineCollection)
         {
@@ -46,11 +55,6 @@ namespace ClassLibrary
             {
                 return false;
             }
-        }
-
-        public string Validate()
-        {
-
         }
 
         // getters
