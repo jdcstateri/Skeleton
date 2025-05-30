@@ -69,7 +69,7 @@ namespace ClassLibrary
             // add the parameter for the ItemID to search for
             DB.AddParameter("@ItemID", ItemID);
             // execute the stored procedure
-            DB.Execute("sproc_tblProduct_FilterByItemID");
+            DB.Execute("sproc_tblProducts_FilterByItemID");
             // if one record is found (should be 0 or 1)
             if (DB.Count == 1)
             {

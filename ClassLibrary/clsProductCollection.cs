@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using ClassLibrary;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ClassLibrary
 {
     public class clsProductCollection
