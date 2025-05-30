@@ -1,9 +1,5 @@
 using System;
 using System.IO;
-using System;
-using System.IO;
-using System;
-
 using ClassLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework.Internal;
@@ -102,7 +98,7 @@ namespace Testing1
         {
             clsProduct AnProduct = new clsProduct();
             Boolean Found = false;
-            Int32 ItemID = 1;
+            Int32 ItemID = 61;
             Found = AnProduct.Find(ItemID);
             Assert.IsTrue(Found);
         }
@@ -114,9 +110,9 @@ namespace Testing1
             clsProduct AnProduct = new clsProduct();
             Boolean Found = false;
             Boolean OK = true;
-            Int32 ItemID = 1;
+            Int32 ItemID = 61;
             Found = AnProduct.Find(ItemID);
-            if (AnProduct.ItemID != 1)
+            if (AnProduct.ItemID != 61)
             {
                 OK = false;
             }

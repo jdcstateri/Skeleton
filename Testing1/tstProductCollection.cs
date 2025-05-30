@@ -169,7 +169,7 @@ namespace Testing1
             // variable to store the primary key
             Int32 PrimaryKey = 0;
             // set its properties
-            TestItem.ItemID = 1;
+            TestItem.ItemID = 55;
             TestItem.ProductTitle = "GMZ 480z";
             TestItem.ProductDescription = "Best Personal Computer";
             TestItem.Price = 1580f;
