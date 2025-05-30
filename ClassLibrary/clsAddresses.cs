@@ -121,7 +121,7 @@ namespace ClassLibrary
             }
         }
 
-        public string Valid(string dateAdded, string address, string postCode)
+        public string Valid(string dateAdded, string address, string postCode, string accountID)
         {
             //create a string variable to store the error
             String Error = "";
@@ -178,9 +178,36 @@ namespace ClassLibrary
                 Error = Error + "The postCode must be less than 50 characters : ";
             }
 
-
-            //return any error messages
-            return Error;
+            if (accountID.Length == 0)
+            {
+                Error = Error + "The AccountID must not be blank : ";
+            }
+            else
+            {
+                try
+                {
+                    Int32 accountIDInt = Convert.ToInt32(accountID);
+                    if (accountIDInt <= 0)
+                    {
+                        Error = Error + "The AccountID must be a positive number : ";
+                    }
+                    else
+                    {
+                        clsCustomer clsCustomer = new clsCustomer();
+                        if (!clsCustomer.Find(accountIDInt))
+                        {
+                            Error = Error + "No customer exists with this ID : ";
+                        }
+                    }
+                }
+                catch
+                {
+                    Error = Error + "The AccountID is not a valid number : ";
+                }
+            }
+                
+                //return any error messages
+                return Error;
         }
     }
 
