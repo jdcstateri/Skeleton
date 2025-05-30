@@ -60,7 +60,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
         //variable to store any error messages
         string Error = "";
         //validate the data
-        Error = aAddress.Valid(DateAdded, Address, PostCode);
+        Error = aAddress.Valid(DateAdded, Address, PostCode, AccountID);
         if (Error == "")
         {
             //capture address id
