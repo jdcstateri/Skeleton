@@ -152,7 +152,26 @@ namespace ClassLibrary
             }
         }
 
-        public string Valid(string dateRegistered, string name, string email, string password)
+        public bool RepeatedEmail(string email, int currentID)
+        {
+            clsDataConnection DB = new clsDataConnection();
+            DB.AddParameter ("@Email", email);
+
+            if (currentID == -1)
+            {
+                //adding customer
+                DB.Execute("sproc_tblCustomer_FilterByEmail");
+            }
+            else
+            {
+                //editing customer
+                DB.AddParameter("@AccountID", currentID);
+                DB.Execute("sproc_tblCustomer_RepeatedEmailExcludeID");
+            }
+            return DB.Count > 0;
+        }
+
+        public string Valid(string dateRegistered, string name, string email, string password, int currentID = -1)
         {
             //create a string variable to store the error
             String Error = "";
@@ -222,6 +241,12 @@ namespace ClassLibrary
             {
                 //record error
                 Error = Error + "The password must be less than 50 characters : ";
+            }
+
+            if (RepeatedEmail(email, currentID))
+            {
+                //record error
+                Error = Error + "This email is already registered : ";
             }
 
             //return any error messages

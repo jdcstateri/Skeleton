@@ -59,7 +59,8 @@ public partial class _1_DataEntry : System.Web.UI.Page
         //variable to store any error messages
         string Error = "";
         //validate the data
-        Error = aCustomer.Valid(DateRegistered, Name, Email, Password);
+        aCustomer.AccountID = AccountID; //dont miss this bit
+        Error = aCustomer.Valid(DateRegistered, Name, Email, Password, AccountID);
         if (Error == "")
         {
             //capture id
