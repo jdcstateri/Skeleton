@@ -20,7 +20,7 @@
             <asp:Label ID="lblDateAdded" runat="server" style="z-index: 1; left: 10px; top: 132px; position: absolute" Text="Date Added"></asp:Label>
             <asp:TextBox ID="txtDateAdded" runat="server" style="z-index: 1; left: 122px; top: 132px; position: absolute"></asp:TextBox>
             <asp:CheckBox ID="chkIsActive" runat="server" style="z-index: 1; left: 122px; top: 158px; position: absolute" Text="Active" />
-            <asp:Label ID="lblError" runat="server" style="z-index: 1; left: 10px; top: 179px; position: absolute"></asp:Label>
+            <asp:Label ID="lblError" runat="server" style="z-index: 1; left: 10px; top: 179px; position: absolute" ForeColor="Red"></asp:Label>
             <asp:Button ID="btnOk" runat="server" style="z-index: 1; left: 10px; top: 209px; position: absolute" Text="Ok" OnClick="btnOk_Click" width="60px" />
             <asp:Button ID="btnCancel" runat="server" style="z-index: 1; left: 122px; top: 209px; position: absolute" Text="Cancel" OnClick="btnCancel_Click" />
             <asp:Button ID="btnReturn" runat="server" style="z-index: 1; left: 10px; top: 252px; position: absolute" Text="Return to Main Menu" OnClick="btnReturn_Click" />
