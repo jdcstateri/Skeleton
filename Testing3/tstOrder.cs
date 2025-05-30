@@ -67,5 +67,158 @@ namespace Testing3
             NewOrder.SetDeliveryInstructions(TestData);
             Assert.AreEqual(NewOrder.GetDeliveryInstructions(), TestData);
         }
+
+        [TestMethod]
+        public void OrderLineCollectionPropertyOK()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection TestData = new clsOrderLineCollection();
+            NewOrder.SetOrderLineCollection(TestData);
+            Assert.AreEqual(NewOrder.GetOrderLineCollection(), TestData);
+        }
+
+        [TestMethod]
+        public void FindOrderMethodOK()
+        {
+            clsOrder NewOrder = new clsOrder();
+            NewOrder.SetOrderId(1);
+            bool found = NewOrder.Find();
+            Assert.IsTrue(found);
+        }
+
+        [TestMethod]
+        public void TestValidMethodOK()
+        {
+            clsOrder NewOrder = new clsOrder();
+            string error = NewOrder.Valid(1, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            Assert.AreEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestAccountIdFound()
+        {
+            clsOrder NewOrder = new clsOrder();
+            bool OK = true;
+            NewOrder.SetOrderId(1);
+            bool found = NewOrder.Find();
+
+            if (NewOrder.GetAccountId() != 1)
+            {
+                OK = false;
+            }
+
+            Assert.IsTrue(OK);
+        }
+
+        [TestMethod]
+        public void TestDateOfDeliveryFound()
+        {
+            clsOrder NewOrder = new clsOrder();
+            bool OK = true;
+            NewOrder.SetOrderId(1);
+            bool found = NewOrder.Find();
+            DateTime testDate = new DateTime(2023, 10, 1);
+
+            if (NewOrder.GetDateOfDelivery() != testDate)
+            {
+                OK = false;
+            }
+
+            Assert.IsTrue(OK);
+        }
+
+        [TestMethod]
+        public void TestDeliveredFound()
+        {
+            clsOrder NewOrder = new clsOrder();
+            bool OK = true;
+            NewOrder.SetOrderId(1);
+            bool found = NewOrder.Find();
+
+            if (NewOrder.GetDelivered() != false)
+            {
+                OK = false;
+            }
+            Assert.IsTrue(OK);
+        }
+
+        [TestMethod]
+        public void TestDeliveryInstructionsFound()
+        {
+            clsOrder NewOrder = new clsOrder();
+            bool OK = true;
+            NewOrder.SetOrderId(1);
+            bool found = NewOrder.Find();
+            string testInstructions = "Leave at the front door";
+
+            if (NewOrder.GetDeliveryInstructions() != testInstructions)
+            {
+                OK = false;
+            }
+            Assert.IsTrue(OK);
+        }
+
+        [TestMethod]
+        public void TestOrderLineCollectionFound()
+        {
+            clsOrder NewOrder = new clsOrder();
+            bool OK = true;
+            NewOrder.SetOrderId(1);
+            bool found = NewOrder.Find();
+            clsOrderLineCollection testCollection = new clsOrderLineCollection();
+
+            if (NewOrder.GetOrderLineCollection() != testCollection)
+            {
+                OK = false;
+            }
+            Assert.IsTrue(OK);
+        }
+
+        [TestMethod]
+        public void TestValidAccountIdLessThanOne()
+        {
+            clsOrder NewOrder = new clsOrder();
+            string error = NewOrder.Valid(0, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            Assert.AreNotEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestValidAccountIdMin()
+        {
+            clsOrder NewOrder = new clsOrder();
+            string error = NewOrder.Valid(1, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            Assert.AreEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestValidAccountIdMinPlusOne()
+        {
+            clsOrder NewOrder = new clsOrder();
+            string error = NewOrder.Valid(2, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            Assert.AreEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestValidAccountIdMax()
+        {
+            clsOrder NewOrder = new clsOrder();
+            string error = NewOrder.Valid(int.MaxValue, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            Assert.AreEqual(error, "");
+        }
+
+        public void TestValidAccountIdMaxPlusOne()
+        {
+            clsOrder NewOrder = new clsOrder();
+            string error = NewOrder.Valid(int.MaxValue + 1, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            Assert.AreNotEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestValidAccountIdMid()
+        {
+            clsOrder NewOrder = new clsOrder();
+            string error = NewOrder.Valid((int.MaxValue / 2), DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            Assert.AreEqual(error, "");
+        }
     }
 }
