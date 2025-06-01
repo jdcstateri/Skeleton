@@ -17,16 +17,25 @@ namespace ClassLibrary
         // constructor for the class
         public clsProductCollection()
         {
-            // variable for the index
-            Int32 Index = 0;
-            //variable for the record count
-            Int32 RecordCount = 0;
             // object for the data connection
             clsDataConnection DB = new clsDataConnection();
             // execute the stored procedure
             DB.Execute("sproc_tblProducts_SelectAll");
+            // populate the array list with the data table in the DB variable
+            PopulateArray(DB);
+        }
+
+        void PopulateArray(clsDataConnection DB)
+        {
+            // populate the product list from the data table in the parameter DB
+            // variable for the index
+            Int32 Index = 0;
+            // variable for the record count
+            Int32 RecordCount = 0;
             // get the count of records
             RecordCount = DB.Count;
+            // clear th private array list 
+            mProductList = new List<clsProduct>();
             // while there are records to process
             while (Index < RecordCount)
             {
@@ -39,12 +48,14 @@ namespace ClassLibrary
                 AnProduct.Price = Convert.ToSingle(DB.DataTable.Rows[Index]["Price"]);
                 AnProduct.StockNumber = Convert.ToInt32(DB.DataTable.Rows[Index]["StockNumber"]);
                 AnProduct.DateAdded = Convert.ToDateTime(DB.DataTable.Rows[Index]["DateAdded"]);
+                AnProduct.DateAdded = Convert.ToDateTime(DB.DataTable.Rows[Index]["DateAdded"]);
                 AnProduct.IsPublished = Convert.ToBoolean(DB.DataTable.Rows[Index]["IsPublished"]);
                 // add the record to the private data member
                 mProductList.Add(AnProduct);
                 // point to the next record
                 Index++;
             }
+
         }
 
 
@@ -133,6 +144,20 @@ namespace ClassLibrary
             // execute the stored procedure
             DB.Execute("sproc_tblProducts_Delete");
         }
+
+        public void ReportByProductTitle(string ProductTitle)
+        {
+            // filters the records based on a product title
+            // connect to the database
+            clsDataConnection DB = new clsDataConnection();
+            // send the product title parameter to the database
+            DB.AddParameter("@ProductTitle", ProductTitle);
+            // execute the stored procedure
+            DB.Execute("sproc_tblProducts_FilterByProductTitle");
+            // populate the product list with the data table in the DB variable
+            PopulateArray(DB);
+        }
+      
     }
 
 }
