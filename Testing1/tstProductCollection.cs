@@ -191,6 +191,58 @@ namespace Testing1
             // test to see that it does not exist
             Assert.IsFalse(Found);
         }
+        [TestMethod]
+        public void ReportByProductTitleMethodOK()
+        {
+            // create an instance of the class we want to create
+            clsProductCollection AllProducts = new clsProductCollection();
+            // create an instance of the filtered data
+            clsProductCollection FilteredProducts = new clsProductCollection();
+            // apply a blank string (should return all records)
+            FilteredProducts.ReportByProductTitle("");
+            // test to see that the two values are the same
+            Assert.AreEqual(AllProducts.Count, FilteredProducts.Count);
+        }
+        [TestMethod]
+        public void ReportByProductNoneFound()
+        {
+            // create an instance of the filtered data
+            clsProductCollection FilteredProducts = new clsProductCollection();
+            // apply a product title that does not exist
+            FilteredProducts.ReportByProductTitle("xxxx");
+            // test to see that there are no records
+            Assert.AreEqual(0, FilteredProducts.Count);
+        }
+        [TestMethod]
+        public void ReportByProductFound()
+        {
+            // create an instance of the filtered data
+            clsProductCollection FilteredProducts = new clsProductCollection();
+            //variable to store outcome
+            Boolean OK = true;
+            // apply a product title that doesn't exist
+            FilteredProducts.ReportByProductTitle("Ryzen 7");
+            // check that the correct number of records are found
+            if (FilteredProducts.Count == 2)
+            {
+                // check that the first record is ID 1
+                if (FilteredProducts.ProductList[0].ItemID != 279)
+                {
+                    OK = false;
+                }
+                // check that the second record is ID 2
+                if (FilteredProducts.ProductList[1].ItemID != 280)
+                {
+                    OK = false;
+                }
+            }
+            else
+            {
+                OK = false;
+            }
+            // test to see that there is at least one record
+            Assert.IsTrue(OK);
+        }
 
 
 

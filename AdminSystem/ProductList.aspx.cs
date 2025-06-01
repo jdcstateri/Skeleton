@@ -81,4 +81,40 @@ public partial class _1_List : System.Web.UI.Page
             lblError.Text = "Please select a record to delete from the list";
         }
     }
+
+
+
+    protected void btnApplyFilter_Click(object sender, EventArgs e)
+    {
+        // create an instance of the product collection
+        clsProductCollection AnProduct = new clsProductCollection();
+        // retrieve the value of Product Title from presentation layer
+        AnProduct.ReportByProductTitle(txtFilter.Text);
+        // set the data source to the product list in the collection
+        lstProductList.DataSource = AnProduct.ProductList;
+        // set the name of the primary key
+        lstProductList.DataValueField = "ItemID";
+        // set the name of the field to display
+        lstProductList.DataTextField = "ProductTitle";
+        // bind the data to the list
+        lstProductList.DataBind();
+    }
+
+    protected void btnClearFilter_Click(object sender, EventArgs e)
+    {
+        // create an instance of the product object
+        clsProductCollection AnProduct = new clsProductCollection();
+        // set an emepty string 
+        AnProduct.ReportByProductTitle("");
+        // Clear any existing filter to tidy up the interface
+        txtFilter.Text = "";
+        // set the data source to the product list in the collection
+        lstProductList.DataSource = AnProduct.ProductList;
+        // set the name of the primary key
+        lstProductList.DataValueField = "ItemID";
+        // set the name of the field to display
+        lstProductList.DataTextField = "ProductTitle";
+        // bind the data to the list
+        lstProductList.DataBind();
+    }
 }
