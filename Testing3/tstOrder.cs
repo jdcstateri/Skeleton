@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO.Ports;
 using ClassLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,18 +19,18 @@ namespace Testing3
         public void OrderIdPropertyOK()
         {
             clsOrder NewOrder = new clsOrder();
-            int TestData = 1;
-            NewOrder.SetOrderId(TestData);
-            Assert.AreEqual(NewOrder.GetOrderId(), TestData);
+            int testOrderId = 6;
+            NewOrder.SetOrderId(testOrderId);
+            Assert.AreEqual(NewOrder.GetOrderId(), testOrderId);
         }
 
         [TestMethod]
         public void AccountIdPropertyOK()
         {
             clsOrder NewOrder = new clsOrder();
-            int TestData = 1;
-            NewOrder.SetAccountId(TestData);
-            Assert.AreEqual(NewOrder.GetAccountId(), TestData);
+            int testOrderId = 6;
+            NewOrder.SetAccountId(testOrderId);
+            Assert.AreEqual(NewOrder.GetAccountId(), testOrderId);
         }
 
         [TestMethod]
@@ -81,7 +82,7 @@ namespace Testing3
         public void FindOrderMethodOK()
         {
             clsOrder NewOrder = new clsOrder();
-            NewOrder.SetOrderId(1);
+            NewOrder.SetOrderId(6);
             bool found = NewOrder.Find();
             Assert.IsTrue(found);
         }
@@ -90,7 +91,10 @@ namespace Testing3
         public void TestValidMethodOK()
         {
             clsOrder NewOrder = new clsOrder();
-            string error = NewOrder.Valid(1, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(14), false, "Knock on the window", tempCollection);
             Assert.AreEqual(error, "");
         }
 
@@ -99,7 +103,7 @@ namespace Testing3
         {
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
-            NewOrder.SetOrderId(1);
+            NewOrder.SetOrderId(6);
             bool found = NewOrder.Find();
 
             if (NewOrder.GetAccountId() != 1)
@@ -115,9 +119,9 @@ namespace Testing3
         {
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
-            NewOrder.SetOrderId(1);
+            NewOrder.SetOrderId(6);
             bool found = NewOrder.Find();
-            DateTime testDate = new DateTime(2023, 10, 1);
+            DateTime testDate = new DateTime(2025, 6, 16);
 
             if (NewOrder.GetDateOfDelivery() != testDate)
             {
@@ -132,7 +136,7 @@ namespace Testing3
         {
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
-            NewOrder.SetOrderId(1);
+            NewOrder.SetOrderId(6);
             bool found = NewOrder.Find();
 
             if (NewOrder.GetDelivered() != false)
@@ -147,14 +151,17 @@ namespace Testing3
         {
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
-            NewOrder.SetOrderId(1);
+            NewOrder.SetOrderId(6);
             bool found = NewOrder.Find();
-            string testInstructions = "Leave at the front door";
+            string testInstructions = "Go to backdoor";
 
             if (NewOrder.GetDeliveryInstructions() != testInstructions)
             {
                 OK = false;
             }
+
+            Console.WriteLine("Database value: " + NewOrder.GetDeliveryInstructions());
+
             Assert.IsTrue(OK);
         }
 
@@ -162,15 +169,22 @@ namespace Testing3
         public void TestOrderLineCollectionFound()
         {
             clsOrder NewOrder = new clsOrder();
+            clsOrderLine testOrderLine = new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1);
+            testOrderLine.SetOrderId(6);
             bool OK = true;
-            NewOrder.SetOrderId(1);
+            NewOrder.SetOrderId(6);
             bool found = NewOrder.Find();
+            NewOrder.SetOrderLineCollection(testOrderLine.Find(NewOrder.GetOrderId()));
+
             clsOrderLineCollection testCollection = new clsOrderLineCollection();
 
-            if (NewOrder.GetOrderLineCollection() != testCollection)
+            testCollection.AddOrderline(testOrderLine);
+
+            if (!NewOrder.GetOrderLineCollection().Equals(testCollection))
             {
                 OK = false;
             }
+
             Assert.IsTrue(OK);
         }
 
@@ -178,7 +192,7 @@ namespace Testing3
         public void TestValidAccountIdLessThanOne()
         {
             clsOrder NewOrder = new clsOrder();
-            string error = NewOrder.Valid(0, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            string error = NewOrder.Valid(0, DateTime.Now.AddDays(14), false, "Knock on the window", new clsOrderLineCollection());
             Assert.AreNotEqual(error, "");
         }
 
@@ -186,7 +200,10 @@ namespace Testing3
         public void TestValidAccountIdMin()
         {
             clsOrder NewOrder = new clsOrder();
-            string error = NewOrder.Valid(1, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(14), false, "Knock on the window", tempCollection);
             Assert.AreEqual(error, "");
         }
 
@@ -194,7 +211,10 @@ namespace Testing3
         public void TestValidAccountIdMinPlusOne()
         {
             clsOrder NewOrder = new clsOrder();
-            string error = NewOrder.Valid(2, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(2, DateTime.Now.AddDays(14), false, "Knock on the window", tempCollection);
             Assert.AreEqual(error, "");
         }
 
@@ -202,22 +222,21 @@ namespace Testing3
         public void TestValidAccountIdMax()
         {
             clsOrder NewOrder = new clsOrder();
-            string error = NewOrder.Valid(int.MaxValue, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
-            Assert.AreEqual(error, "");
-        }
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
 
-        public void TestValidAccountIdMaxPlusOne()
-        {
-            clsOrder NewOrder = new clsOrder();
-            string error = NewOrder.Valid(int.MaxValue + 1, DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
-            Assert.AreNotEqual(error, "");
+            string error = NewOrder.Valid(int.MaxValue, DateTime.Now.AddDays(14), false, "Knock on the window", tempCollection);
+            Assert.AreEqual(error, "");
         }
 
         [TestMethod]
         public void TestValidAccountIdMid()
         {
             clsOrder NewOrder = new clsOrder();
-            string error = NewOrder.Valid((int.MaxValue / 2), DateTime.Now, false, "Knock on the window", new clsOrderLineCollection());
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid((int.MaxValue / 2), DateTime.Now.AddDays(14), false, "Knock on the window", tempCollection);
             Assert.AreEqual(error, "");
         }
     }
