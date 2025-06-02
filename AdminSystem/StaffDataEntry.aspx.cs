@@ -11,8 +11,15 @@ public partial class _1_DataEntry : System.Web.UI.Page
     Int32 StaffID;
     protected void Page_Load(object sender, EventArgs e)
     {
+        // Redirect if not logged in or not admin
+        if (Session["IsAdmin"] == null || !(bool)Session["IsAdmin"])
+        {
+            Response.Redirect("StaffLogin.aspx");
+        }
+
         //get the number of the staff to be processed
         StaffID = Convert.ToInt32(Session["StaffID"]);
+
         if (IsPostBack == false)
         {
             //if this is not a new record

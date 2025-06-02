@@ -10,8 +10,13 @@ public partial class _1_List : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        // Redirect if not logged in or not admin
+        if (Session["IsAdmin"] == null || !(bool)Session["IsAdmin"])
+        {
+            Response.Redirect("StaffLogin.aspx");
+        }
 
-        if(IsPostBack == false)
+        if (IsPostBack == false)
         {
             //update the listbox
             DisplayStaff();

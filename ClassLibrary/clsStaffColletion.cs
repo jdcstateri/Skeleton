@@ -27,37 +27,6 @@ namespace ClassLibrary
           
         }
 
-        void PopulateArray(clsDataConnection DB)
-        {
-            //Populates the array list based on the data table in the parameter DB
-            Int32 Index = 0;
-
-            //variable to store the count
-            Int32 RecordCount;
-
-            //Get the count of records
-            RecordCount = DB.Count;
-
-            //clear the private array list
-            mStaffList = new List<clsStaff>();
-
-            while (Index < RecordCount)
-            {
-                clsStaff AStaff = new clsStaff();
-                AStaff.StaffId = Convert.ToInt32(DB.DataTable.Rows[Index]["StaffID"]);
-                AStaff.Name = Convert.ToString(DB.DataTable.Rows[Index]["Name"]);
-                AStaff.Email = Convert.ToString(DB.DataTable.Rows[Index]["Email"]);
-                AStaff.Password = Convert.ToString(DB.DataTable.Rows[Index]["Password"]);
-                AStaff.IsAdmin = Convert.ToBoolean(DB.DataTable.Rows[Index]["IsAdmin"]);
-                AStaff.DateAdded = Convert.ToDateTime(DB.DataTable.Rows[Index]["DateAdded"]);
-                AStaff.LastLogin = Convert.ToDateTime(DB.DataTable.Rows[Index]["LastLogin"]);
-                //Add the record to the private data member
-                mStaffList.Add(AStaff);
-                //Point at the next record
-                Index++;
-            }
-        }
-
         public List<clsStaff> StaffList 
         {
             get
@@ -154,6 +123,37 @@ namespace ClassLibrary
 
             //Populate the Array
             PopulateArray(DB);
+        }
+
+        void PopulateArray(clsDataConnection DB)
+        {
+            //populates the array list based on the data table in the parameter DB
+            //variable for the index
+            Int32 Index = 0;
+            //variable to store the record count
+            Int32 RecordCount;
+            //get the count of records
+            RecordCount = DB.Count;
+            //clear the private array list
+            mStaffList = new List<clsStaff>();
+            //while there are records to process
+            while (Index < RecordCount)
+            {
+                //create a blank address object
+                clsStaff AStaff = new clsStaff();
+                //read in the fields from the current record
+                AStaff.StaffId = Convert.ToInt32(DB.DataTable.Rows[Index]["StaffID"]);
+                AStaff.Name = Convert.ToString(DB.DataTable.Rows[Index]["Name"]);
+                AStaff.Email = Convert.ToString(DB.DataTable.Rows[Index]["Email"]);
+                AStaff.Password = Convert.ToString(DB.DataTable.Rows[Index]["Password"]);
+                AStaff.DateAdded = Convert.ToDateTime(DB.DataTable.Rows[Index]["DateAdded"]);
+                AStaff.IsAdmin = Convert.ToBoolean(DB.DataTable.Rows[Index]["IsAdmin"]);
+                AStaff.LastLogin = Convert.ToDateTime(DB.DataTable.Rows[Index]["LastLogin"]);
+                //add the record to the private data member
+                mStaffList.Add(AStaff);
+                //point at next record
+                Index++;
+            }
         }
     }
 }

@@ -4,51 +4,53 @@ namespace ClassLibrary
 {
     public class clsActivityLog
     {
-        private Int32 mActivityId;
-        public int ActivityId
+        public int ActivityId { get; set; }
+        public int UserId { get; set; }
+        public string Action { get; set; }
+        public string Detail { get; set; }
+        public DateTime TimeStamp { get; set; }
+
+        // Add StaffName if available from DB or join
+        public string StaffName { get; set; }
+
+        // Display field for list UI
+        public string DisplayField
         {
-            get { return mActivityId; }
-            set { mActivityId = value; }
+            get
+            {
+                return $"{TimeStamp:G} - {StaffName ?? "Unknown User"} - {Action}";
+            }
         }
 
-        private Int32 mUserId;
-        public int UserId
+        // Find method to load details by ActivityId
+        public bool Find(int activityId)
         {
-            get { return mUserId; }
-            set { mUserId = value; }
-        }
+            clsDataConnection DB = new clsDataConnection();
+            DB.AddParameter("@ActivityID", activityId);
+            DB.Execute("sproc_tblActivityLogs_FilterByActivityId");
 
-        private string mAction;
-        public string Action
-        {
-            get { return mAction; }
-            set { mAction = value; }
-        }
+            if (DB.Count == 1)
+            {
+                ActivityId = Convert.ToInt32(DB.DataTable.Rows[0]["ActivityID"]);
+                UserId = Convert.ToInt32(DB.DataTable.Rows[0]["UserID"]);
+                Action = Convert.ToString(DB.DataTable.Rows[0]["Action"]);
+                TimeStamp = Convert.ToDateTime(DB.DataTable.Rows[0]["TimeStamp"]);
+                Detail = Convert.ToString(DB.DataTable.Rows[0]["Details"]);
 
-        private string mDetail;
-        public string Detail
-        {
-            get { return mDetail; }
-            set { mDetail = value; }
-        }
+                // Optional: If StaffName is returned by your stored procedure
+                if (DB.DataTable.Columns.Contains("StaffName"))
+                {
+                    StaffName = Convert.ToString(DB.DataTable.Rows[0]["StaffName"]);
+                }
+                else
+                {
+                    StaffName = "Unknown Staff";
+                }
 
-        private DateTime mTimeStamp;
-        public DateTime TimeStamp
-        {
-            get { return mTimeStamp; }
-            set { mTimeStamp = value; }
-        }
 
-        public bool Find(int ActivityId)
-        {
-            //Set the private data members to the test data value
-            mActivityId = 21;
-            mUserId = 21;
-            mAction = "This is an Action";
-            mDetail = "This is an action in detail";
-            mTimeStamp = Convert.ToDateTime("25/12/2025");
-            //always return true
-            return true;
+                    return true;
+            }
+            return false;
         }
     }
 }

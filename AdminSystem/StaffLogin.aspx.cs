@@ -32,18 +32,36 @@ public partial class StaffLogin : System.Web.UI.Page
         if (txtEmail.Text == "")
         {
             lblError.Text = "Enter a Email";
+            return;
         }
-        else if (txtPassword.Text == "")
+        if (txtPassword.Text == "")
         {
             lblError.Text = "Enter a Password";
+            return;
         }
-        else if (Found == true)
+
+        //Authenticate
+        if (Found == true)
         {
-            Response.Redirect("StaffList.aspx");
+            Session["StaffID"] = AStaff.StaffID;
+            Session["IsAdmin"] = AStaff.IsAdmin;
+
+            if (AStaff.IsAdmin == true)
+            {
+                Response.Redirect("StaffList.aspx");
+            }
+            else
+            {
+                Response.Redirect("CustomerList.aspx");
+            }
         }
         else if (Found == false)
         {
             lblError.Text = "Login details are incorrect, please try aagain!";
+        }
+        else if (Found == false)
+        {
+            lblError.Text = "Invalid Login Credentials!";
         }
     }
 }

@@ -10,8 +10,12 @@ namespace ClassLibrary
         private string mEmail;
         //private data member for the password
         private string mPassword;
-        //public property for the staff ID
+        //private data member for verify admin
+        private bool mIsAdmin;
 
+
+
+        //public property for the staff ID
         public clsStaffUser()
         {
 
@@ -51,6 +55,18 @@ namespace ClassLibrary
             }
         }
 
+        public bool IsAdmin
+        {
+            get
+            {
+                return mIsAdmin;
+            }
+            set
+            {
+                mIsAdmin = value;
+            }
+        }
+
         public bool FindUser(string email, string password)
         {
             //create an instance of the data connection
@@ -70,6 +86,8 @@ namespace ClassLibrary
                 mEmail = Convert.ToString(DB.DataTable.Rows[0]["Email"]);
                 //get the password
                 mPassword = Convert.ToString(DB.DataTable.Rows[0]["Password"]);
+                //get the IsAdmin
+                mIsAdmin = Convert.ToBoolean(DB.DataTable.Rows[0]["IsAdmin"]);
                 //return true
                 return true;
             }

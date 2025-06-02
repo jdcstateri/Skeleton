@@ -11,6 +11,11 @@ public partial class _1_ConfirmDelete : System.Web.UI.Page
     Int32 StaffId;
     protected void Page_Load(object sender, EventArgs e)
     {
+        // Redirect if not logged in or not admin
+        if (Session["IsAdmin"] == null || !(bool)Session["IsAdmin"])
+        {
+            Response.Redirect("StaffLogin.aspx");
+        }
         //Get the number of the staff to be deleted from the session object
         StaffId = Convert.ToInt32(Session["StaffID"]);
     }

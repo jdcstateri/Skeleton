@@ -1,34 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Xml.Linq;
 using ClassLibrary;
 
-public partial class _1_DataEntry : System.Web.UI.Page
+public partial class ActivityLogDataEntry : System.Web.UI.Page
 {
+    Int32 ActivityId;
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        // Redirect if not logged in or not admin
+        if (Session["IsAdmin"] == null || !(bool)Session["IsAdmin"])
+        {
+            Response.Redirect("StaffLogin.aspx");
+        }
 
+        // Check if ActivityID is provided (either via Session or QueryString)
+        if (Session["ActivityID"] != null)
+        {
+            ActivityId = Convert.ToInt32(Session["ActivityID"]);
+        }
+        else
+        {
+            lblError.Text = "No Activity selected.";
+            return; // Exit early if no ID
+        }
+
+        if (!IsPostBack)
+        {
+            DisplayActivity();
+        }
     }
 
-    //Navigate to the Staff View Page
-    protected void btnOK_Click(object sender, EventArgs e)
+    void DisplayActivity()
     {
+        clsActivityLog activity = new clsActivityLog();
 
-        //Capture Input for the Activity Logs
-        clsActivityLog AnActivityLog = new clsActivityLog();
-        AnActivityLog.ActivityId = Convert.ToInt32(txtActivityId.Text);
-        AnActivityLog.UserId = Convert.ToInt32(txtUserId.Text);
-        AnActivityLog.Action = txtAction.Text;
-        AnActivityLog.Detail = txtDetail.Text;
-        AnActivityLog.TimeStamp = Convert.ToDateTime(DateTime.Now);
+        bool found = activity.Find(ActivityId);
 
-        Session["AnActivityLog"] = AnActivityLog;
-        //Navigate to the Staff Viewer Page
-        Response.Redirect("ActivityLogViewer.aspx");
+        if (found)
+        {
+            txtActivityId.Text = activity.ActivityId.ToString();
+            txtUserId.Text = activity.UserId.ToString();
+            txtAction.Text = activity.Action;
+            txtDetail.Text = activity.Detail;
+            txtTimeStamp.Text = activity.TimeStamp.ToString();
+        }
+        else
+        {
+            lblError.Text = "Activity record not found.";
+        }
     }
 
+    protected void btnBack_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ActivityLogList.aspx");
+    }
 }
