@@ -52,6 +52,32 @@ namespace ClassLibrary
             db.Execute("sproc_tblOrderLines_Delete");
         }
 
+        public bool Equals(clsOrderLineCollection other)
+        {
+            if (this.GetCount() != other.GetCount())
+            {
+                return false;
+            }
+
+            for (int i = 0; i < this.GetCount(); i++)
+            {
+                clsOrderLine thisLine = this.orderLineList[i];
+                clsOrderLine otherLine = other.orderLineList[i];
+
+                if (thisLine.GetOrderId() != otherLine.GetOrderId() ||
+                    thisLine.GetItemId() != otherLine.GetItemId() ||
+                    thisLine.GetDateAdded() != otherLine.GetDateAdded() ||
+                    thisLine.GetStatus() != otherLine.GetStatus() ||
+                    thisLine.GetAgreedPrice() != otherLine.GetAgreedPrice() ||
+                    thisLine.GetQuantity() != otherLine.GetQuantity())
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public void AddOrderline(clsOrderLine line)
         {
             orderLineList.Add(line);
@@ -61,6 +87,7 @@ namespace ClassLibrary
         public void RemoveOrderline(clsOrderLine line)
         {
             orderLineList.Remove(line);
+            count--;
         }
 
         public void SetThisOrderLine(clsOrderLine line)
@@ -71,6 +98,20 @@ namespace ClassLibrary
         public clsOrderLine GetThisOrderLine()
         {
             return this.thisOrderLine;
+        }
+
+        public void GetOrderLineCollectionByText()
+        {
+            foreach (clsOrderLine line in orderLineList) 
+            {
+                Console.WriteLine("Order ID: " + line.GetOrderId());
+                Console.WriteLine("Item ID: " + line.GetItemId());
+                Console.WriteLine("Date Added: " + line.GetDateAdded());
+                Console.WriteLine("Status: " + line.GetStatus());
+                Console.WriteLine("Agreed Price: " + line.GetAgreedPrice());
+                Console.WriteLine("Quantity: " + line.GetQuantity());
+                Console.WriteLine("-----------------------------");
+            }
         }
 
         public int GetCount()

@@ -21,15 +21,16 @@ namespace ClassLibrary
             SetDateAdded(dateAdded);
             SetStatus(status);
             SetAgreedPrice(agreedPrice);
-            SetStatus(status);
+            SetQuantity(quantity);
         }
 
         public clsOrderLine() {}
 
-        public bool Find(clsOrderLineCollection orderLineCollection)
+        public clsOrderLineCollection Find(int orderId)
         {
             clsDataConnection db = new clsDataConnection();
-            db.AddParameter("OrderId", this.GetOrderId());
+            clsOrderLineCollection orderLineCollection = new clsOrderLineCollection();
+            db.AddParameter("OrderId", orderId);
             db.Execute("sproc_tblOrderLines_Find");
 
             if (db.Count > 0)
@@ -40,20 +41,22 @@ namespace ClassLibrary
                 while (index < count)
                 {
                     clsOrderLine line = new clsOrderLine();
-                    line.SetItemId(Convert.ToInt32(db.DataTable.Rows[index]["AccountId"]));
-                    line.SetDateAdded(Convert.ToDateTime(db.DataTable.Rows[index]["TotalCost"]));
-                    line.SetStatus(Convert.ToString(db.DataTable.Rows[index]["DeliveryInstructions"]));
-                    line.SetQuantity(Convert.ToInt32(db.DataTable.Rows[index]["DeliveryInstructions"]));
+                    line.SetOrderId(Convert.ToInt32(db.DataTable.Rows[index]["OrderId"]));
+                    line.SetItemId(Convert.ToInt32(db.DataTable.Rows[index]["ItemId"]));
+                    line.SetDateAdded(Convert.ToDateTime(db.DataTable.Rows[index]["DateAdded"]));
+                    line.SetStatus(Convert.ToString(db.DataTable.Rows[index]["Status"]));
+                    line.SetAgreedPrice(Convert.ToDouble(db.DataTable.Rows[index]["AgreedPrice"]));
+                    line.SetQuantity(Convert.ToInt32(db.DataTable.Rows[index]["Quantity"]));
                     orderLineCollection.AddOrderline(line);
 
                     index++;
                 }
 
-                return true;
+                return orderLineCollection;
             }
             else
             {
-                return false;
+                return orderLineCollection;
             }
         }
 
