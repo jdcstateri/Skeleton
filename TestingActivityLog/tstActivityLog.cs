@@ -7,6 +7,12 @@ namespace Testing6
     [TestClass]
     public class tstActivityLog
     {
+        //Create some test data to assign to the property
+        string Action = "This is an Action";
+        string Details = "This is an Action in Detail";
+        string DateAdded = DateTime.Now.Date.ToString();
+
+
         [TestMethod]
         public void InstanceOK()
         {
@@ -112,7 +118,7 @@ namespace Testing6
             Found = AnActivityLog.Find(ActivityId);
 
             //Check the Staff Id
-            if (AnActivityLog.UserId != 21)
+            if (AnActivityLog.UserId != 2)
             {
                 OK = false;
             }
@@ -196,13 +202,41 @@ namespace Testing6
             Found = AnActivityLog.Find(ActivityId);
 
             //Check the Staff Id
-            if (AnActivityLog.TimeStamp != Convert.ToDateTime("25/12/2025"))
+            if (AnActivityLog.TimeStamp != Convert.ToDateTime("25/05/2025"))
             {
                 OK = false;
             }
 
             //Test to see that the result is correct
             Assert.IsTrue(OK);
+        }
+
+        [TestMethod]
+        public void Find_IncludeStaffName_WhenJoinedWithStaffTable()
+        {
+            //create an instance of the class we want to create
+            clsActivityLog log = new clsActivityLog();
+
+            //Create a Boolean variable to store the results of the search
+            Boolean Found = false;
+
+            //Create a Boolean variable to record of the data is OK
+            Boolean OK = true;
+
+            //Create Some test data to use with the method
+            Int32 ActivityId = 21;
+
+            //invoke the method
+            Found = log.Find(ActivityId);
+
+            //Check the Staff Id
+            if (log.StaffName != "John Doe")
+            {
+                OK = false;
+            }
+
+            //Test to see that the result is correct
+            Assert.IsTrue(Found);
         }
 
     }

@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsActivityLogCollection.cs" />
     <Compile Include="clsAddresses.cs" />
     <Compile Include="clsAddressesCollection.cs" />
     <Compile Include="clsCustomer.cs" />

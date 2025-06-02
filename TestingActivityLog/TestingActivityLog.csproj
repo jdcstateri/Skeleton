@@ -54,6 +54,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="tstActivityLogsCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tstActivityLog.cs" />
   </ItemGroup>
