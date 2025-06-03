@@ -26,24 +26,45 @@ namespace ClassLibrary
 
         public clsOrder() { }
 
-        public bool Find()
+        public clsOrderCollection Find(int needle, string fieldOfSearch)
         {
             clsDataConnection db = new clsDataConnection();
-            db.AddParameter("OrderId", this.GetOrderId());
-            db.Execute("sproc_tblOrder_Find");
+            clsOrderCollection orderCollection = new clsOrderCollection();
 
-            if (db.Count == 1)
+            if (fieldOfSearch == "OrderId")
             {
-                this.SetAccountId(Convert.ToInt32(db.DataTable.Rows[0]["AccountId"]));
-                this.SetDateOfDelivery(Convert.ToDateTime(db.DataTable.Rows[0]["DateOfDelivery"]));
-                this.SetDelivered(Convert.ToBoolean(db.DataTable.Rows[0]["Delivered"]));
-                this.SetDeliveryInstructions(Convert.ToString(db.DataTable.Rows[0]["DeliveryInstructions"]));
+                db.AddParameter("OrderId", needle);
+                db.Execute("sproc_tblOrder_FindByOrderId");
+            }
+            else if (fieldOfSearch == "AccountId")
+            {
+                db.AddParameter("AccountId", needle);
+                db.Execute("sproc_tblOrder_FindByAccountId");
+            }
 
-                return true;
+            if (db.Count > 0)
+            {
+                int index = 0;
+                int count = db.Count;
+
+                while (index < count)
+                {
+                    clsOrder order = new clsOrder();
+                    order.SetOrderId(Convert.ToInt32(db.DataTable.Rows[0]["OrderId"]));
+                    order.SetAccountId(Convert.ToInt32(db.DataTable.Rows[0]["AccountId"]));
+                    order.SetDateOfDelivery(Convert.ToDateTime(db.DataTable.Rows[0]["DateOfDelivery"]));
+                    order.SetDelivered(Convert.ToBoolean(db.DataTable.Rows[0]["Delivered"]));
+                    order.SetDeliveryInstructions(Convert.ToString(db.DataTable.Rows[0]["DeliveryInstructions"]));
+                    orderCollection.AddOrder(order);
+
+                    index++;
+                }
+
+                return orderCollection;
             }
             else
             {
-                return false;
+                return orderCollection;
             }
         }
 

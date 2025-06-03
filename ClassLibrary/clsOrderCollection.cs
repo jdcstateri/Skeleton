@@ -10,7 +10,7 @@ namespace ClassLibrary
     public class clsOrderCollection
     {
         private List<clsOrder> orderList = new List<clsOrder>();
-        private int count = 0;
+        public int count = 0;
         private clsOrder thisOrder = new clsOrder();
 
         public clsOrderCollection(){}
@@ -51,6 +51,18 @@ namespace ClassLibrary
             db.Execute("sproc_tblOrder_Delete");
         }
 
+        public void AddOrder(clsOrder order)
+        {
+            orderList.Add(order);
+            count++;
+        }
+
+        public void RemoveOrder(clsOrder order)
+        {
+            orderList.Remove(order);
+            count--;
+        }
+
         public clsOrder GetThisOrder()
         {
             return thisOrder;
@@ -59,6 +71,11 @@ namespace ClassLibrary
         public void SetThisOrder(clsOrder order) 
         {
             thisOrder = order;
+        }
+
+        public List<clsOrder> GetOrderList()
+        {
+            return orderList;
         }
     }
 }
