@@ -8,8 +8,6 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-        </div>
         <asp:Label ID="lblTitle" runat="server" style="z-index: 1; left: 10px; top: 41px; position: absolute" Text="Order system login"></asp:Label>
         
         <asp:Label ID="lblEmail" runat="server" style="z-index: 1; left: 40px; top: 93px; position: absolute" Text="Email:" width="63px"></asp:Label>

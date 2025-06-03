@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 using ClassLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -83,8 +84,16 @@ namespace Testing3
         {
             clsOrder NewOrder = new clsOrder();
             NewOrder.SetOrderId(6);
-            bool found = NewOrder.Find();
-            Assert.IsTrue(found);
+            clsOrderCollection found = NewOrder.Find(NewOrder.GetOrderId(), "OrderId");
+
+            if (found.count == 1)
+            {
+                Assert.IsTrue(true);
+            }
+            else
+            {
+                Assert.IsTrue(false);
+            }
         }
 
         [TestMethod]
@@ -104,13 +113,17 @@ namespace Testing3
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
             NewOrder.SetOrderId(6);
-            bool found = NewOrder.Find();
+            clsOrderCollection found = NewOrder.Find(NewOrder.GetOrderId(), "OrderId");
+
+            List<clsOrder> orderList = found.GetOrderList();
+            NewOrder = orderList[0];
 
             if (NewOrder.GetAccountId() != 1)
             {
                 OK = false;
             }
 
+            Console.WriteLine("Database value: " + NewOrder.GetAccountId());
             Assert.IsTrue(OK);
         }
 
@@ -120,8 +133,11 @@ namespace Testing3
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
             NewOrder.SetOrderId(6);
-            bool found = NewOrder.Find();
+            clsOrderCollection found = NewOrder.Find(NewOrder.GetOrderId(), "OrderId");
             DateTime testDate = new DateTime(2025, 6, 16);
+
+            List<clsOrder> orderList = found.GetOrderList();
+            NewOrder = orderList[0];
 
             if (NewOrder.GetDateOfDelivery() != testDate)
             {
@@ -137,7 +153,10 @@ namespace Testing3
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
             NewOrder.SetOrderId(6);
-            bool found = NewOrder.Find();
+            clsOrderCollection found = NewOrder.Find(NewOrder.GetOrderId(), "OrderId");
+
+            List<clsOrder> orderList = found.GetOrderList();
+            NewOrder = orderList[0];
 
             if (NewOrder.GetDelivered() != false)
             {
@@ -152,8 +171,11 @@ namespace Testing3
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
             NewOrder.SetOrderId(6);
-            bool found = NewOrder.Find();
+            clsOrderCollection found = NewOrder.Find(NewOrder.GetOrderId(), "OrderId");
             string testInstructions = "Go to backdoor";
+
+            List<clsOrder> orderList = found.GetOrderList();
+            NewOrder = orderList[0];
 
             if (NewOrder.GetDeliveryInstructions() != testInstructions)
             {
@@ -173,7 +195,7 @@ namespace Testing3
             testOrderLine.SetOrderId(6);
             bool OK = true;
             NewOrder.SetOrderId(6);
-            bool found = NewOrder.Find();
+            clsOrderCollection found = NewOrder.Find(NewOrder.GetOrderId(), "OrderId");
             NewOrder.SetOrderLineCollection(testOrderLine.Find(NewOrder.GetOrderId()));
 
             clsOrderLineCollection testCollection = new clsOrderLineCollection();

@@ -10,7 +10,16 @@ public partial class OrderLogin : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+        Int32 OrderLogin = Convert.ToInt32(Session["OrderLogin"]);
+
+        if (OrderLogin == 1) 
+        {
+            checkStaff.Visible = false;
+        }
+        else if (OrderLogin == 2) 
+        {
+            checkStaff.Visible = true;
+        }
     }
 
     protected void btnLogin_Click(object sender, EventArgs e)
@@ -53,7 +62,7 @@ public partial class OrderLogin : System.Web.UI.Page
             Session["StaffID"] = aStaff.StaffID;
             Session["IsAdmin"] = aStaff.IsAdmin;
 
-            Response.Redirect("OrderDataEntry.aspx");
+            Response.Redirect("OrderViewer.aspx");
         }
         else if (found == false)
         {
@@ -80,9 +89,16 @@ public partial class OrderLogin : System.Web.UI.Page
         }
         else if (found == true)
         {
-            Int32 CustomerLogin = Convert.ToInt32(Session["CustomerLogin"]);
-
-            Response.Redirect("OrderDataEntry.aspx");
+            Int32 OrderLogin = Convert.ToInt32(Session["OrderLogin"]);
+           
+            if (OrderLogin == 1)
+            {
+                Response.Redirect("OrderDataEntry.aspx");
+            }
+            else if (OrderLogin == 2) 
+            {
+                Response.Redirect("OrderViewer.aspx");
+            }
         }
         else if (found == false)
         {

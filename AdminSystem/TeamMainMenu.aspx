@@ -17,9 +17,10 @@
         <asp:Button ID="btnStaff" runat="server" style="z-index: 1; left: 140px; top: 65px; position: absolute" Text="Staff" height="26px" OnClick="btnStaff_Click" width="94px" />
         <asp:Button ID="btnActivityLog" runat="server" style="z-index: 1; left: 140px; top: 109px; position: absolute" Text="Activity Log" height="26px" OnClick="btnActivityLog_Click" width="94px" />
 
-        <asp:Button ID="btnOrder" runat="server" style="z-index: 1; left: 268px; top: 65px; position: absolute" Text="Order" height="26px" OnClick="btnOrder_Click" width="94px" />
+        <asp:Button ID="btnCreateOrder" runat="server" style="z-index: 1; left: 268px; top: 65px; position: absolute" Text="Create Order" height="26px" OnClick="btnCreateOrder_Click" width="94px" />
+        <asp:Button ID="btnViewOrders" runat="server" style="z-index: 1; left: 395px; top: 65px; position: absolute" Text="View Orders" height="26px" OnClick="btnViewOrders_Click" width="94px" />
 
-        <asp:Button ID="btnProduct" runat="server" style="z-index: 1; left: 395px; top: 65px; position: absolute" Text="Product" height="26px" OnClick="btnProduct_Click" width="94px" />
+        <asp:Button ID="btnProduct" runat="server" style="z-index: 1; left: 268px; top: 109px; position: absolute" Text="Product" height="26px" OnClick="btnProduct_Click" width="94px" />
     </form>
 </body>
 </html>
