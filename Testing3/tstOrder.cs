@@ -241,6 +241,17 @@ namespace Testing3
         }
 
         [TestMethod]
+        public void TestValidAccountIdMid()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid((int.MaxValue / 2), DateTime.Now.AddDays(14), false, "Knock on the window", tempCollection);
+            Assert.AreEqual(error, "");
+        }
+
+        [TestMethod]
         public void TestValidAccountIdMax()
         {
             clsOrder NewOrder = new clsOrder();
@@ -252,13 +263,144 @@ namespace Testing3
         }
 
         [TestMethod]
-        public void TestValidAccountIdMid()
+        public void TestValidDateOfDeliveryExtremeLessThanMin()
         {
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
 
-            string error = NewOrder.Valid((int.MaxValue / 2), DateTime.Now.AddDays(14), false, "Knock on the window", tempCollection);
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(-100), false, "Knock on the window", tempCollection);
+            Assert.AreNotEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestValidDateOfDeliveryOneLessThanMin()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(-1), false, "Knock on the window", tempCollection);
+            Assert.AreNotEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestValidDateOfDeliveryMin()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.Date, false, "Knock on the window", tempCollection);
+            Assert.AreEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestValidDateOfDeliveryMinPlusOne()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(1), false, "Knock on the window", tempCollection);
+            Assert.AreEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestValidDateOfDeliveryExtremeMax()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(180), false, "Knock on the window", tempCollection);
+            Assert.AreEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestValidDateOfDeliveryMaxPlusOne()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(181), false, "Knock on the window", tempCollection);
+            Assert.AreNotEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestDeliveryInstructionsEmpty()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(14), false, "", tempCollection);
+            Assert.AreNotEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestDeliveryInstructionsMin()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(14), false, "a", tempCollection);
+            Assert.AreEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestDeliveryInstructionsExtremeMax()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(14), false, new string('a', 50), tempCollection);
+            Assert.AreEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestDeliveryInstructionsMaxPlusOne()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(14), false, new string('a', 51), tempCollection);
+            Assert.AreNotEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestDeliveredAtCreation()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(14), true, "Knock on the window", tempCollection);
+            Assert.AreNotEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestOrderLineCollectionEmpty()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(14), false, "Knock on the window", tempCollection);
+            Assert.AreNotEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestOrderLineCollectionMin()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(1, DateTime.Now.AddDays(14), false, "Knock on the window", tempCollection);
             Assert.AreEqual(error, "");
         }
     }

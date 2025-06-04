@@ -114,6 +114,11 @@ namespace ClassLibrary
             }
         }
 
+        public List<clsOrderLine> GetOrderLines()
+        {
+            return orderLineList;
+        }
+
         public int GetCount()
         {
             return count;
