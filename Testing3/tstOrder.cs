@@ -241,17 +241,6 @@ namespace Testing3
         }
 
         [TestMethod]
-        public void TestValidAccountIdMax()
-        {
-            clsOrder NewOrder = new clsOrder();
-            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
-            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
-
-            string error = NewOrder.Valid(int.MaxValue, DateTime.Now.AddDays(14), false, "Knock on the window", tempCollection);
-            Assert.AreEqual(error, "");
-        }
-
-        [TestMethod]
         public void TestValidAccountIdMid()
         {
             clsOrder NewOrder = new clsOrder();
@@ -263,7 +252,18 @@ namespace Testing3
         }
 
         [TestMethod]
-        public void TestValidDateOfDeliveryExtremeMin()
+        public void TestValidAccountIdMax()
+        {
+            clsOrder NewOrder = new clsOrder();
+            clsOrderLineCollection tempCollection = new clsOrderLineCollection();
+            tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
+
+            string error = NewOrder.Valid(int.MaxValue, DateTime.Now.AddDays(14), false, "Knock on the window", tempCollection);
+            Assert.AreEqual(error, "");
+        }
+
+        [TestMethod]
+        public void TestValidDateOfDeliveryExtremeLessThanMin()
         {
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
@@ -274,7 +274,7 @@ namespace Testing3
         }
 
         [TestMethod]
-        public void TestValidDateOfDeliveryLessThanOne()
+        public void TestValidDateOfDeliveryOneLessThanMin()
         {
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
