@@ -52,6 +52,15 @@ namespace ClassLibrary
             }
         }
 
+        private int mCurrentUserId;
+
+        public int CurrentUserId
+        {
+            get { return mCurrentUserId; }
+            set { mCurrentUserId = value; }
+        }
+
+
         public clsStaff ThisStaff
         {
             get
@@ -146,14 +155,18 @@ namespace ClassLibrary
             try
             {
                 clsDataConnection DB = new clsDataConnection();
-                DB.AddParameter("@UserID", ThisStaff.StaffId); // Currently logged-in admin
+                DB.AddParameter("@UserID", mCurrentUserId); // Correct user
                 DB.AddParameter("@Action", action);
                 DB.AddParameter("@TimeStamp", DateTime.Now);
                 DB.AddParameter("@Details", details);
                 DB.Execute("sproc_tblActivityLogs_Insert");
             }
-            catch { /* Silent fail - optional error handling */ }
+            catch
+            {
+                // Optional: Log exception if needed
+            }
         }
+
 
         void PopulateArray(clsDataConnection DB)
         {

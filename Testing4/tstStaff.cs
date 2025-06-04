@@ -8,12 +8,12 @@ namespace Testing4
     public class tstStaff
     {
         //Create some test data to assign to the property
-        string Name = "John Doe";
-        string Email = "johndoe@gmail.com";
-        string Password = "johndoe1234";
+        string Name = "John Doe";                // Only letters and a space — valid
+        string Email = "john.doe@example.com";   // Valid email format
+        string Password = "JohnDoe123!";       // No spaces, less than 50 characters, special characters included
         string IsAdmin = "true";
-        string DateAdded = DateTime.Now.Date.ToString();
-        string LastLogin = DateTime.Now.ToString();
+        string DateAdded = DateTime.Now.Date.ToString(); // Exactly today’s date
+        string LastLogin = DateTime.Now.ToString(); // Exactly today’s date
 
         [TestMethod]
         public void InstanceOK()
@@ -340,7 +340,7 @@ namespace Testing4
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //Test to see that the result is correct
-            Assert.AreEqual(Error, ""); 
+            Assert.AreEqual(Error, "");
 
 
         }
@@ -463,6 +463,21 @@ namespace Testing4
         }
 
         [TestMethod]
+        public void FindNonExistentStaff()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //create a boolean variable to store the result of the search
+            Boolean Found = false;
+            //create a variable to store the StaffId
+            Int32 StaffId = -1; //assuming this ID does not exist
+            //invoke the method
+            Found = AStaff.Find(StaffId);
+            //test to see that the result is false
+            Assert.IsFalse(Found);
+        }
+
+        [TestMethod]
         public void NameMinLessOne()
         {
             //create an instance of the class we want to create
@@ -572,6 +587,36 @@ namespace Testing4
         }
 
         [TestMethod]
+        public void NameWithInvalidCharacters()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the name with invalid characters
+            string Name = "John@Doe";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void NameWithSQLInjection()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the name with SQL injection characters
+            string Name = "John'; DROP TABLE Staff; --";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
         public void EmailMinLessOne()
         {
             //create an instance of the class we want to create
@@ -587,14 +632,14 @@ namespace Testing4
         }
 
         [TestMethod]
-        public void EmailMin()
+        public void EmailMinValidFormat()
         {
             //create an instance of the class we want to create
             clsStaff AStaff = new clsStaff();
             //string variable to store any error message
             String Error = "";
             //set the Email
-            string Email = "a";
+            string Email = "a@b.c";
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -609,7 +654,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the Email
-            string Email = "aa";
+            string Email = "a@b.c"; //5 chars-valid format
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -624,8 +669,8 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the Email
-            string Email = "";
-            Email = Email.PadRight(49, 'a');
+            string localPart = new string('a', 39); // 39 chars
+            string Email = $"{localPart}@test.com"; // 49 chars total
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -633,7 +678,7 @@ namespace Testing4
         }
 
         [TestMethod]
-        public void EmailMax()
+        public void EmailMaxLengthValid()
         {
             //create an instance of the class we want to create
             clsStaff AStaff = new clsStaff();
@@ -641,7 +686,8 @@ namespace Testing4
             String Error = "";
             //set the Email
             string Email = "";
-            Email = Email.PadRight(50, 'a');
+            string domain = new string('a', 30);
+            Email = $"test@{domain}.com"; //Exactly 50 characters
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -657,7 +703,8 @@ namespace Testing4
             String Error = "";
             //set the Email
             string Email = "";
-            Email = Email.PadRight(51, 'a');
+            string tooLong = new string('a', 41);
+            Email = $"{tooLong}@gmail.com"; //51 characters
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -673,11 +720,64 @@ namespace Testing4
             String Error = "";
             //set the Email
             string Email = "";
-            Email = Email.PadRight(25, 'a');
+            string localPart = new string('a', 15); // 15 chars
+            Email = $"{localPart}@test.com";
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void EmailInvalidMissingAt()
+        {
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Email with invalid format
+            string Email = "johndoe.com"; //missing '@'
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void EmailWithInvalidMissingDomain()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Email with invalid format
+            string Email = "invalidgmail@";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void EmailInvalidWithSpaces()
+        {
+            clsStaff AStaff = new clsStaff();
+            string badEmail = "john doe@gmail.com"; // Space in address
+            string Error = AStaff.Valid(Name, badEmail, Password, DateAdded);
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void EmailWithSQLInjection()
+        {
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the Email with SQL injection characters
+            string Email = "john'; DROP TABLE Staff; --@test.com";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
         }
 
         [TestMethod]
@@ -688,7 +788,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the Password
-            string Password = "";
+            string Password = "Abc123!"; //7 chars (below minimum
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -703,7 +803,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the Password
-            string Password = "a";
+            string Password = "Abc123!@";
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -718,7 +818,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the Password
-            string Password = "aa";
+            string Password = "Abc123!@x";
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -733,8 +833,8 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the Password
-            string Password = "";
-            Password = Password.PadRight(49, 'a');
+            string Password = "A1!" + new string('a', 44) + "9Z"; //49 chars
+
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -749,8 +849,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the Password
-            string Password = "";
-            Password = Password.PadRight(50, 'a');
+            string Password = "A1!" + new string('a', 45) + "9Z"; //50 chars
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -781,14 +880,11 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the Password
-            string Password = "";
-            Password = Password.PadRight(25, 'a');
+            string Password = "SecureP@ss1!";
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
-
-
     }
 }

@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -36,16 +36,15 @@ public partial class _1_DataEntry : System.Web.UI.Page
     {
         clsStaff AStaff = new clsStaff();
         //Capture the Staff
-        string StaffId = txtStaffID.Text;
         string Name = txtName.Text;
         string Email = txtEmail.Text;
         string Password = txtPassword.Text;
         string DateAdded = txtDateAdded.Text;
-        string LastLogin = txtLastLogin.Text;   
+        string LastLogin = txtLastLogin.Text;
         string IsAdmin = ChkAdmin.Text;
 
         string Error = "";
-        //valdiate the data
+        //validate the data
         Error = AStaff.Valid(Name, Email, Password, DateAdded);
         //if there is no error
         if (Error == "")
@@ -60,24 +59,26 @@ public partial class _1_DataEntry : System.Web.UI.Page
 
             //create a new instance of the staff collection
             clsStaffColletion StaffList = new clsStaffColletion();
-            
-            if(StaffID == -1) //if it's a new record
+
+            //CRITICAL FIX: Set the current user BEFORE setting ThisStaff
+            //This ensures the logging has the correct user context
+            StaffList.CurrentUserId = Convert.ToInt32(Session["StaffID"]);
+
+            if (StaffID == -1) //if it's a new record
             {
                 //set the ThisStaff property
                 StaffList.ThisStaff = AStaff;
                 //add the new record
                 StaffList.Add();
             }
-            //Othewrwise it must be an update   
+            //Otherwise it must be an update   
             else
             {
-                //Find the record
-                StaffList.ThisStaff.Find(StaffID);
-                //Set the ThisStaff property
+                //CRITICAL FIX: Don't call Find again, just set the staff data
+                //The Find call was unnecessary and potentially problematic
                 StaffList.ThisStaff = AStaff;
                 //Update the record
                 StaffList.Update();
-
             }
             Response.Redirect("StaffList.aspx");
         }
@@ -86,10 +87,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
             //display the error message
             lblError.Text = Error;
         }
-
-
     }
-
 
     protected void Button3_Click(object sender, EventArgs e)
     {
@@ -102,7 +100,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
         //create a variable to store the results of the find operation
         Boolean Found = false;
 
-        //get the primary enetered by the user
+        //get the primary entered by the user
         StaffId = Convert.ToInt32(txtStaffID.Text);
 
         //find the record
@@ -111,17 +109,14 @@ public partial class _1_DataEntry : System.Web.UI.Page
         //if found
         if (Found == true)
         {
-            {
-                //display the values of the properties in the form
-                txtStaffID.Text = AStaff.StaffId.ToString();
-                txtName.Text = AStaff.Name;
-                txtEmail.Text = AStaff.Email;
-                txtPassword.Text = AStaff.Password;
-                txtDateAdded.Text = AStaff.DateAdded.ToString();
-                txtLastLogin.Text = AStaff.LastLogin.ToString();
-                ChkAdmin.Checked = AStaff.IsAdmin;
-
-            }
+            //display the values of the properties in the form
+            txtStaffID.Text = AStaff.StaffId.ToString();
+            txtName.Text = AStaff.Name;
+            txtEmail.Text = AStaff.Email;
+            txtPassword.Text = AStaff.Password;
+            txtDateAdded.Text = AStaff.DateAdded.ToString();
+            txtLastLogin.Text = AStaff.LastLogin.ToString();
+            ChkAdmin.Checked = AStaff.IsAdmin;
         }
     }
 
