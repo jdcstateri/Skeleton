@@ -50,7 +50,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
         //if there is no error
         if (Error == "")
         {
-            AStaff.StaffId = Convert.ToInt32(txtStaffID.Text);
+            AStaff.StaffId = StaffID;
             AStaff.Name = Name;
             AStaff.Email = Email;
             AStaff.Password = Password;
@@ -61,7 +61,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
             //create a new instance of the staff collection
             clsStaffColletion StaffList = new clsStaffColletion();
             
-            if(StaffId != "-1")
+            if(StaffID == -1) //if it's a new record
             {
                 //set the ThisStaff property
                 StaffList.ThisStaff = AStaff;

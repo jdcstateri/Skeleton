@@ -1,54 +1,87 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="StaffDataEntry.aspx.cs" Inherits="_1_DataEntry" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Staff Data Entry</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
-<body style="height: 495px">
-    <h3>This is the Staff Data Entry Page</h3>
+<body>
     <form id="form1" runat="server">
-        <div>
-            <asp:Label ID="lblStaffId" runat="server" Style="left: 14px; top: 53px; position: absolute; bottom: 602px;" Text="Staff ID"></asp:Label>
-            <asp:TextBox ID="txtStaffID" runat="server" Style="left: 95px; top: 50px; position: absolute"></asp:TextBox>
-            <asp:Button ID="Button3" runat="server" Text="Find" Style="left: 230px; top: 50px; position: absolute" OnClick="Button3_Click"/>
-        </div>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h3 class="text-center mb-4">Staff Data Entry</h3>
+                    <div class="card shadow p-4">
+                        <div class="mb-3 row">
+                            <label for="txtStaffID" class="col-sm-3 col-form-label">Staff ID</label>
+                            <div class="col-sm-6">
+                                <asp:TextBox ID="txtStaffID" runat="server" CssClass="form-control" />
+                            </div>
+                            <div class="col-sm-3">
+                                <asp:Button ID="Button3" runat="server" Text="Find" CssClass="btn btn-secondary w-100" OnClick="Button3_Click" />
+                            </div>
+                        </div>
 
-        <div>
-            <asp:Label ID="lblName" runat="server" Style="left: 14px; top: 82px; position: absolute;" Text="Name" Width="37"></asp:Label>
-            <asp:TextBox ID="txtName" runat="server" Style="left: 95px; top: 76px; position: absolute"></asp:TextBox>
-        </div>
+                        <div class="mb-3 row">
+                            <label for="txtName" class="col-sm-3 col-form-label">Name</label>
+                            <div class="col-sm-9">
+                                <asp:TextBox ID="txtName" runat="server" CssClass="form-control" />
+                            </div>
+                        </div>
 
-        <div>
-            <asp:Label ID="lblEmail" runat="server" Style="left: 14px; top: 114px; position: absolute" Text="Email"></asp:Label>
-            <asp:TextBox ID="txtEmail" runat="server" Style="left: 95px; top: 106px; position: absolute"></asp:TextBox>
-        </div>
+                        <div class="mb-3 row">
+                            <label for="txtEmail" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+                                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" />
+                            </div>
+                        </div>
 
-        <div>
-            <asp:Label ID="lblPassword" runat="server" Style="left: 14px; top: 147px; position: absolute" Text="Password"></asp:Label>
-            <asp:TextBox ID="txtPassword" runat="server" Style="left: 95px; top: 145px; position: absolute"></asp:TextBox>
-        </div>
-        <div>
-            <asp:Label ID="lblDateAdded" runat="server" Style="left: 14px; top: 231px; position: absolute" Text="Date Added"></asp:Label>
-            <asp:TextBox ID="txtDateAdded" runat="server" Style="left: 95px; top: 224px; position: absolute"></asp:TextBox>
-        </div>
+                        <div class="mb-3 row">
+                            <label for="txtPassword" class="col-sm-3 col-form-label">Password</label>
+                            <div class="col-sm-9">
+                                <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" />
+                            </div>
+                        </div>
 
-        <div>
-            <asp:Label ID="lblLastLogin" runat="server" Style="left: 14px; top: 265px; position: absolute; width: 95px;" Text="Last Login"></asp:Label>
-            <asp:TextBox ID="txtLastLogin" runat="server" Style="left: 95px; top: 260px; position: absolute" ReadOnly="true"></asp:TextBox>
-        </div>
-        <div>
-            <asp:CheckBox ID="ChkAdmin" runat="server" Style="left: 95px; top: 184px; position: absolute" Text="IsAdmin" />
-        </div>
-        <div>
-        </div>
+                        <div class="mb-3 row">
+                            <label for="ChkAdmin" class="col-sm-3 col-form-label">Admin</label>
+                            <div class="col-sm-9">
+                                <asp:CheckBox ID="ChkAdmin" runat="server" CssClass="form-check-input me-2" />
+                                <label class="form-check-label" for="ChkAdmin">Is Admin</label>
+                            </div>
+                        </div>
 
-        <div>
-            <asp:Button ID="Button1" runat="server" Style="left: 14px; top: 569px; position: absolute; width: 66px;" Text="OK" OnClick="btnOK_Click" />
-            <asp:Button ID="Button2" runat="server" Style="left: 109px; top: 568px; position: absolute; width: 69px;" Text="Cancel" OnClick="BtnCancel_Click" />
+                        <div class="mb-3 row">
+                            <label for="txtDateAdded" class="col-sm-3 col-form-label">Date Added</label>
+                            <div class="col-sm-9">
+                                <asp:TextBox ID="txtDateAdded" runat="server" CssClass="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label for="txtLastLogin" class="col-sm-3 col-form-label">Last Login</label>
+                            <div class="col-sm-9">
+                                <asp:TextBox ID="txtLastLogin" runat="server" CssClass="form-control" ReadOnly="true" />
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <asp:Button ID="Button1" runat="server" Text="OK" CssClass="btn btn-primary me-2" OnClick="btnOK_Click" />
+                            <asp:Button ID="Button2" runat="server" Text="Cancel" CssClass="btn btn-secondary" OnClick="BtnCancel_Click" />
+                        </div>
+
+                        <div class="mt-3 text-danger text-center">
+                            <asp:Label ID="lblError" runat="server" Text="[lblError]"></asp:Label>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-             <asp:Label ID="lblError" runat="server" Style="left: 14px; top: 320px; position: absolute; width: 271px; height: 224px;" Text="[lblError]"></asp:Label>
     </form>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

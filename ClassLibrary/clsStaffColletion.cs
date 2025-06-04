@@ -24,10 +24,10 @@ namespace ClassLibrary
 
             //Populate the array
             PopulateArray(DB);
-          
-        }
 
-        public List<clsStaff> StaffList 
+        }
+        //Public property for the staff list
+        public List<clsStaff> StaffList
         {
             get
             {
@@ -40,7 +40,7 @@ namespace ClassLibrary
                 mStaffList = value;
             }
         }
-        public int Count 
+        public int Count
         {
             get
             {
@@ -51,7 +51,7 @@ namespace ClassLibrary
                 //Ammend later
             }
         }
-        //Public property for the staff list
+
         public clsStaff ThisStaff
         {
             get
@@ -78,7 +78,12 @@ namespace ClassLibrary
             DB.AddParameter("@DateAdded", mThisStaff.DateAdded);
             DB.AddParameter("@LastLogin", mThisStaff.LastLogin);
             //Execute the stored procedure
-            return DB.Execute("sproc_tblStaff_Insert");
+            int newId = DB.Execute("sproc_tblStaff_Insert");
+
+            // Log the action
+            LogAction("CREATE", $"Added new staff: {mThisStaff.Name} (ID: {newId})");
+
+            return newId;
 
         }
 
@@ -88,7 +93,7 @@ namespace ClassLibrary
             //Connect the database
             clsDataConnection DB = new clsDataConnection();
             //Set the parameters for the stored procedure
-            DB.AddParameter("@Staff_ID", mThisStaff.StaffId);
+            DB.AddParameter("@StaffID", mThisStaff.StaffId);
             DB.AddParameter("@Name", mThisStaff.Name);
             DB.AddParameter("@Email", mThisStaff.Email);
             DB.AddParameter("@Password", mThisStaff.Password);
@@ -96,7 +101,14 @@ namespace ClassLibrary
             DB.AddParameter("@DateAdded", mThisStaff.DateAdded);
             DB.AddParameter("@LastLogin", mThisStaff.LastLogin);
             //Execute the stored procedure
-            return DB.Execute("sproc_tblStaff_Update");
+            int result = DB.Execute("sproc_tblStaff_Update");
+
+            // Log the action
+            LogAction("UPDATE", $"Updated staff ID: {mThisStaff.StaffId}");
+
+            return result;
+
+
         }
 
         public void Delete()
@@ -108,7 +120,11 @@ namespace ClassLibrary
             DB.AddParameter("StaffID", mThisStaff.StaffId);
             //execute the stored procedure
             DB.Execute("sproc_tblStaff_Delete");
+
+            // Log the action
+            LogAction("DELETE", $"Deleted staff ID: {mThisStaff.StaffId}");
         }
+         
 
         public void ReportByName(string Name)
         {
@@ -123,6 +139,20 @@ namespace ClassLibrary
 
             //Populate the Array
             PopulateArray(DB);
+        }
+
+        private void LogAction(string action, string details)
+        {
+            try
+            {
+                clsDataConnection DB = new clsDataConnection();
+                DB.AddParameter("@UserID", ThisStaff.StaffId); // Currently logged-in admin
+                DB.AddParameter("@Action", action);
+                DB.AddParameter("@TimeStamp", DateTime.Now);
+                DB.AddParameter("@Details", details);
+                DB.Execute("sproc_tblActivityLogs_Insert");
+            }
+            catch { /* Silent fail - optional error handling */ }
         }
 
         void PopulateArray(clsDataConnection DB)

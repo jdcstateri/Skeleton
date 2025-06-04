@@ -56,17 +56,6 @@ namespace ClassLibrary
 
         public bool Find(int StaffId)
         {
-            ////Set the private data members to the test data value
-            //mStaffId = 21;
-            //mStaffName = "John Doe";
-            //mStaffEmail = "john@gmail.com";
-            //mPassword = "12345678";
-            //mIsAdmin = true;
-            //mDateAdded = Convert.ToDateTime("25/12/2022");
-            //mLastLogin = Convert.ToDateTime("25/12/2022");
-            ////always return true
-            //return true;
-
             clsDataConnection DB = new clsDataConnection();
             //add the parameter for the Staff id to search for
             DB.AddParameter("@StaffId", StaffId);
