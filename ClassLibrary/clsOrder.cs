@@ -78,21 +78,25 @@ namespace ClassLibrary
                 {
                     error += "Account ID must be greater than zero. ";
                 }
-                if (DateOfDelivery < DateTime.Now)
+                if (DateOfDelivery < DateTime.Now.Date)
                 {
                     error += "Date of delivery cannot be in the past. ";
+                }
+                if (DateOfDelivery > DateTime.Now.AddDays(180))
+                {
+                    error += "Date of delivery cannot be more than 180 days in the future. ";
                 }
                 if (string.IsNullOrWhiteSpace(DeliveryInstructions))
                 {
                     error += "Delivery instructions cannot be empty. ";
                 }
-                if (Delivered == true)
-                {
-                    error += "Order cannot be marked as delivered at the time of creation. ";
-                }
                 if (DeliveryInstructions.Length > 50)
                 {
                     error += "Delivery instructions cannot exceed 50 characters. ";
+                }
+                if (Delivered == true)
+                {
+                    error += "Order cannot be marked as delivered at the time of creation. ";
                 }
                 if (orderLineCollection.GetCount() == 0)
                 {

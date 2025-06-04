@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO.Ports;
 using ClassLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -57,6 +59,76 @@ namespace Testing6
             string TestData = "Out for delivery";
             NewOrderLine.SetStatus(TestData);
             Assert.AreEqual(NewOrderLine.GetStatus(), TestData);
+        }
+
+        [TestMethod]
+        public void QuantityPropertyOK()
+        {
+            clsOrderLine NewOrderLine = new clsOrderLine();
+            int TestData = 5;
+            NewOrderLine.SetQuantity(TestData);
+            Assert.AreEqual(NewOrderLine.GetQuantity(), TestData);
+        }
+
+        [TestMethod]
+        public void FindOrderLineByIdOK()
+        {
+            clsOrderLineCollection TestCollection = new clsOrderLineCollection();
+            clsOrderLine TestOrderLine = new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1);
+            TestOrderLine.SetOrderId(6);
+            TestCollection.AddOrderline(TestOrderLine);
+
+            clsOrderLine NewOrderLine = new clsOrderLine();
+            clsOrderLineCollection found = NewOrderLine.Find(6);
+
+            Boolean collectionsMatch = TestCollection.Equals(found);
+
+            Assert.AreEqual(true, collectionsMatch);
+        }
+
+        [TestMethod]
+        public void TestOrderIdFound()
+        {
+            clsOrderLine NewOrderLine = new clsOrderLine();
+            clsOrderLineCollection found = NewOrderLine.Find(6);
+            
+            Boolean foundOK = true;
+
+            foreach (clsOrderLine line in found.GetOrderLines())
+            {
+                if (line.GetOrderId() != 6)
+                {
+                    foundOK = false;
+                }
+            }
+
+            Assert.AreEqual(true, foundOK);
+        }
+
+
+        [TestMethod]
+        public void ValidMethodOK()
+        {
+            clsOrderLine NewOrderLine = new clsOrderLine();
+            string error = NewOrderLine.Valid(1, 1, DateTime.Now, 100.00, "Pending", 2);
+
+            Assert.AreEqual(error, "");
+        }
+
+        [TestMethod]
+        public void ValidMethodExtremeLessThanMin()
+        {
+            clsOrderLine NewOrderLine = new clsOrderLine();
+            string error = NewOrderLine.Valid(-100, 1, DateTime.Now, 100.00, "Pending", 2);
+            Assert.AreNotEqual(error, "");
+        }
+
+        [TestMethod]
+        public void ValidMethodInvalidLessThanMin()
+        {
+            clsOrderLine NewOrderLine = new clsOrderLine();
+            string error = NewOrderLine.Valid(0, 1, DateTime.Now, 100.00, "Pending", 2);
+            Assert.AreNotEqual(error, "");
         }
     }
 }
