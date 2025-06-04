@@ -41,7 +41,7 @@
                         <div class="mb-3 row">
                             <label for="txtPassword" class="col-sm-3 col-form-label">Password</label>
                             <div class="col-sm-9">
-                                <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" />
+                                <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control"/>
                             </div>
                         </div>
 
