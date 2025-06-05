@@ -51,6 +51,30 @@ namespace ClassLibrary
             db.Execute("sproc_tblOrder_Delete");
         }
 
+        public bool Equals(clsOrderCollection other)
+        {
+            if (this.GetCount() != other.GetCount())
+            {
+                return false;
+            }
+
+            for (int i = 0; i < this.GetCount(); i++)
+            {
+                clsOrder thisLine = this.orderList[i];
+                clsOrder otherLine = other.orderList[i];
+
+                if (thisLine.GetOrderId() != otherLine.GetOrderId() ||
+                    thisLine.GetDateOfDelivery() != otherLine.GetDateOfDelivery() ||
+                    thisLine.GetDelivered() != otherLine.GetDelivered() ||
+                    thisLine.GetDeliveryInstructions() != otherLine.GetDeliveryInstructions())
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public void AddOrder(clsOrder order)
         {
             orderList.Add(order);
@@ -82,6 +106,30 @@ namespace ClassLibrary
         {
             orderList = orders;
             count = orders.Count;
+        }
+
+        public int GetCount()
+        {
+            return count;
+        }
+
+        public void SetCount(int value)
+        {
+            count = value;
+        }
+
+        // for debugging, do not use in production code
+        public void GetOrderCollectionByText()
+        {
+            foreach (clsOrder order in orderList)
+            {
+                Console.WriteLine("Order ID: " + order.GetOrderId());
+                Console.WriteLine("Date Of Delivery: " + order.GetDateOfDelivery());
+                Console.WriteLine("Delivered: " + order.GetDelivered());
+                Console.WriteLine("Delivery Instructions: " + order.GetDeliveryInstructions());
+
+                Console.WriteLine("-----------------------------");
+            }
         }
     }
 }
