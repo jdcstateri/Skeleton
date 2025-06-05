@@ -24,6 +24,9 @@ public partial class _1Viewer : System.Web.UI.Page
                 lblAccountId.Visible = true;
                 txtAccountId.Visible = true;
                 btnSearchByAccountId.Visible = true;
+                string displayText = "Input an account ID to show an order";
+                ListItem listItem = new ListItem(displayText);
+                lstOrders.Items.Add(listItem);
             }
             else
             {
@@ -39,19 +42,44 @@ public partial class _1Viewer : System.Web.UI.Page
     protected void btnSearchOrderById_Click(object sender, System.EventArgs e)
     {
         string id = txtAccountId.Text;
+        lblError.Text = "";
 
         if (string.IsNullOrEmpty(id))
         {
             lblError.Text = "Please enter an Account ID.";
+            string displayText = "Input an account ID to show an order";
+            ListItem listItem = new ListItem(displayText);
+            lstOrders.Items.Clear();
+            lstOrders.Items.Add(listItem);
             return;
         }
         if (!Regex.IsMatch(id, "^[0-9]+$"))
         {
             lblError.Text = "Please enter a valid Account ID.";
+            string displayText = "Input an account ID to show an order";
+            lstOrders.Items.Clear();
+            ListItem listItem = new ListItem(displayText);
+            lstOrders.Items.Add(listItem);
             return;
         }
 
         DisplayOrders(Convert.ToInt32(id));
+    }
+
+    protected void btnSearchForOrderLines_Click(object sender, System.EventArgs e)
+    {
+        if (lstOrders.SelectedIndex != -1)
+        {
+            int selectedOrderId = Convert.ToInt32(lstOrders.SelectedValue);
+            int accountId = (Session["CustomerUser"] as clsCustomer).AccountID;
+
+            DisplayOrderLines(selectedOrderId, accountId);
+        }
+        else
+        {
+            lblError.Text = "Please select an order to view its order lines.";
+            return;
+        }
     }
 
     protected void DisplayOrders(int accountId)
@@ -81,6 +109,41 @@ public partial class _1Viewer : System.Web.UI.Page
                      " | Date Of Delivery: " + order.GetDateOfDelivery().ToString() +
                      " | Order Delivered?: " + order.GetDelivered() +
                      " | Delivery Instuctions: " + order.GetDeliveryInstructions();
+
+            ListItem listItem = new ListItem(displayText, order.GetOrderId().ToString());
+            lstOrders.Items.Add(listItem);
+            counter++;
+        }
+    }
+
+    protected void DisplayOrderLines(int orderid, int accountId)
+    {
+        clsCustomer aCustomer = Session["CustomerUser"] as clsCustomer;
+        clsOrderLine anOrderLine = new clsOrderLine();
+
+        clsOrderLineCollection orderLineCollection = anOrderLine.FindAll(orderid);
+
+        int counter = 1;
+        string displayText = "";
+
+        lstOrders.Items.Clear();
+
+        if (orderLineCollection.GetCount() == 0)
+        {
+            displayText = "No orders found under this account ID";
+            ListItem listItem = new ListItem(displayText, counter.ToString());
+            lstOrders.Items.Add(listItem);
+            return;
+        }
+
+        foreach (clsOrderLine orderLine in orderLineCollection.GetOrderLines())
+        {
+            displayText = "Order ID: " + orderLine.GetOrderId() +
+                     " | Account Id: " + orderLine.GetItemId() +
+                     " | Date Of Delivery: " + orderLine.GetDateAdded().ToString() +
+                     " | Order Delivered?: " + orderLine.GetStatus() +
+                     " | Delivery Instuctions: " + orderLine.GetAgreedPrice() + 
+                     " | Quantity: " + orderLine.GetQuantity();
 
             ListItem listItem = new ListItem(displayText, counter.ToString());
             lstOrders.Items.Add(listItem);
