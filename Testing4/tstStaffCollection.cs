@@ -12,7 +12,7 @@ namespace Testing4
         public void InstanceOK()
         {
             //create an instance of th class we want to crete
-            clsStaffColletion AllStaff = new clsStaffColletion();
+            clsStaffCollection AllStaff = new clsStaffCollection();
             //test to seet it exist
             Assert.IsNotNull(AllStaff);
         }
@@ -21,7 +21,7 @@ namespace Testing4
         public void StaffListOK()
         {
             //Create Instance of Staff Class
-            clsStaffColletion AllStaff = new clsStaffColletion();
+            clsStaffCollection AllStaff = new clsStaffCollection();
 
             //Create test data to assign the property
             //In this case data has to be list of objects
@@ -55,7 +55,7 @@ namespace Testing4
         public void ThisStaffPropertyOK()
         {
             //Create an instance of a staff class
-            clsStaffColletion AllStaff = new clsStaffColletion();
+            clsStaffCollection AllStaff = new clsStaffCollection();
 
             //Create some test data
             clsStaff TestStaff= new clsStaff();
@@ -80,7 +80,7 @@ namespace Testing4
         public void ListAndCountOK()
         {
             //create an instance of staff class
-            clsStaffColletion AllStaff = new clsStaffColletion();
+            clsStaffCollection AllStaff = new clsStaffCollection();
 
             //Create some test data
             List<clsStaff> TestList = new List<clsStaff>();
@@ -112,7 +112,7 @@ namespace Testing4
         public void AddMethodOK()
         {
             //Create a instance of a class we want to create
-            clsStaffColletion AllStaff = new clsStaffColletion();
+            clsStaffCollection AllStaff = new clsStaffCollection();
             //Create the item of the test data
             clsStaff TestItem = new clsStaff();
             //Variable to store the primary key
@@ -141,7 +141,7 @@ namespace Testing4
         public void UpdateMethodOK()
         {
             //Create a instance of a class we want to create
-            clsStaffColletion AllStaff = new clsStaffColletion();
+            clsStaffCollection AllStaff = new clsStaffCollection();
             //Create the item of the test data
             clsStaff TestItem = new clsStaff();
             //Variable to store the primary key
@@ -187,10 +187,10 @@ namespace Testing4
         public void ReportByStaffNameMethodOK()
         {
             //create an instance of Staff Name Method
-            clsStaffColletion AllStaff = new clsStaffColletion();
+            clsStaffCollection AllStaff = new clsStaffCollection();
 
             //create an instance of a filter Name data
-            clsStaffColletion FilteredName = new clsStaffColletion();
+            clsStaffCollection FilteredName = new clsStaffCollection();
 
             //apply blank string (should return all the records);
             FilteredName.ReportByName("");
@@ -204,7 +204,7 @@ namespace Testing4
         {
 
             //Create instance of the class we want to create
-            clsStaffColletion FilteredName = new clsStaffColletion();
+            clsStaffCollection FilteredName = new clsStaffCollection();
 
             //Apply the name that doesn't exist
             FilteredName.ReportByName("xxxxxx");
@@ -217,7 +217,7 @@ namespace Testing4
         public void ReportByStaffNameTestDataFound()
         {
             //Create an instance of a filtered data
-            clsStaffColletion FilteredStaff = new clsStaffColletion();
+            clsStaffCollection FilteredStaff = new clsStaffCollection();
 
             //variable to store the outcome
             Boolean OK = true;

@@ -24,7 +24,7 @@ public partial class _1_ConfirmDelete : System.Web.UI.Page
     protected void BtnYes_Click(object sender, EventArgs e)
     {
         //Create an instance of the staff collection
-        clsStaffColletion Staff = new clsStaffColletion();
+        clsStaffCollection Staff = new clsStaffCollection();
         //Find the record to delete
         Staff.ThisStaff.Find(StaffId);
         //Delete the record

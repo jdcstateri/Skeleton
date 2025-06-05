@@ -58,7 +58,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
             AStaff.IsAdmin = ChkAdmin.Checked;
 
             //create a new instance of the staff collection
-            clsStaffColletion StaffList = new clsStaffColletion();
+            clsStaffCollection StaffList = new clsStaffCollection();
 
             //CRITICAL FIX: Set the current user BEFORE setting ThisStaff
             //This ensures the logging has the correct user context
@@ -128,7 +128,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
     void DisplayStaff()
     {
         //create an instance of the Staff Collection
-        clsStaffColletion Staff = new clsStaffColletion();
+        clsStaffCollection Staff = new clsStaffCollection();
         //Find the record to be updated
         Staff.ThisStaff.Find(StaffID);
         //display the data for the record

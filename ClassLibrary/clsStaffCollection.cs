@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ClassLibrary
 {
-    public class clsStaffColletion
+    public class clsStaffCollection
     {
 
         //Private data member for the list
@@ -13,7 +13,7 @@ namespace ClassLibrary
         clsStaff mThisStaff = new clsStaff();
 
         //Constructor for the class
-        public clsStaffColletion()
+        public clsStaffCollection()
         {
 
             //Object for the data connnect
