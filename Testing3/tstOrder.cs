@@ -229,7 +229,7 @@ namespace Testing3
             bool OK = true;
             NewOrder.SetOrderId(6);
             clsOrderCollection found = NewOrder.Find(NewOrder.GetOrderId(), "OrderId");
-            NewOrder.SetOrderLineCollection(testOrderLine.Find(NewOrder.GetOrderId()));
+            NewOrder.SetOrderLineCollection(testOrderLine.FindAll(NewOrder.GetOrderId()));
 
             clsOrderLineCollection testCollection = new clsOrderLineCollection();
 

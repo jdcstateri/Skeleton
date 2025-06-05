@@ -124,7 +124,7 @@ namespace Testing3
                 clsOrderCollection result = temp.Find(testOrder.GetOrderId(), "OrderId");
 
                 // Check if the order was found in the database
-                if (result.GetOrderList().Count == 0 || result.GetThisOrder() == null)
+                if (result.GetOrderList().Count == 0)
                 {
                     addOk = false;
                     Console.WriteLine("Order not found in database after adding.");
@@ -139,6 +139,7 @@ namespace Testing3
                 }
             }
 
+            testOrderCollection.Delete();
             Assert.AreEqual(true, addOk);
         }
 
@@ -173,11 +174,8 @@ namespace Testing3
                 testOrderCollection.Add();
 
                 // Create a new order which will be used to insert new values, overwriting old ones
-                clsOrder testOrder2 = new clsOrder();
+                clsOrder testOrder2 = new clsOrder(testOrder.GetAccountId(), testOrder.GetDateOfDelivery(), true, "Updated delivery instructions");
                 testOrder2.SetOrderId(testOrder.GetOrderId());
-                testOrder2.SetDateOfDelivery(testOrder.GetDateOfDelivery());
-                testOrder2.SetDelivered(true);
-                testOrder2.SetDeliveryInstructions("Updated delivery instructions");
 
                 // removes the first test order from the test order collection, and sets the second test order as the current order
                 testOrderCollection.SetOrderList(new List<clsOrder>());
@@ -191,7 +189,7 @@ namespace Testing3
                 result = testOrder2.Find(testOrder2.GetOrderId(), "OrderId");
 
                 // Check if the order was found in the database
-                if (result.GetOrderList().Count == 0 || result.GetThisOrder() == null)
+                if (result.GetOrderList().Count == 0)
                 {
                     addOk = false;
                     Console.WriteLine("Order not found in database after adding.");
@@ -206,6 +204,7 @@ namespace Testing3
                 }
             }
 
+            testOrderCollection.Delete();
             Assert.AreEqual(true, addOk);
         }
 

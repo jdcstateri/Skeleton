@@ -89,7 +89,7 @@ namespace Testing6
 
             // Find the order lines by OrderId
             clsOrderLine NewOrderLine = new clsOrderLine();
-            clsOrderLineCollection found = NewOrderLine.Find(6);
+            clsOrderLineCollection found = NewOrderLine.FindAll(6);
 
             Boolean collectionsMatch = TestCollection.Equals(found);
 
@@ -101,7 +101,7 @@ namespace Testing6
         {
             // Create an instance of clsOrderline and find order lines by OrderId
             clsOrderLine NewOrderLine = new clsOrderLine();
-            clsOrderLineCollection found = NewOrderLine.Find(6);
+            clsOrderLineCollection found = NewOrderLine.FindAll(6);
 
             Boolean foundOK = true;
 
@@ -122,7 +122,7 @@ namespace Testing6
         {
             // Create an instance of clsOrderLine and find order lines by OrderId
             clsOrderLine NewOrderLine = new clsOrderLine();
-            clsOrderLineCollection found = NewOrderLine.Find(6);
+            clsOrderLineCollection found = NewOrderLine.FindAll(6);
 
             Boolean foundOK = true;
 
@@ -143,7 +143,7 @@ namespace Testing6
         {
             // Create an instance of clsOrderLine and find order lines by OrderId
             clsOrderLine NewOrderLine = new clsOrderLine();
-            clsOrderLineCollection found = NewOrderLine.Find(6);
+            clsOrderLineCollection found = NewOrderLine.FindAll(6);
 
             Boolean foundOK = true;
 
@@ -164,7 +164,7 @@ namespace Testing6
         {
             // Create an instance of clsOrderLine and find order lines by OrderId
             clsOrderLine NewOrderLine = new clsOrderLine();
-            clsOrderLineCollection found = NewOrderLine.Find(6);
+            clsOrderLineCollection found = NewOrderLine.FindAll(6);
 
             Boolean foundOK = true;
 
@@ -185,7 +185,7 @@ namespace Testing6
         {
             // Create an instance of clsOrderLine and find order lines by OrderId
             clsOrderLine NewOrderLine = new clsOrderLine();
-            clsOrderLineCollection found = NewOrderLine.Find(6);
+            clsOrderLineCollection found = NewOrderLine.FindAll(6);
 
             Boolean foundOK = true;
 
@@ -206,7 +206,7 @@ namespace Testing6
         {
             // Create an instance of clsOrderLine and find order lines by OrderId
             clsOrderLine NewOrderLine = new clsOrderLine();
-            clsOrderLineCollection found = NewOrderLine.Find(6);
+            clsOrderLineCollection found = NewOrderLine.FindAll(6);
 
             Boolean foundOK = true;
 

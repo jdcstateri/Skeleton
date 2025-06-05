@@ -23,13 +23,13 @@ namespace ClassLibrary
                 db.AddParameter("DateAdded", DateTime.Now);
                 db.AddParameter("ItemId", item.ProductId);
                 db.AddParameter("Status", "Pending");
-                db.AddParameter("AgreedPrice", (item.Quantity * item.Cost));
+                db.AddParameter("AgreedPrice", item.Cost);
                 db.AddParameter("Quantity", item.Quantity);
                 db.Execute("sproc_tblOrderLines_Insert");
             }
         }
 
-        public void Update()
+        public void Edit()
         {
             clsOrderLine line = GetThisOrderLine();
 

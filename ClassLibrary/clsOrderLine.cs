@@ -26,12 +26,12 @@ namespace ClassLibrary
 
         public clsOrderLine() {}
 
-        public clsOrderLineCollection Find(int orderId)
+        public clsOrderLineCollection FindAll(int orderId)
         {
             clsDataConnection db = new clsDataConnection();
             clsOrderLineCollection orderLineCollection = new clsOrderLineCollection();
             db.AddParameter("OrderId", orderId);
-            db.Execute("sproc_tblOrderLines_Find");
+            db.Execute("sproc_tblOrderLines_FindAll");
 
             if (db.Count > 0)
             {
@@ -51,13 +51,32 @@ namespace ClassLibrary
 
                     index++;
                 }
+            }
 
-                return orderLineCollection;
-            }
-            else
+            return orderLineCollection;
+        }
+
+        public clsOrderLineCollection FindOrderLine(int orderId, int itemId)
+        {
+            clsDataConnection db = new clsDataConnection();
+            clsOrderLineCollection orderLineCollection = new clsOrderLineCollection();
+            db.AddParameter("OrderId", orderId);
+            db.AddParameter("ItemId", itemId);
+            db.Execute("sproc_tblOrderLines_Find");
+
+            if (db.Count == 1)
             {
-                return orderLineCollection;
+                clsOrderLine line = new clsOrderLine();
+                line.SetOrderId(Convert.ToInt32(db.DataTable.Rows[0]["OrderId"]));
+                line.SetItemId(Convert.ToInt32(db.DataTable.Rows[0]["ItemId"]));
+                line.SetDateAdded(Convert.ToDateTime(db.DataTable.Rows[0]["DateAdded"]));
+                line.SetStatus(Convert.ToString(db.DataTable.Rows[0]["Status"]));
+                line.SetAgreedPrice(Convert.ToDouble(db.DataTable.Rows[0]["AgreedPrice"]));
+                line.SetQuantity(Convert.ToInt32(db.DataTable.Rows[0]["Quantity"]));
+                orderLineCollection.AddOrderline(line);
             }
+
+            return orderLineCollection;
         }
 
         public string Valid(int orderId, int itemId, DateTime dateAdded, double agreedPrice, string status, int quantity)
