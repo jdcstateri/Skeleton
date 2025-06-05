@@ -42,6 +42,15 @@ namespace ClassLibrary
             db.Execute("sproc_tblOrder_Update");
         }
 
+        public void Delete()
+        {
+            clsOrder order = GetThisOrder();
+
+            clsDataConnection db = new clsDataConnection();
+            db.AddParameter("OrderId", order.GetOrderId());
+            db.Execute("sproc_tblOrder_Delete");
+        }
+
         public bool Equals(clsOrderCollection other)
         {
             if (this.GetCount() != other.GetCount())
@@ -64,15 +73,6 @@ namespace ClassLibrary
             }
 
             return true;
-        }
-
-        public void Delete()
-        {
-            clsOrder order = GetThisOrder();
-
-            clsDataConnection db = new clsDataConnection();
-            db.AddParameter("OrderId", order.GetOrderId());
-            db.Execute("sproc_tblOrder_Delete");
         }
 
         public void AddOrder(clsOrder order)
