@@ -70,7 +70,7 @@ namespace ClassLibrary
                     thisLine.GetStatus() != otherLine.GetStatus() ||
                     thisLine.GetAgreedPrice() != otherLine.GetAgreedPrice() ||
                     thisLine.GetQuantity() != otherLine.GetQuantity())
-                {
+                { 
                     return false;
                 }
             }
