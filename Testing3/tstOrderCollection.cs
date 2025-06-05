@@ -12,6 +12,7 @@ namespace Testing3
         [TestMethod]
         public void InstanceOK()
         {
+            // Create an instance of clsOrderCollection
             clsOrderCollection orderCollection = new clsOrderCollection();
             Assert.IsNotNull(orderCollection);
         }
@@ -19,6 +20,7 @@ namespace Testing3
         [TestMethod]
         public void OrderListOK()
         {
+            // Create an instance of clsOrderCollection and check if the order list is initialized
             clsOrderCollection orderCollection = new clsOrderCollection();
             List<clsOrder> testList = new List<clsOrder>();
             orderCollection.SetOrderList(testList);
@@ -29,6 +31,7 @@ namespace Testing3
         [TestMethod]
         public void CountPropertyOK()
         {
+            // Create an instance of clsOrderCollection and check if the count property is initialized correctly
             clsOrderCollection orderCollection = new clsOrderCollection();
             int testCount = 0;
             orderCollection.count = testCount;
@@ -39,6 +42,7 @@ namespace Testing3
         [TestMethod]
         public void ThisOrderPropertyOK()
         {
+            // Create an instance of clsOrderCollection and check if the ThisOrder property is initialized correctly
             clsOrderCollection orderCollection = new clsOrderCollection();
             clsOrder testOrder = new clsOrder();
             orderCollection.SetThisOrder(testOrder);
@@ -48,6 +52,7 @@ namespace Testing3
         [TestMethod]
         public void AddOrderMethodOK()
         {
+            // Create an instance of clsOrderCollection and add a test order to it
             clsOrderCollection orderCollection = new clsOrderCollection();
             clsOrder testOrder = new clsOrder();
             orderCollection.AddOrder(testOrder);
@@ -58,6 +63,7 @@ namespace Testing3
         [TestMethod]
         public void RemoveOrderMethodOK()
         {
+            // Create an instance of clsOrderCollection, add a test order, and then remove it
             clsOrderCollection orderCollection = new clsOrderCollection();
             clsOrder testOrder = new clsOrder();
             orderCollection.AddOrder(testOrder);
@@ -117,12 +123,14 @@ namespace Testing3
                 clsOrder temp = new clsOrder();
                 clsOrderCollection result = temp.Find(testOrder.GetOrderId(), "OrderId");
 
+                // Check if the order was found in the database
                 if (result.GetOrderList().Count == 0 || result.GetThisOrder() == null)
                 {
                     addOk = false;
                     Console.WriteLine("Order not found in database after adding.");
                 }
 
+                // Checks that the found order's values match the temporary test order
                 if (!result.Equals(testOrderCollection))
                 {
                     addOk = false;

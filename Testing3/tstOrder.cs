@@ -12,6 +12,7 @@ namespace Testing3
         [TestMethod]
         public void InstanceOK()
         {
+            // Create an instance of clsOrder
             clsOrder NewOrder = new clsOrder();
             Assert.IsNotNull(NewOrder);
         }
@@ -19,6 +20,7 @@ namespace Testing3
         [TestMethod]
         public void OrderIdPropertyOK()
         {
+            // Create an instance of clsOrder and check if the OrderId property is initialized 
             clsOrder NewOrder = new clsOrder();
             int testOrderId = 6;
             NewOrder.SetOrderId(testOrderId);
@@ -28,6 +30,7 @@ namespace Testing3
         [TestMethod]
         public void AccountIdPropertyOK()
         {
+            // Create an instance of clsOrder and check if the AccountId property is initialized
             clsOrder NewOrder = new clsOrder();
             int testOrderId = 6;
             NewOrder.SetAccountId(testOrderId);
@@ -37,6 +40,7 @@ namespace Testing3
         [TestMethod]
         public void TotalCostPropertyOK()
         {
+            // Create an instance of clsOrder and check if the TotalCost property is initialized
             clsOrder NewOrder = new clsOrder();
             double TestData = 499.99;
             NewOrder.SetTotalCost(TestData);
@@ -46,6 +50,7 @@ namespace Testing3
         [TestMethod]
         public void DateOfDeliveryPropertyOK()
         {
+            // Create an instance of clsOrder and check if the DateOfDelivery property is initialized
             clsOrder NewOrder = new clsOrder();
             DateTime TestData = DateTime.Now.Date;
             NewOrder.SetDateOfDelivery(TestData);
@@ -55,6 +60,7 @@ namespace Testing3
         [TestMethod]
         public void DeliveredPropertyOK()
         {
+            // Create an instance of clsOrder and check if the Delivered property is initialized
             clsOrder NewOrder = new clsOrder();
             bool TestData = true;
             NewOrder.SetDelivered(TestData);
@@ -64,6 +70,7 @@ namespace Testing3
         [TestMethod]
         public void DeliveryInstructionsPropertyOK()
         {
+            // Create an instance of clsOrder and check if the DeliveryInstructions property is initialized
             clsOrder NewOrder = new clsOrder();
             string TestData = "Knock on the window";
             NewOrder.SetDeliveryInstructions(TestData);
@@ -73,6 +80,7 @@ namespace Testing3
         [TestMethod]
         public void OrderLineCollectionPropertyOK()
         {
+            // Create an instance of clsOrder and check if the OrderLineCollection property is initialized
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection TestData = new clsOrderLineCollection();
             NewOrder.SetOrderLineCollection(TestData);
@@ -80,8 +88,9 @@ namespace Testing3
         }
 
         [TestMethod]
-        public void FindOrderMethodOK()
+        public void FindOrderMethodOK_ByOrderId()
         {
+            // Create an instance of clsOrder and use the Find method to retrieve an order by OrderId
             clsOrder NewOrder = new clsOrder();
             NewOrder.SetOrderId(6);
             clsOrderCollection found = NewOrder.Find(NewOrder.GetOrderId(), "OrderId");
@@ -97,8 +106,27 @@ namespace Testing3
         }
 
         [TestMethod]
+        public void FindOrderMethodOK_ByAccountId()
+        {
+            // Create an instance of clsOrder and use the Find method to retrieve an order by AccountId
+            clsOrder NewOrder = new clsOrder();
+            NewOrder.SetAccountId(1);
+            clsOrderCollection found = NewOrder.Find(NewOrder.GetAccountId(), "AccountId");
+
+            if (found.count >= 1)
+            {
+                Assert.IsTrue(true);
+            }
+            else
+            {
+                Assert.IsTrue(false);
+            }
+        }
+
+        [TestMethod]
         public void TestValidMethodOK()
         {
+            // Create an instance of clsOrder and validate it with valid parameters
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -110,6 +138,7 @@ namespace Testing3
         [TestMethod]
         public void TestAccountIdFound()
         {
+            // Create an instance of clsOrder and check if the AccountId is found correctly using existing order
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
             NewOrder.SetOrderId(6);
@@ -130,6 +159,7 @@ namespace Testing3
         [TestMethod]
         public void TestDateOfDeliveryFound()
         {
+            // Create an instance of clsOrder and check if the DateOfDelivery is found correctly using existing order
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
             NewOrder.SetOrderId(6);
@@ -150,6 +180,7 @@ namespace Testing3
         [TestMethod]
         public void TestDeliveredFound()
         {
+            // Create an instance of clsOrder and check if the Delivered status is found correctly using existing order
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
             NewOrder.SetOrderId(6);
@@ -168,6 +199,7 @@ namespace Testing3
         [TestMethod]
         public void TestDeliveryInstructionsFound()
         {
+            // Create an instance of clsOrder and check if the DeliveryInstructions are found correctly using existing order
             clsOrder NewOrder = new clsOrder();
             bool OK = true;
             NewOrder.SetOrderId(6);
@@ -190,6 +222,7 @@ namespace Testing3
         [TestMethod]
         public void TestOrderLineCollectionFound()
         {
+            // Create an instance of clsOrder and check if the OrderLineCollection is found correctly using existing order and orderlines
             clsOrder NewOrder = new clsOrder();
             clsOrderLine testOrderLine = new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1);
             testOrderLine.SetOrderId(6);
@@ -213,6 +246,7 @@ namespace Testing3
         [TestMethod]
         public void TestValidAccountIdLessThanOne()
         {
+            // Create an instance of clsOrder and validate with an AccountId less than 1
             clsOrder NewOrder = new clsOrder();
             string error = NewOrder.Valid(0, DateTime.Now.AddDays(14), false, "Knock on the window", new clsOrderLineCollection());
             Assert.AreNotEqual(error, "");
@@ -221,6 +255,7 @@ namespace Testing3
         [TestMethod]
         public void TestValidAccountIdMin()
         {
+            // Create an instance of clsOrder and validate with an AccountId of 1
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -232,6 +267,7 @@ namespace Testing3
         [TestMethod]
         public void TestValidAccountIdMinPlusOne()
         {
+            // Create an instance of clsOrder and validate with an AccountId of 2
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -243,6 +279,7 @@ namespace Testing3
         [TestMethod]
         public void TestValidAccountIdMid()
         {
+            // Create an instance of clsOrder and validate with a mid-range AccountId
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -254,6 +291,7 @@ namespace Testing3
         [TestMethod]
         public void TestValidAccountIdMax()
         {
+            // Create an instance of clsOrder and validate with the maximum possible AccountId
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -265,6 +303,7 @@ namespace Testing3
         [TestMethod]
         public void TestValidDateOfDeliveryExtremeLessThanMin()
         {
+            // Create an instance of clsOrder and validate with a DateOfDelivery in the past
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -276,6 +315,7 @@ namespace Testing3
         [TestMethod]
         public void TestValidDateOfDeliveryOneLessThanMin()
         {
+            // Create an instance of clsOrder and validate with a DateOfDelivery one day in the past
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -287,6 +327,7 @@ namespace Testing3
         [TestMethod]
         public void TestValidDateOfDeliveryMin()
         {
+            // Create an instance of clsOrder and validate with a DateOfDelivery set to today
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -298,6 +339,7 @@ namespace Testing3
         [TestMethod]
         public void TestValidDateOfDeliveryMinPlusOne()
         {
+            // Create an instance of clsOrder and validate with a DateOfDelivery one day in the future
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -309,6 +351,7 @@ namespace Testing3
         [TestMethod]
         public void TestValidDateOfDeliveryExtremeMax()
         {
+            // Create an instance of clsOrder and validate with a DateOfDelivery set to 180 days in the future
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -320,6 +363,7 @@ namespace Testing3
         [TestMethod]
         public void TestValidDateOfDeliveryMaxPlusOne()
         {
+            // Create an instance of clsOrder and validate with a DateOfDelivery set to 181 days in the future
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -331,6 +375,7 @@ namespace Testing3
         [TestMethod]
         public void TestDeliveryInstructionsEmpty()
         {
+            // Create an instance of clsOrder and validate with empty DeliveryInstructions 
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -342,6 +387,7 @@ namespace Testing3
         [TestMethod]
         public void TestDeliveryInstructionsMin()
         {
+            // Create an instance of clsOrder and validate with minimum DeliveryInstructions length
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -353,6 +399,7 @@ namespace Testing3
         [TestMethod]
         public void TestDeliveryInstructionsExtremeMax()
         {
+            // Create an instance of clsOrder and validate with maximum DeliveryInstructions length
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -364,6 +411,7 @@ namespace Testing3
         [TestMethod]
         public void TestDeliveryInstructionsMaxPlusOne()
         {
+            // Create an instance of clsOrder and validate with DeliveryInstructions exceeding maximum length
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -375,6 +423,7 @@ namespace Testing3
         [TestMethod]
         public void TestDeliveredAtCreation()
         {
+            // Create an instance of clsOrder and validate with Delivered set to true at creation
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
@@ -386,6 +435,7 @@ namespace Testing3
         [TestMethod]
         public void TestOrderLineCollectionEmpty()
         {
+            // Create an instance of clsOrder and validate with an empty OrderLineCollection
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
 
@@ -396,6 +446,7 @@ namespace Testing3
         [TestMethod]
         public void TestOrderLineCollectionMin()
         {
+            // Create an instance of clsOrder and validate with a minimum OrderLineCollection containing one order line
             clsOrder NewOrder = new clsOrder();
             clsOrderLineCollection tempCollection = new clsOrderLineCollection();
             tempCollection.AddOrderline(new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1));
