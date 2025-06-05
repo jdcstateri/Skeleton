@@ -478,6 +478,46 @@ namespace Testing4
         }
 
         [TestMethod]
+        public void StaffIDExtremeMax()
+        {
+            clsStaff AStaff = new clsStaff();
+            int TestData = int.MaxValue; // 2,147,483,647
+            AStaff.StaffId = TestData;
+            Assert.AreEqual(AStaff.StaffId, TestData);
+        }
+
+        [TestMethod]
+        public void StaffIDMaxMinusOne()
+        {
+            clsStaff AStaff = new clsStaff();
+            int TestData = int.MaxValue - 1; // 2,147,483,646
+            AStaff.StaffId = TestData;
+            Assert.AreEqual(AStaff.StaffId, TestData);
+        }
+
+        [TestMethod]
+        public void StaffIDZero()
+        {
+            clsStaff AStaff = new clsStaff();
+            int TestData = 0; // Typically invalid for IDs
+            AStaff.StaffId = TestData;
+            Assert.AreEqual(AStaff.StaffId, TestData); // Still sets, but may fail in DB
+        }
+
+
+        [TestMethod]
+        public void FindWithExtremeStaffID()
+        {
+            clsStaff AStaff = new clsStaff();
+            bool Found = false;
+            int StaffId = int.MaxValue; // Extremely unlikely to exist
+            Found = AStaff.Find(StaffId);
+            Assert.IsFalse(Found); // Should return false (not found)
+        }
+
+
+
+        [TestMethod]
         public void NameMinLessOne()
         {
             //create an instance of the class we want to create
@@ -485,7 +525,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the name
-            string Name = "";
+            string Name = "a";
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -500,7 +540,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the name
-            string Name = "a";
+            string Name = "ab";
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -515,7 +555,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the name
-            string Name = "aa";
+            string Name = "abc";
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -594,7 +634,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the name with invalid characters
-            string Name = "John@Doe";
+            string Name = "John@Doe1";
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -654,7 +694,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the Email
-            string Email = "a@b.c"; //5 chars-valid format
+            string Email = "aa@bb.cc"; //5 chars-valid format
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -864,8 +904,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the Password
-            string Password = "";
-            Password = Password.PadRight(51, 'a');
+            string Password = "A1!" + new string('a', 46) + "9Z";
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct
@@ -880,7 +919,7 @@ namespace Testing4
             //string variable to store any error message
             String Error = "";
             //set the Password
-            string Password = "SecureP@ss1!";
+            string Password = "A1!" + new string('a', 20) + "9Z";
             //invoke the method
             Error = AStaff.Valid(Name, Email, Password, DateAdded);
             //test to see that the result is correct

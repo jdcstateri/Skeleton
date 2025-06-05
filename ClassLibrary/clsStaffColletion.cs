@@ -133,7 +133,7 @@ namespace ClassLibrary
             // Log the action
             LogAction("DELETE", $"Deleted staff ID: {mThisStaff.StaffId}");
         }
-         
+
 
         public void ReportByName(string Name)
         {
@@ -161,9 +161,9 @@ namespace ClassLibrary
                 DB.AddParameter("@Details", details);
                 DB.Execute("sproc_tblActivityLogs_Insert");
             }
-            catch
+            catch(Exception ex)
             {
-                // Optional: Log exception if needed
+                Console.WriteLine($"Error logging action: {ex.Message}");
             }
         }
 
