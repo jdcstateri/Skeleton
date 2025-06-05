@@ -105,6 +105,11 @@ namespace ClassLibrary
                 //record error
                 Error = Error + "The name must not be blank : ";
             }
+            if (name.Length < 2)
+            {
+                //record error
+                Error = Error + "The name must not be less than 2 characters : ";
+            }
             if (name.Length > 50)
             {
                 //record error
@@ -179,6 +184,11 @@ namespace ClassLibrary
             {
                 //record error
                 Error = Error + "The password must contain at least one number : ";
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"[\W_]"))
+            {
+                // record error
+                Error = Error + "The password must contain at least one special character : ";
             }
             if (password.Contains(" "))
             {
