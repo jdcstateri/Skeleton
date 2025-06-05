@@ -45,7 +45,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
 
         string Error = "";
         //validate the data
-        Error = AStaff.Valid(Name, Email, Password, DateAdded);
+        Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
         //if there is no error
         if (Error == "")
         {
@@ -53,8 +53,8 @@ public partial class _1_DataEntry : System.Web.UI.Page
             AStaff.Name = Name;
             AStaff.Email = Email;
             AStaff.Password = Password;
-            AStaff.DateAdded = Convert.ToDateTime(DateTime.Now);
-            AStaff.LastLogin = DateTime.Now;
+            AStaff.DateAdded = Convert.ToDateTime(DateAdded);
+            AStaff.LastLogin = Convert.ToDateTime(LastLogin);
             AStaff.IsAdmin = ChkAdmin.Checked;
 
             //create a new instance of the staff collection
@@ -136,8 +136,8 @@ public partial class _1_DataEntry : System.Web.UI.Page
         txtName.Text = Staff.ThisStaff.Name;
         txtEmail.Text = Staff.ThisStaff.Email;
         txtPassword.Text = Staff.ThisStaff.Password;
-        txtDateAdded.Text = Staff.ThisStaff.DateAdded.ToString();
-        txtLastLogin.Text = Staff.ThisStaff.LastLogin.ToString();
+        txtDateAdded.Text = Staff.ThisStaff.DateAdded.ToString("yyyy-MM-dd");
+        txtLastLogin.Text = Staff.ThisStaff.LastLogin.ToString("yyyy-MM-dd HH:mm");
         ChkAdmin.Checked = Staff.ThisStaff.IsAdmin;
     }
 }
