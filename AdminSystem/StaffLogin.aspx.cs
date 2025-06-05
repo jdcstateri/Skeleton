@@ -56,7 +56,7 @@ public partial class StaffLogin : System.Web.UI.Page
             }
             else
             {
-                Response.Redirect("CustomerList.aspx");
+                Response.Redirect("CustomerLogin.aspx");
             }
         }
         else if (Found == false)
@@ -86,4 +86,9 @@ public partial class StaffLogin : System.Web.UI.Page
         }
     }
 
+
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("TeamMainMenu.aspx");
+    }
 }

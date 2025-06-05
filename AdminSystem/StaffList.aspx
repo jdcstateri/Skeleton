@@ -14,9 +14,14 @@
                 <div class="col-md-6 offset-md-3">
                     <h3 class="text-center mb-4">Staff List</h3>
 
+                    <!-- Action Buttons For Logout and Cancel-->
+                    <div class="d-flex justify-content-end mb-3">
+                        <asp:Button ID="BtnLogout" runat="server" OnClick="ButtonLogout_Click" Text="Logout" CssClass="btn btn-secondary" />
+                    </div>
+
                     <!-- Staff List Box-->
                     <div class="mb-3">
-                        <asp:ListBox ID="lstStaffList" runat="server" CssClass="form-select" Rows="10" style="height: 320px;"></asp:ListBox>
+                        <asp:ListBox ID="lstStaffList" runat="server" CssClass="form-select" Rows="10" Style="height: 320px;"></asp:ListBox>
                     </div>
 
                     <!-- Action Buttons For CRUD-->
@@ -40,6 +45,7 @@
 
                     <!-- Error Message -->
                     <asp:Label ID="lblError" runat="server" CssClass="text-danger"></asp:Label>
+
                 </div>
             </div>
         </div>
