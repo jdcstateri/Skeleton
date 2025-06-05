@@ -77,5 +77,11 @@ namespace ClassLibrary
         {
             return orderList;
         }
+
+        public void SetOrderList(List<clsOrder> orders)
+        {
+            orderList = orders;
+            count = orders.Count;
+        }
     }
 }

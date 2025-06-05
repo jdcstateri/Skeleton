@@ -90,19 +90,41 @@ namespace ClassLibrary
             count--;
         }
 
-        public void SetThisOrderLine(clsOrderLine line)
-        {
-            this.thisOrderLine = line;
-        }
-
         public clsOrderLine GetThisOrderLine()
         {
             return this.thisOrderLine;
         }
 
+        public void SetThisOrderLine(clsOrderLine line)
+        {
+            this.thisOrderLine = line;
+        }
+
+        public List<clsOrderLine> GetOrderLines()
+        {
+            return orderLineList;
+        }
+
+        public void SetOrderLines(List<clsOrderLine> orderLines)
+        {
+            orderLineList = orderLines;
+            count = orderLines.Count;
+        }
+
+        public int GetCount()
+        {
+            return count;
+        }
+
+        public void SetCount(int value)
+        {
+            count = value;
+        }
+
+        // for debugging, do not use in production code
         public void GetOrderLineCollectionByText()
         {
-            foreach (clsOrderLine line in orderLineList) 
+            foreach (clsOrderLine line in orderLineList)
             {
                 Console.WriteLine("Order ID: " + line.GetOrderId());
                 Console.WriteLine("Item ID: " + line.GetItemId());
@@ -112,16 +134,6 @@ namespace ClassLibrary
                 Console.WriteLine("Quantity: " + line.GetQuantity());
                 Console.WriteLine("-----------------------------");
             }
-        }
-
-        public List<clsOrderLine> GetOrderLines()
-        {
-            return orderLineList;
-        }
-
-        public int GetCount()
-        {
-            return count;
         }
     }
 }
