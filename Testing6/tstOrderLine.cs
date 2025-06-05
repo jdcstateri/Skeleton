@@ -97,6 +97,24 @@ namespace Testing6
         }
 
         [TestMethod]
+        public void FindOrderLineByOrderIdItemIdOK()
+        {
+            // Create an instance of clsOrderLineCollection and add a test order line
+            clsOrderLineCollection TestCollection = new clsOrderLineCollection();
+            clsOrderLine TestOrderLine = new clsOrderLine(55, new DateTime(2025, 06, 02), "Pending", 2799.99, 1);
+            TestOrderLine.SetOrderId(6);
+            TestCollection.AddOrderline(TestOrderLine);
+
+            // Find the order lines by OrderId
+            clsOrderLine NewOrderLine = new clsOrderLine();
+            clsOrderLineCollection found = NewOrderLine.FindOrderLine(6, 55);
+
+            Boolean collectionsMatch = TestCollection.Equals(found);
+
+            Assert.AreEqual(true, collectionsMatch);
+        }
+
+        [TestMethod]
         public void TestOrderIdFound()
         {
             // Create an instance of clsOrderline and find order lines by OrderId
