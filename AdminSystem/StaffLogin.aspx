@@ -28,7 +28,7 @@
                             <asp:Label ID="lblError" runat="server" CssClass="text-danger mb-3 d-block"></asp:Label>
                             <div class="d-flex justify-content-between">
                                 <asp:Button ID="btnLogin" runat="server" OnClick="btnLogin_Click" Text="Login" CssClass="btn btn-primary" />
-                                <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-secondary" />
+                                <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-secondary" OnClick="btnCancel_Click" />
                             </div>
                         </div>
                     </div>
