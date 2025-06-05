@@ -56,14 +56,14 @@
                         <div class="mb-3 row">
                             <label for="txtDateAdded" class="col-sm-3 col-form-label">Date Added</label>
                             <div class="col-sm-9">
-                                <asp:TextBox ID="txtDateAdded" runat="server" CssClass="form-control" />
+                                <asp:TextBox ID="txtDateAdded" runat="server" CssClass="form-control" TextMode="Date"/>
                             </div>
                         </div>
 
                         <div class="mb-3 row">
                             <label for="txtLastLogin" class="col-sm-3 col-form-label">Last Login</label>
                             <div class="col-sm-9">
-                                <asp:TextBox ID="txtLastLogin" runat="server" CssClass="form-control" ReadOnly="true" />
+                                <asp:TextBox ID="txtLastLogin" runat="server" CssClass="form-control"  TextMode="DateTimeLocal" />
                             </div>
                         </div>
 

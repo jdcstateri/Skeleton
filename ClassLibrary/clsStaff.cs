@@ -85,7 +85,7 @@ namespace ClassLibrary
             }
         }
 
-        public string Valid(string name, string email, string password, string dateAdded)
+        public string Valid(string name, string email, string password, string dateAdded, string lastLogin)
         {
             //create a string variable to store the error
             String Error = "";
@@ -223,6 +223,30 @@ namespace ClassLibrary
             {
                 //record the error
                 Error = Error + "The date was not a valid date : ";
+            }
+
+
+            // -----LastLogin Validations-----
+            try
+            {
+                DateTemp = Convert.ToDateTime(lastLogin);
+
+                // Example rule: Last login must not be more than 10 years in the past or future
+                DateTime now = DateTime.Now.Date;
+
+                if (DateTemp < now.AddYears(-10))
+                {
+                    Error += "The last login cannot be more than 10 years in the past: ";
+                }
+
+                if (DateTemp > now.AddYears(1))
+                {
+                    Error += "The last login cannot be more than 1 year in the future: ";
+                }
+            }
+            catch
+            {
+                Error += "The last login was not a valid date: ";
             }
 
 

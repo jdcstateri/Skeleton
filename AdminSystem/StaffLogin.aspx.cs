@@ -43,8 +43,12 @@ public partial class StaffLogin : System.Web.UI.Page
         //Authenticate
         if (Found == true)
         {
+
             Session["StaffID"] = AStaff.StaffID;
             Session["IsAdmin"] = AStaff.IsAdmin;
+
+            UpdateLastLogin(AStaff.StaffID, DateTime.Now); // Update last login time
+
 
             if (AStaff.IsAdmin == true)
             {
@@ -64,4 +68,22 @@ public partial class StaffLogin : System.Web.UI.Page
             lblError.Text = "Invalid Login Credentials!";
         }
     }
+
+    public bool UpdateLastLogin(int staffId, DateTime lastLogin)
+    {
+        try
+        {
+            clsDataConnection DB = new clsDataConnection();
+            DB.AddParameter("@StaffID", staffId);
+            DB.AddParameter("@LastLogin", lastLogin);
+            DB.Execute("sproc_tblStaff_Update_LastLogin");
+            return true; // success
+        }
+        catch (Exception)
+        {
+            // handle exceptions/log as needed
+            return false; // failure
+        }
+    }
+
 }

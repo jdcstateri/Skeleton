@@ -338,7 +338,7 @@ namespace Testing4
             //Create a string variable to store the error
             String Error = "";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //Test to see that the result is correct
             Assert.AreEqual(Error, "");
 
@@ -360,7 +360,7 @@ namespace Testing4
             //convert the date variable to a string variable
             string DateAdded = TestDate.ToString();
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -381,7 +381,7 @@ namespace Testing4
             //convert the date variable to a string variable
             string DateAdded = TestDate.ToString();
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -400,7 +400,7 @@ namespace Testing4
             //convert the date variable to a string variable
             string DateAdded = TestDate.ToString();
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -421,7 +421,7 @@ namespace Testing4
             //convert the date variable to a string variable
             string DateAdded = TestDate.ToString();
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -442,7 +442,7 @@ namespace Testing4
             //convert the date variable to a string variable
             string DateAdded = TestDate.ToString();
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -457,7 +457,7 @@ namespace Testing4
             //set the DateRegistered to a non date value
             string DateAdded = "This is not a date!";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -527,7 +527,7 @@ namespace Testing4
             //set the name
             string Name = "a";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -542,7 +542,7 @@ namespace Testing4
             //set the name
             string Name = "ab";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -557,7 +557,7 @@ namespace Testing4
             //set the name
             string Name = "abc";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -573,7 +573,7 @@ namespace Testing4
             string Name = "";
             Name = Name.PadRight(49, 'a');
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -589,7 +589,7 @@ namespace Testing4
             string Name = "";
             Name = Name.PadRight(50, 'a');
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -605,7 +605,7 @@ namespace Testing4
             string Name = "";
             Name = Name.PadRight(51, 'a');
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -621,7 +621,7 @@ namespace Testing4
             string Name = "";
             Name = Name.PadRight(25, 'a');
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -636,7 +636,7 @@ namespace Testing4
             //set the name with invalid characters
             string Name = "John@Doe1";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -651,7 +651,7 @@ namespace Testing4
             //set the name with SQL injection characters
             string Name = "John'; DROP TABLE Staff; --";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -666,7 +666,7 @@ namespace Testing4
             //set the Email
             string Email = "";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -681,7 +681,7 @@ namespace Testing4
             //set the Email
             string Email = "a@b.c";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -696,7 +696,7 @@ namespace Testing4
             //set the Email
             string Email = "aa@bb.cc"; //5 chars-valid format
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -712,7 +712,7 @@ namespace Testing4
             string localPart = new string('a', 39); // 39 chars
             string Email = $"{localPart}@test.com"; // 49 chars total
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -729,7 +729,7 @@ namespace Testing4
             string domain = new string('a', 30);
             Email = $"test@{domain}.com"; //Exactly 50 characters
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -746,7 +746,7 @@ namespace Testing4
             string tooLong = new string('a', 41);
             Email = $"{tooLong}@gmail.com"; //51 characters
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -763,7 +763,7 @@ namespace Testing4
             string localPart = new string('a', 15); // 15 chars
             Email = $"{localPart}@test.com";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -777,7 +777,7 @@ namespace Testing4
             //set the Email with invalid format
             string Email = "johndoe.com"; //missing '@'
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -792,7 +792,7 @@ namespace Testing4
             //set the Email with invalid format
             string Email = "invalidgmail@";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -802,7 +802,7 @@ namespace Testing4
         {
             clsStaff AStaff = new clsStaff();
             string badEmail = "john doe@gmail.com"; // Space in address
-            string Error = AStaff.Valid(Name, badEmail, Password, DateAdded);
+            string Error = AStaff.Valid(Name, badEmail, Password, DateAdded, LastLogin);
             Assert.AreNotEqual(Error, "");
         }
 
@@ -815,7 +815,7 @@ namespace Testing4
             //set the Email with SQL injection characters
             string Email = "john'; DROP TABLE Staff; --@test.com";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -830,7 +830,7 @@ namespace Testing4
             //set the Password
             string Password = "Abc123!"; //7 chars (below minimum
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -845,7 +845,7 @@ namespace Testing4
             //set the Password
             string Password = "Abc123!@";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -860,7 +860,7 @@ namespace Testing4
             //set the Password
             string Password = "Abc123!@x";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -876,7 +876,7 @@ namespace Testing4
             string Password = "A1!" + new string('a', 44) + "9Z"; //49 chars
 
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -891,7 +891,7 @@ namespace Testing4
             //set the Password
             string Password = "A1!" + new string('a', 45) + "9Z"; //50 chars
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
         }
@@ -906,7 +906,7 @@ namespace Testing4
             //set the Password
             string Password = "A1!" + new string('a', 46) + "9Z";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreNotEqual(Error, "");
         }
@@ -921,9 +921,72 @@ namespace Testing4
             //set the Password
             string Password = "A1!" + new string('a', 20) + "9Z";
             //invoke the method
-            Error = AStaff.Valid(Name, Email, Password, DateAdded);
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
             //test to see that the result is correct
             Assert.AreEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void LastLogin_ValidDate()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the LastLogin to a valid date
+            string LastLogin = DateTime.Now.ToString();
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
+            //test to see that the result is correct
+            Assert.AreEqual(Error, "");
+        }
+
+
+        [TestMethod]
+        public void LastLogin_InvalidDate()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the LastLogin to an invalid date
+            string LastLogin = "This is not a date!";
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void LastLoginExtremeMin()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the LastLogin to a date less than 100 years ago
+            DateTime TestDate = DateTime.Now.AddYears(-100);
+            string LastLogin = TestDate.ToString();
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
+        }
+
+        [TestMethod]
+        public void LastLoginExtremeMax()
+        {
+            //create an instance of the class we want to create
+            clsStaff AStaff = new clsStaff();
+            //string variable to store any error message
+            String Error = "";
+            //set the LastLogin to a date more than 100 years in the future
+            DateTime TestDate = DateTime.Now.AddYears(100);
+            string LastLogin = TestDate.ToString();
+            //invoke the method
+            Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
+            //test to see that the result is correct
+            Assert.AreNotEqual(Error, "");
         }
     }
 }
