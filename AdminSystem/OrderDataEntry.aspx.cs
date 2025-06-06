@@ -10,7 +10,15 @@ public partial class _1_DataEntry : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+        if (Session["CustomerUser"] == null)
+        {
+            Response.Redirect("OrderLogin.aspx");
+        }
+        if (!IsPostBack)
+        {
+            DisplayShoppingCart();
+
+        }
     }
 
     protected void btnOk_Click(object sender, EventArgs e)
@@ -50,5 +58,34 @@ public partial class _1_DataEntry : System.Web.UI.Page
         }
 
         return shoppingCart;
+    }
+
+    void DisplayShoppingCart()
+    {
+        clsShoppingCart myShoppingCart = FetchShoppingCart();
+        clsOrderLineCollection orderLineCollection = new clsOrderLineCollection();
+
+        lstShoppingCart.Items.Clear();
+        int counter = 0;
+        double runningTotal = 0;
+
+        foreach (clsShoppingCartItem item in myShoppingCart.GetShoppingCart())
+        {
+            
+            clsOrderLine newOrderLine = new clsOrderLine(item.ProductId, DateTime.Now, "Pending", item.Cost * item.Quantity, item.Quantity);
+            orderLineCollection.AddOrderline(newOrderLine);
+
+            string displayText = "Product ID: " + item.ProductId +
+                                 " | Quantity: " + item.Quantity +
+                                 " | Cost per unit: £" + item.Cost.ToString() +
+                                 " | Total cost: £" + (item.Cost * item.Quantity).ToString();
+
+            runningTotal = runningTotal + (item.Cost * item.Quantity);
+            ListItem listItem = new ListItem(displayText, counter.ToString());
+            lstShoppingCart.Items.Add(listItem);
+            counter++;
+        }
+
+        lblGrandTotal.Text = "Grand Total: £" + runningTotal.ToString();
     }
 }

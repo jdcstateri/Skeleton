@@ -1,23 +1,34 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="StaffConfirmDelete.aspx.cs" Inherits="_1_ConfirmDelete" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Confirm Delete</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
-<body style="z-index: 1; left: 0px; top: 0px; position: absolute; height: 216px; width: 1612px">
+<body>
     <form id="form1" runat="server">
-        <div>
-            <div>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow text-center">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger mb-4">Delete Confirmation</h5>
+                            <asp:Label ID="Label1" runat="server" Text="Are you sure you want to delete this record?" CssClass="d-block mb-4 fw-bold"></asp:Label>
+                            
+                            <div class="d-flex justify-content-center gap-3">
+                                <asp:Button ID="Button1" runat="server" Text="Yes" CssClass="btn btn-danger" OnClick="BtnYes_Click" />
+                                <asp:Button ID="Button2" runat="server" Text="No" CssClass="btn btn-secondary" OnClick="BtnNo_Click" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <asp:Button ID="Button2" runat="server" Style="z-index: 1; left: 38px; top: 85px; position: absolute; width: 61px;" Text="No" OnClick="BtnNo_Click" />
-                  <asp:Button ID="Button1" runat="server" Style="z-index: 1; left: 148px; top: 86px; position: absolute; width: 61px;" Text="Yes" OnClick="BtnYes_Click" />
-            </div>
-                <asp:Label ID="Label1" runat="server" Text="Are you sure you want a delete this reccord? "></asp:Label>
         </div>
-                
     </form>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

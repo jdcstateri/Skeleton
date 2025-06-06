@@ -16,6 +16,12 @@ public partial class _1_List : System.Web.UI.Page
             Response.Redirect("StaffLogin.aspx");
         }
 
+        // Redirect if logged in as a non-admin
+        //if (Session["IsAdmin"] != null && !(bool)Session["IsAdmin"])
+        //{
+        //    Response.Redirect("NonAdminDashboard.aspx"); // Replace with the appropriate page for non-admin users
+        //}
+
         if (IsPostBack == false)
         {
             //update the listbox
@@ -26,7 +32,7 @@ public partial class _1_List : System.Web.UI.Page
     void DisplayStaff()
     {
         //create an instance of the Staff Collection
-        clsStaffColletion Staff = new clsStaffColletion();
+        clsStaffCollection Staff = new clsStaffCollection();
 
         //set the data source to the list staff in the collectioj
         lstStaffList.DataSource = Staff.StaffList;
@@ -101,7 +107,7 @@ public partial class _1_List : System.Web.UI.Page
     protected void ButtonFilter_Click(object sender, EventArgs e)
     {
         //create an instance 
-        clsStaffColletion AStaff = new clsStaffColletion();
+        clsStaffCollection AStaff = new clsStaffCollection();
 
         //Retrieve the value of post code from the presentation layer
         AStaff.ReportByName(txtFilter.Text);
@@ -123,7 +129,7 @@ public partial class _1_List : System.Web.UI.Page
     protected void ButtonClear_Click(object sender, EventArgs e)
     {
         //Create an Staff of the Staff object
-        clsStaffColletion AStaff = new clsStaffColletion();
+        clsStaffCollection AStaff = new clsStaffCollection();
 
         //Set the empty String
         txtFilter.Text = "";
@@ -140,4 +146,25 @@ public partial class _1_List : System.Web.UI.Page
         //Bind the data the list
         lstStaffList.DataBind();
     }
+
+    protected void ButtonLogout_Click(object sender, EventArgs e)
+    {
+        // End the session
+        Session.Abandon();
+        Session.Clear();
+
+        // Optionally, remove authentication cookies
+        Response.Cookies.Clear();
+
+        // Redirect to the login page (or any other appropriate page)
+        Response.Redirect("StaffLogin.aspx");
+    }
+
+    protected void ButtonCancel_Click(object sender, EventArgs e)
+    {
+
+        // Redirect to the login page (or any other appropriate page)
+        Response.Redirect("TeamMainMenu.aspx");
+    }
+
 }

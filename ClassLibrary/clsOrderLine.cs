@@ -21,16 +21,17 @@ namespace ClassLibrary
             SetDateAdded(dateAdded);
             SetStatus(status);
             SetAgreedPrice(agreedPrice);
-            SetStatus(status);
+            SetQuantity(quantity);
         }
 
         public clsOrderLine() {}
 
-        public bool Find(clsOrderLineCollection orderLineCollection)
+        public clsOrderLineCollection FindAll(int orderId)
         {
             clsDataConnection db = new clsDataConnection();
-            db.AddParameter("OrderId", this.GetOrderId());
-            db.Execute("sproc_tblOrderLines_Find");
+            clsOrderLineCollection orderLineCollection = new clsOrderLineCollection();
+            db.AddParameter("OrderId", orderId);
+            db.Execute("sproc_tblOrderLines_FindAll");
 
             if (db.Count > 0)
             {
@@ -40,21 +41,42 @@ namespace ClassLibrary
                 while (index < count)
                 {
                     clsOrderLine line = new clsOrderLine();
-                    line.SetItemId(Convert.ToInt32(db.DataTable.Rows[index]["AccountId"]));
-                    line.SetDateAdded(Convert.ToDateTime(db.DataTable.Rows[index]["TotalCost"]));
-                    line.SetStatus(Convert.ToString(db.DataTable.Rows[index]["DeliveryInstructions"]));
-                    line.SetQuantity(Convert.ToInt32(db.DataTable.Rows[index]["DeliveryInstructions"]));
+                    line.SetOrderId(Convert.ToInt32(db.DataTable.Rows[index]["OrderId"]));
+                    line.SetItemId(Convert.ToInt32(db.DataTable.Rows[index]["ItemId"]));
+                    line.SetDateAdded(Convert.ToDateTime(db.DataTable.Rows[index]["DateAdded"]));
+                    line.SetStatus(Convert.ToString(db.DataTable.Rows[index]["Status"]));
+                    line.SetAgreedPrice(Convert.ToDouble(db.DataTable.Rows[index]["AgreedPrice"]));
+                    line.SetQuantity(Convert.ToInt32(db.DataTable.Rows[index]["Quantity"]));
                     orderLineCollection.AddOrderline(line);
 
                     index++;
                 }
+            }
 
-                return true;
-            }
-            else
+            return orderLineCollection;
+        }
+
+        public clsOrderLineCollection FindOrderLine(int orderId, int itemId)
+        {
+            clsDataConnection db = new clsDataConnection();
+            clsOrderLineCollection orderLineCollection = new clsOrderLineCollection();
+            db.AddParameter("OrderId", orderId);
+            db.AddParameter("ItemId", itemId);
+            db.Execute("sproc_tblOrderLines_Find");
+
+            if (db.Count == 1)
             {
-                return false;
+                clsOrderLine line = new clsOrderLine();
+                line.SetOrderId(Convert.ToInt32(db.DataTable.Rows[0]["OrderId"]));
+                line.SetItemId(Convert.ToInt32(db.DataTable.Rows[0]["ItemId"]));
+                line.SetDateAdded(Convert.ToDateTime(db.DataTable.Rows[0]["DateAdded"]));
+                line.SetStatus(Convert.ToString(db.DataTable.Rows[0]["Status"]));
+                line.SetAgreedPrice(Convert.ToDouble(db.DataTable.Rows[0]["AgreedPrice"]));
+                line.SetQuantity(Convert.ToInt32(db.DataTable.Rows[0]["Quantity"]));
+                orderLineCollection.AddOrderline(line);
             }
+
+            return orderLineCollection;
         }
 
         public string Valid(int orderId, int itemId, DateTime dateAdded, double agreedPrice, string status, int quantity)

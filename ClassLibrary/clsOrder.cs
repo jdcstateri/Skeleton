@@ -26,24 +26,45 @@ namespace ClassLibrary
 
         public clsOrder() { }
 
-        public bool Find()
+        public clsOrderCollection Find(int needle, string fieldOfSearch)
         {
             clsDataConnection db = new clsDataConnection();
-            db.AddParameter("OrderId", this.GetOrderId());
-            db.Execute("sproc_tblOrder_Find");
+            clsOrderCollection orderCollection = new clsOrderCollection();
 
-            if (db.Count == 1)
+            if (fieldOfSearch == "OrderId")
             {
-                this.SetAccountId(Convert.ToInt32(db.DataTable.Rows[0]["AccountId"]));
-                this.SetDateOfDelivery(Convert.ToDateTime(db.DataTable.Rows[0]["DateOfDelivery"]));
-                this.SetDelivered(Convert.ToBoolean(db.DataTable.Rows[0]["Delivered"]));
-                this.SetDeliveryInstructions(Convert.ToString(db.DataTable.Rows[0]["DeliveryInstructions"]));
+                db.AddParameter("OrderId", needle);
+                db.Execute("sproc_tblOrder_FindByOrderId");
+            }
+            else if (fieldOfSearch == "AccountId")
+            {
+                db.AddParameter("AccountId", needle);
+                db.Execute("sproc_tblOrder_FindByAccountId");
+            }
 
-                return true;
+            if (db.Count > 0)
+            {
+                int index = 0;
+                int count = db.Count;
+
+                while (index < count)
+                {
+                    clsOrder order = new clsOrder();
+                    order.SetOrderId(Convert.ToInt32(db.DataTable.Rows[0]["OrderId"]));
+                    order.SetAccountId(Convert.ToInt32(db.DataTable.Rows[0]["AccountId"]));
+                    order.SetDateOfDelivery(Convert.ToDateTime(db.DataTable.Rows[0]["DateOfDelivery"]));
+                    order.SetDelivered(Convert.ToBoolean(db.DataTable.Rows[0]["Delivered"]));
+                    order.SetDeliveryInstructions(Convert.ToString(db.DataTable.Rows[0]["DeliveryInstructions"]));
+                    orderCollection.AddOrder(order);
+
+                    index++;
+                }
+
+                return orderCollection;
             }
             else
             {
-                return false;
+                return orderCollection;
             }
         }
 
@@ -57,21 +78,25 @@ namespace ClassLibrary
                 {
                     error += "Account ID must be greater than zero. ";
                 }
-                if (DateOfDelivery < DateTime.Now)
+                if (DateOfDelivery < DateTime.Now.Date)
                 {
                     error += "Date of delivery cannot be in the past. ";
+                }
+                if (DateOfDelivery > DateTime.Now.AddDays(180))
+                {
+                    error += "Date of delivery cannot be more than 180 days in the future. ";
                 }
                 if (string.IsNullOrWhiteSpace(DeliveryInstructions))
                 {
                     error += "Delivery instructions cannot be empty. ";
                 }
-                if (Delivered == true)
-                {
-                    error += "Order cannot be marked as delivered at the time of creation. ";
-                }
                 if (DeliveryInstructions.Length > 50)
                 {
                     error += "Delivery instructions cannot exceed 50 characters. ";
+                }
+                if (Delivered == true)
+                {
+                    error += "Order cannot be marked as delivered at the time of creation. ";
                 }
                 if (orderLineCollection.GetCount() == 0)
                 {

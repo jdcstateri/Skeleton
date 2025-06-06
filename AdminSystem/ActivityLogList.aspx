@@ -25,7 +25,7 @@
 <body>
     <form id="form1" runat="server">
         <div class="container">
-            <h3>Activity Log List</h3>
+            <h2>Activity Log List</h2>
             <asp:ListBox ID="lstActivityLogList" runat="server" CssClass="listbox"></asp:ListBox>
 
             <div class="buttons">

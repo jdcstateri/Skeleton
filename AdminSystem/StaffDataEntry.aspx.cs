@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -36,48 +36,49 @@ public partial class _1_DataEntry : System.Web.UI.Page
     {
         clsStaff AStaff = new clsStaff();
         //Capture the Staff
-        string StaffId = txtStaffID.Text;
         string Name = txtName.Text;
         string Email = txtEmail.Text;
         string Password = txtPassword.Text;
         string DateAdded = txtDateAdded.Text;
-        string LastLogin = txtLastLogin.Text;   
+        string LastLogin = txtLastLogin.Text;
         string IsAdmin = ChkAdmin.Text;
 
         string Error = "";
-        //valdiate the data
-        Error = AStaff.Valid(Name, Email, Password, DateAdded);
+        //validate the data
+        Error = AStaff.Valid(Name, Email, Password, DateAdded, LastLogin);
         //if there is no error
         if (Error == "")
         {
-            AStaff.StaffId = Convert.ToInt32(txtStaffID.Text);
+            AStaff.StaffId = StaffID;
             AStaff.Name = Name;
             AStaff.Email = Email;
             AStaff.Password = Password;
-            AStaff.DateAdded = Convert.ToDateTime(DateTime.Now);
-            AStaff.LastLogin = DateTime.Now;
+            AStaff.DateAdded = Convert.ToDateTime(DateAdded);
+            AStaff.LastLogin = Convert.ToDateTime(LastLogin);
             AStaff.IsAdmin = ChkAdmin.Checked;
 
             //create a new instance of the staff collection
-            clsStaffColletion StaffList = new clsStaffColletion();
-            
-            if(StaffId != "-1")
+            clsStaffCollection StaffList = new clsStaffCollection();
+
+            //CRITICAL FIX: Set the current user BEFORE setting ThisStaff
+            //This ensures the logging has the correct user context
+            StaffList.CurrentUserId = Convert.ToInt32(Session["StaffID"]);
+
+            if (StaffID == -1) //if it's a new record
             {
                 //set the ThisStaff property
                 StaffList.ThisStaff = AStaff;
                 //add the new record
                 StaffList.Add();
             }
-            //Othewrwise it must be an update   
+            //Otherwise it must be an update   
             else
             {
-                //Find the record
-                StaffList.ThisStaff.Find(StaffID);
-                //Set the ThisStaff property
+                //CRITICAL FIX: Don't call Find again, just set the staff data
+                //The Find call was unnecessary and potentially problematic
                 StaffList.ThisStaff = AStaff;
                 //Update the record
                 StaffList.Update();
-
             }
             Response.Redirect("StaffList.aspx");
         }
@@ -86,10 +87,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
             //display the error message
             lblError.Text = Error;
         }
-
-
     }
-
 
     protected void Button3_Click(object sender, EventArgs e)
     {
@@ -102,7 +100,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
         //create a variable to store the results of the find operation
         Boolean Found = false;
 
-        //get the primary enetered by the user
+        //get the primary entered by the user
         StaffId = Convert.ToInt32(txtStaffID.Text);
 
         //find the record
@@ -111,17 +109,14 @@ public partial class _1_DataEntry : System.Web.UI.Page
         //if found
         if (Found == true)
         {
-            {
-                //display the values of the properties in the form
-                txtStaffID.Text = AStaff.StaffId.ToString();
-                txtName.Text = AStaff.Name;
-                txtEmail.Text = AStaff.Email;
-                txtPassword.Text = AStaff.Password;
-                txtDateAdded.Text = AStaff.DateAdded.ToString();
-                txtLastLogin.Text = AStaff.LastLogin.ToString();
-                ChkAdmin.Checked = AStaff.IsAdmin;
-
-            }
+            //display the values of the properties in the form
+            txtStaffID.Text = AStaff.StaffId.ToString();
+            txtName.Text = AStaff.Name;
+            txtEmail.Text = AStaff.Email;
+            txtPassword.Text = AStaff.Password;
+            txtDateAdded.Text = AStaff.DateAdded.ToString();
+            txtLastLogin.Text = AStaff.LastLogin.ToString();
+            ChkAdmin.Checked = AStaff.IsAdmin;
         }
     }
 
@@ -133,7 +128,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
     void DisplayStaff()
     {
         //create an instance of the Staff Collection
-        clsStaffColletion Staff = new clsStaffColletion();
+        clsStaffCollection Staff = new clsStaffCollection();
         //Find the record to be updated
         Staff.ThisStaff.Find(StaffID);
         //display the data for the record
@@ -141,8 +136,8 @@ public partial class _1_DataEntry : System.Web.UI.Page
         txtName.Text = Staff.ThisStaff.Name;
         txtEmail.Text = Staff.ThisStaff.Email;
         txtPassword.Text = Staff.ThisStaff.Password;
-        txtDateAdded.Text = Staff.ThisStaff.DateAdded.ToString();
-        txtLastLogin.Text = Staff.ThisStaff.LastLogin.ToString();
+        txtDateAdded.Text = Staff.ThisStaff.DateAdded.ToString("yyyy-MM-dd");
+        txtLastLogin.Text = Staff.ThisStaff.LastLogin.ToString("yyyy-MM-dd HH:mm");
         ChkAdmin.Checked = Staff.ThisStaff.IsAdmin;
     }
 }

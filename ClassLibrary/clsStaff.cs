@@ -25,48 +25,40 @@ namespace ClassLibrary
         public string Email
         {
             get { return mStaffEmail; }
-            set { mStaffEmail = value; }    
-        
+            set { mStaffEmail = value; }
+
         }
 
         private String mPassword;
-        public String Password {
+        public String Password
+        {
             get { return mPassword; }
             set { mPassword = value; }
         }
 
         private bool mIsAdmin;
-        public bool IsAdmin {
+        public bool IsAdmin
+        {
             get { return mIsAdmin; }
-            set { mIsAdmin = value;}
+            set { mIsAdmin = value; }
         }
 
         private DateTime mLastLogin;
         public DateTime LastLogin
-        {   get {return  mLastLogin; }
-            set {mLastLogin = value; } 
+        {
+            get { return mLastLogin; }
+            set { mLastLogin = value; }
         }
 
         private DateTime mDateAdded;
         public DateTime DateAdded
         {
             get { return mDateAdded; }
-            set { mDateAdded = value;}
+            set { mDateAdded = value; }
         }
 
         public bool Find(int StaffId)
         {
-            ////Set the private data members to the test data value
-            //mStaffId = 21;
-            //mStaffName = "John Doe";
-            //mStaffEmail = "john@gmail.com";
-            //mPassword = "12345678";
-            //mIsAdmin = true;
-            //mDateAdded = Convert.ToDateTime("25/12/2022");
-            //mLastLogin = Convert.ToDateTime("25/12/2022");
-            ////always return true
-            //return true;
-
             clsDataConnection DB = new clsDataConnection();
             //add the parameter for the Staff id to search for
             DB.AddParameter("@StaffId", StaffId);
@@ -93,7 +85,7 @@ namespace ClassLibrary
             }
         }
 
-        public string Valid(string name, string email, string password, string dateAdded)
+        public string Valid(string name, string email, string password, string dateAdded, string lastLogin)
         {
             //create a string variable to store the error
             String Error = "";
@@ -105,6 +97,111 @@ namespace ClassLibrary
             //in the if statements
             DateTime DateComp = DateTime.Now.Date;
 
+     
+
+            // -----Name Validations-----
+            if (string.IsNullOrEmpty(name))
+            {
+                //record error
+                Error = Error + "The name must not be blank : ";
+            }
+            if (name.Length < 2)
+            {
+                //record error
+                Error = Error + "The name must not be less than 2 characters : ";
+            }
+            if (name.Length > 50)
+            {
+                //record error
+                Error = Error + "The name must be less than 50 characters : ";
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(name, @"^[a-zA-Z\s]+$"))
+            {
+                //record error
+                Error = Error + "The name must only contain letters and spaces : ";
+            }
+            if (name.Contains("  ") || name.ToLower().Contains("drop table"))
+            {
+                //record error
+                Error = Error + "The name contains SQL injection risk: "; ;
+            }
+
+
+            // -----Email Validations-----
+            if (string.IsNullOrEmpty(email))
+            {
+                //record error
+                Error = Error + "The email must not be blank : ";
+            }
+            if (email.Length > 50)
+            {
+                //record error
+                Error = Error + "The email must be less than 50 characters : ";
+            }
+            if (!email.Contains("@") || !email.Contains(".") || email.StartsWith("@") || email.EndsWith("@"))
+            {
+                //record error
+                Error = Error + "The email format is invalid: ";
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                //record error
+                Error = Error + "The email is not in a valid format : ";
+            }
+            if (email.Contains("  ") || email.ToLower().Contains("drop table"))
+            {
+                //record error
+                Error = Error + "The email contains SQL injection risk: "; ;
+            }
+
+            // -----Password Validations-----
+            if (string.IsNullOrEmpty(password))
+            {
+                //record error
+                Error = Error + "The password must not be blank : ";
+            }
+            if (password.Length < 8)
+            {
+                //record error
+                Error = Error + "The password must be at least 8 characters : ";
+            }
+            if (password.Length > 50)
+            {
+                Error = Error + "The password must be less than 50 characters: ";
+
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"[A-Z]"))
+            {
+                //record error
+                Error = Error + "The password must contain at least one uppercase letter : ";
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"[a-z]"))
+            {
+                //record error
+                Error = Error + "The password must contain at least one lowercase letter : ";
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"[0-9]"))
+            {
+                //record error
+                Error = Error + "The password must contain at least one number : ";
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"[\W_]"))
+            {
+                // record error
+                Error = Error + "The password must contain at least one special character : ";
+            }
+            if (password.Contains(" "))
+            {
+                Error = Error + "The password must not contain spaces: ";
+
+            }
+            if (password.Contains("  ") || password.ToLower().Contains("drop table"))
+            {
+                //record error
+                Error = Error + "The password contains SQL injection risk: "; ;
+            }
+
+            // -----Date Added Validations-----
             try
             {
                 //copy the DataAdded value to the DateTemp variable
@@ -127,44 +224,32 @@ namespace ClassLibrary
                 //record the error
                 Error = Error + "The date was not a valid date : ";
             }
-            //if name is blank
-            if (name.Length == 0)
+
+
+            // -----LastLogin Validations-----
+            try
             {
-                //record error
-                Error = Error + "The name must not be blank : ";
+                DateTemp = Convert.ToDateTime(lastLogin);
+
+                // Example rule: Last login must not be more than 10 years in the past or future
+                DateTime now = DateTime.Now.Date;
+
+                if (DateTemp < now.AddYears(-10))
+                {
+                    Error += "The last login cannot be more than 10 years in the past: ";
+                }
+
+                if (DateTemp > now.AddYears(1))
+                {
+                    Error += "The last login cannot be more than 1 year in the future: ";
+                }
             }
-            //if name is greater than _ characters
-            if (name.Length > 50)
+            catch
             {
-                //record error
-                Error = Error + "The name must be less than 50 characters : ";
+                Error += "The last login was not a valid date: ";
             }
 
-            //if email is blank
-            if (email.Length == 0)
-            {
-                //record error
-                Error = Error + "The email must not be blank : ";
-            }
-            //if email is greater than _ characters
-            if (email.Length > 50)
-            {
-                //record error
-                Error = Error + "The email must be less than 50 characters : ";
-            }
 
-            //if password is blank
-            if (password.Length == 0)
-            {
-                //record error
-                Error = Error + "The password must not be blank : ";
-            }
-            //if password is greater than _ characters
-            if (password.Length > 50)
-            {
-                //record error
-                Error = Error + "The password must be less than 50 characters : ";
-            }
             //return any errors messages
             return Error;
         }
