@@ -13,6 +13,8 @@ public partial class _1Viewer : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        string errorCode = "-1";
+
         if (Session["StaffID"] == null && Session["CustomerUser"] == null)
         {
             Response.Redirect("OrderLogin.aspx");
@@ -25,7 +27,7 @@ public partial class _1Viewer : System.Web.UI.Page
                 txtAccountId.Visible = true;
                 btnSearchByAccountId.Visible = true;
                 string displayText = "Input an account ID to show an order";
-                ListItem listItem = new ListItem(displayText);
+                ListItem listItem = new ListItem(displayText, errorCode);
                 lstOrders.Items.Add(listItem);
             }
             else
@@ -43,12 +45,14 @@ public partial class _1Viewer : System.Web.UI.Page
     {
         string id = txtAccountId.Text;
         lblError.Text = "";
+        string errorCode = "-1";
+        lstOrderLines.Items.Clear();
 
         if (string.IsNullOrEmpty(id))
         {
             lblError.Text = "Please enter an Account ID.";
             string displayText = "Input an account ID to show an order";
-            ListItem listItem = new ListItem(displayText);
+            ListItem listItem = new ListItem(displayText, errorCode);
             lstOrders.Items.Clear();
             lstOrders.Items.Add(listItem);
             return;
@@ -58,7 +62,7 @@ public partial class _1Viewer : System.Web.UI.Page
             lblError.Text = "Please enter a valid Account ID.";
             string displayText = "Input an account ID to show an order";
             lstOrders.Items.Clear();
-            ListItem listItem = new ListItem(displayText);
+            ListItem listItem = new ListItem(displayText, errorCode);
             lstOrders.Items.Add(listItem);
             return;
         }
@@ -71,15 +75,75 @@ public partial class _1Viewer : System.Web.UI.Page
         if (lstOrders.SelectedIndex != -1)
         {
             int selectedOrderId = Convert.ToInt32(lstOrders.SelectedValue);
-            int accountId = (Session["CustomerUser"] as clsCustomer).AccountID;
 
-            DisplayOrderLines(selectedOrderId, accountId);
+            DisplayOrderLines(selectedOrderId);
         }
         else
         {
             lblError.Text = "Please select an order to view its order lines.";
             return;
         }
+    }
+
+    protected void btnUpdateOrder_Click(object sender, System.EventArgs e)
+    {
+        clsOrder aOrder = new clsOrder();
+        aOrder.SetDateOfDelivery(Convert.ToDateTime(txtDateOfDelivery.Text));
+        aOrder.SetDelivered(Convert.ToBoolean(rblDelivered));
+        aOrder.SetDeliveryInstructions(Convert.ToString(txtDeliveryInstructions));
+        aOrder.SetOrderId(Convert.ToInt32(lstOrders.SelectedIndex));
+
+        if (Session["StaffID"] != null)
+        {
+            aOrder.SetAccountId(Convert.ToInt32(txtAccountId.Text));
+        }
+        else if (Session["CustomerUser"] != null)
+        {
+            clsCustomer aCustomer = Session["CustomerUser"] as clsCustomer;
+
+            aOrder.SetAccountId(aCustomer.AccountID);
+        }
+        else if (lstOrders.SelectedIndex == -1)
+        {
+            lblError.Text = "Order hasn't been selected for editing - No modifications to the order have been made";
+            return;
+        }
+        else
+        {
+            lblError.Text = "Unknown Error - No modifications to the order have been made";
+            return;
+        }
+
+        clsOrderCollection aOrderCollection = new clsOrderCollection();
+        aOrderCollection.SetThisOrder(aOrder);
+        aOrderCollection.Edit();
+    }
+
+    protected void btnDeleteOrder_Click(object sender, System.EventArgs e)
+    {
+        if (lstOrders.SelectedIndex != -1)
+        {
+            clsOrder aOrder = new clsOrder();
+            clsOrderCollection aOrderCollection = new clsOrderCollection();
+            aOrder.SetOrderId(lstOrders.SelectedIndex);
+            aOrderCollection.SetThisOrder(aOrder);
+            aOrderCollection.Delete();
+        }
+        else
+        {
+            lblError.Text = "Order hasn't been selected for deleting - No modifications to the order have been made";
+            return;
+        }
+    }
+
+    protected void btnUpdateOrderline_Click(object sender, System.EventArgs e)
+    {
+
+    }
+
+    protected void btnDeleteOrderline_Click(object sender, System.EventArgs e)
+    {
+
     }
 
     protected void DisplayOrders(int accountId)
@@ -89,15 +153,15 @@ public partial class _1Viewer : System.Web.UI.Page
 
         clsOrderCollection orderCollection = anOrder.Find(accountId, "AccountId");
 
-        int counter = 1;
         string displayText = "";
+        string errorCode = "-1";
 
         lstOrders.Items.Clear();
 
         if (orderCollection.count == 0)
         {
             displayText = "No orders found under this account ID";
-            ListItem listItem = new ListItem(displayText, counter.ToString());
+            ListItem listItem = new ListItem(displayText, errorCode);
             lstOrders.Items.Add(listItem); 
             return;
         }
@@ -112,42 +176,40 @@ public partial class _1Viewer : System.Web.UI.Page
 
             ListItem listItem = new ListItem(displayText, order.GetOrderId().ToString());
             lstOrders.Items.Add(listItem);
-            counter++;
         }
     }
 
-    protected void DisplayOrderLines(int orderid, int accountId)
+    protected void DisplayOrderLines(int orderid)
     {
         clsCustomer aCustomer = Session["CustomerUser"] as clsCustomer;
         clsOrderLine anOrderLine = new clsOrderLine();
 
         clsOrderLineCollection orderLineCollection = anOrderLine.FindAll(orderid);
 
-        int counter = 1;
         string displayText = "";
+        string errorCode = "-1";
 
-        lstOrders.Items.Clear();
-
+        lstOrderLines.Items.Clear();
+        
         if (orderLineCollection.GetCount() == 0)
         {
-            displayText = "No orders found under this account ID";
-            ListItem listItem = new ListItem(displayText, counter.ToString());
-            lstOrders.Items.Add(listItem);
+            displayText = "To see order lines, enter an account ID and select an order";
+            ListItem listItem = new ListItem(displayText, errorCode);
+            lstOrderLines.Items.Add(listItem);
             return;
         }
 
         foreach (clsOrderLine orderLine in orderLineCollection.GetOrderLines())
         {
             displayText = "Order ID: " + orderLine.GetOrderId() +
-                     " | Account Id: " + orderLine.GetItemId() +
-                     " | Date Of Delivery: " + orderLine.GetDateAdded().ToString() +
-                     " | Order Delivered?: " + orderLine.GetStatus() +
-                     " | Delivery Instuctions: " + orderLine.GetAgreedPrice() + 
+                     " | Item Id: " + orderLine.GetItemId() +
+                     " | Date added: " + orderLine.GetDateAdded().ToString() +
+                     " | Status: " + orderLine.GetStatus() +
+                     " | Agreed Price: " + orderLine.GetAgreedPrice() + 
                      " | Quantity: " + orderLine.GetQuantity();
 
-            ListItem listItem = new ListItem(displayText, counter.ToString());
-            lstOrders.Items.Add(listItem);
-            counter++;
+            ListItem listItem = new ListItem(displayText, orderLine.GetItemId().ToString());
+            lstOrderLines.Items.Add(listItem);
         }
     }
 }
