@@ -52,7 +52,16 @@ public partial class StaffLogin : System.Web.UI.Page
 
             if (AStaff.IsAdmin == true)
             {
-                Response.Redirect("StaffList.aspx");
+                //redirect to the list Page
+                Int32 StaffLogin = Convert.ToInt32(Session["StaffLogin"]);
+                if (StaffLogin == 1) //StaffList button was clicked in menu
+                {
+                    Response.Redirect("StaffList.aspx");
+                }
+                else if (StaffLogin == 2) //Activity Log button was clicked in menu
+                {
+                    Response.Redirect("ActivityLogList.aspx");
+                }
             }
             else
             {
