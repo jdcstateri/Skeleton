@@ -89,7 +89,7 @@ public partial class _1Viewer : System.Web.UI.Page
     {
         clsOrder aOrder = new clsOrder();
         aOrder.SetDateOfDelivery(Convert.ToDateTime(txtDateOfDelivery.Text));
-        aOrder.SetDelivered(Convert.ToBoolean(rblDelivered));
+        aOrder.SetDelivered(Convert.ToBoolean(rblDelivered.SelectedValue));
         aOrder.SetDeliveryInstructions(Convert.ToString(txtDeliveryInstructions));
         aOrder.SetOrderId(Convert.ToInt32(lstOrders.SelectedIndex));
 
@@ -117,6 +117,7 @@ public partial class _1Viewer : System.Web.UI.Page
         clsOrderCollection aOrderCollection = new clsOrderCollection();
         aOrderCollection.SetThisOrder(aOrder);
         aOrderCollection.Edit();
+        lblError.Text = "Order Edited";
     }
 
     protected void btnDeleteOrder_Click(object sender, System.EventArgs e)
@@ -138,12 +139,48 @@ public partial class _1Viewer : System.Web.UI.Page
 
     protected void btnUpdateOrderline_Click(object sender, System.EventArgs e)
     {
+        if (lstOrderLines.SelectedIndex != -1)
+        {
+            clsOrderLine aOrderLine = new clsOrderLine();
+            aOrderLine.SetOrderId(Convert.ToInt32(lstOrders.SelectedValue));
+            aOrderLine.SetItemId(Convert.ToInt32(lstOrderLines.SelectedValue));
+            aOrderLine.SetDateAdded(DateTime.Now.Date);
+            aOrderLine.SetStatus(Convert.ToString(txtStatus.Text));
+            aOrderLine.SetAgreedPrice(Convert.ToDouble(txtAgreedPrice.Text));
+            aOrderLine.SetQuantity(Convert.ToInt32(txtQuantity.Text));
 
+            clsOrderLineCollection aOrderLineCollection = new clsOrderLineCollection();
+            aOrderLineCollection.SetThisOrderLine(aOrderLine);
+            aOrderLineCollection.Edit();
+        }
+        else
+        {
+            lblError.Text = "Order line hasn't been selected for editing - No modifications to the order have been made";
+            return;
+        }
     }
 
     protected void btnDeleteOrderline_Click(object sender, System.EventArgs e)
     {
+        if (lstOrderLines.SelectedIndex != -1)
+        {
+            clsOrderLine aOrderLine = new clsOrderLine();
+            aOrderLine.SetOrderId(Convert.ToInt32(lstOrders.SelectedValue));
+            aOrderLine.SetItemId(Convert.ToInt32(lstOrderLines.SelectedValue));
+            aOrderLine.SetDateAdded(DateTime.Now.Date);
+            aOrderLine.SetStatus(Convert.ToString(txtStatus.Text));
+            aOrderLine.SetAgreedPrice(Convert.ToDouble(txtAgreedPrice.Text));
+            aOrderLine.SetQuantity(Convert.ToInt32(txtQuantity.Text));
 
+            clsOrderLineCollection aOrderLineCollection = new clsOrderLineCollection();
+            aOrderLineCollection.SetThisOrderLine(aOrderLine);
+            aOrderLineCollection.Delete();
+        }
+        else
+        {
+            lblError.Text = "Order line hasn't been selected for Deleting - No modifications to the order have been made";
+            return;
+        }
     }
 
     protected void DisplayOrders(int accountId)
