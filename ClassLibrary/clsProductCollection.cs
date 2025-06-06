@@ -48,7 +48,6 @@ namespace ClassLibrary
                 AnProduct.Price = Convert.ToSingle(DB.DataTable.Rows[Index]["Price"]);
                 AnProduct.StockNumber = Convert.ToInt32(DB.DataTable.Rows[Index]["StockNumber"]);
                 AnProduct.DateAdded = Convert.ToDateTime(DB.DataTable.Rows[Index]["DateAdded"]);
-                AnProduct.DateAdded = Convert.ToDateTime(DB.DataTable.Rows[Index]["DateAdded"]);
                 AnProduct.IsPublished = Convert.ToBoolean(DB.DataTable.Rows[Index]["IsPublished"]);
                 // add the record to the private data member
                 mProductList.Add(AnProduct);

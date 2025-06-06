@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections.Generic; // You'll need this if you switch to List<string> but not for this specific fix.
 
 namespace ClassLibrary
 {
@@ -93,100 +93,105 @@ namespace ClassLibrary
         {
             // create a string variable to store the error message
             String Error = "";
-          
 
             // # 1 If the product title is blank
             if (productTitle.Length == 0)
             {
-                // record the error 
-                Error = Error + "The product title may not be blank : ";
+                // record the error
+                Error = Error + "The product title may not be blank.<br />"; // Changed to <br />
             }
             // If the product title is greater than 50 characters
             if (productTitle.Length > 50)
             {
-                // record the error 
-                Error = Error + "The product title must be less than 50 characters : ";
+                // record the error
+                Error = Error + "The product title must be less than 50 characters.<br />"; // Changed to <br />
             }
             // # 2 If the product description is blank
             if (productDescription.Length == 0)
-
-                Error += "The product description may not be blank : ";
-
+            {
+                Error += "The product description may not be blank.<br />"; // Changed to <br />
+            }
             else if (productDescription.Length > 250)
-
-                Error += "The product description cannot exceed 250 characters. : ";
+            {
+                Error += "The product description cannot exceed 250 characters.<br />"; // Changed to <br />
+            }
 
             // # 3 Price should not be blank, numeric, and greater than 0, max 8 digits
             if (price.Length == 0)
             {
-                // record the error 
-                Error += "The price may not be blank : ";
+                // record the error
+                Error += "The price may not be blank.<br />"; // Changed to <br />
             }
             else if (!decimal.TryParse(price, out decimal dP))
             {
-                Error += "The price must be a number : ";
+                Error += "The price must be a number.<br />"; // Changed to <br />
             }
             else
             {
                 if (dP < 1m)
-                
-                    // record the error 
-                    Error += "The price must be at least 1. : ";
-                
+                {
+                    // record the error
+                    Error += "The price must be at least 1.<br />"; // Changed to <br />
+                }
+                // Check if price string (before parsing) is too long for perceived '8 digits'
+                // Note: This check should be careful. "12345.67" is 8 characters but only 7 digits.
+                // It might be better to check parsed decimal's precision or number of digits.
+                // Assuming you mean string length including decimal points.
                 if (price.Length > 8)
-                
-                    // record the error 
-                    Error += "The price must be less than 8 digits : ";
-                
+                {
+                    // record the error
+                    Error += "The price string must be less than 8 characters.<br />"; // Changed to <br />
+                }
             }
 
             // # 4 Stock number should not be blank, non-numeric, < 1, > 8 digits
             if (stockNumber.Length == 0)
             {
-                // record the error 
-                Error += "The stock number may not be blank : ";
+                // record the error
+                Error += "The stock number may not be blank.<br />"; // Changed to <br />
             }
             else if (!int.TryParse(stockNumber, out int dSN))
             {
-                Error += "The stock number must be a number : ";
+                Error += "The stock number must be a whole number.<br />"; // Changed to <br />
             }
             else
             {
                 if (dSN < 1)
                 {
-                    // record the error 
-                    Error += "The stock number must be at least 1. : ";
+                    // record the error
+                    Error += "The stock number must be at least 1.<br />"; // Changed to <br />
                 }
-                else if (stockNumber.Length > 8)
+                // Again, this is checking string length, not numerical value magnitude.
+                if (stockNumber.Length > 8)
                 {
-                    // record the error 
-                    Error += "The stock number must be less than 8 digits : ";
+                    // record the error
+                    Error += "The stock number string must be less than 8 characters.<br />"; // Changed to <br />
                 }
             }
-
 
             // #5 DATE ADDED (valid, not ≥100 years ago, not >100 years in future)
             if (!DateTime.TryParse(dateAdded, out DateTime DateTemp))
             {
                 // not even a date
-                Error += "The date added is not a valid date : ";
+                Error += "The date added is not a valid date.<br />"; // Changed to <br />
             }
             else
             {
-                
                 DateTime today = DateTime.Now.Date;
                 DateTime lower = today.AddYears(-100);
                 DateTime upper = today.AddYears(100);
 
                 // exactly 100 years ago or earlier → fail Extrememin & MinLessOne
                 if (DateTemp <= lower)
-                    Error += "The date added cannot be more than 100 years ago : ";
-
+                {
+                    Error += "The date added cannot be more than 100 years ago.<br />"; // Changed to <br />
+                }
                 // beyond 100 years in the future → fail ExtremeMax & MaxPlusOne
-                if (DateTemp >=  upper)
-                    Error += "The date added cannot be more than 100 years in the future : ";
+                if (DateTemp >= upper)
+                {
+                    Error += "The date added cannot be more than 100 years in the future.<br />"; // Changed to <br />
+                }
             }
-
 
             // return any error messages
             return Error;

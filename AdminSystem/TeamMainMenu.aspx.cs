@@ -44,7 +44,7 @@ public partial class TeamMainMenu : System.Web.UI.Page
 
     protected void btnProduct_Click(object sender, EventArgs e)
     {
-        //redirect it to your login page
-        //Response.Redirect("example.aspx");
+        Session["ProductLogin"] = 1;
+        Response.Redirect("ProductUserLogin.aspx");
     }
 }

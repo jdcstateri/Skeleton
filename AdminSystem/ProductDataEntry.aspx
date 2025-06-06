@@ -2,58 +2,85 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head runat="server">
-    <title></title>
+    <title>Product Management System</title>
+    <script type="text/javascript">
+        function hideErrorAfterDelay() {
+            var errorLabel = document.getElementById('<%= lblError.ClientID %>');
+
+            //If an error is currently visible, hide it after a short delay
+            if (errorLabel && errorLabel.style.display !== 'none' && errorLabel.innerText.trim() !== '') {
+                setTimeout(function () {
+                    errorLabel.style.display = 'none';
+                    errorLabel.innerText = ''; //clear the message as well
+                }, 5000); //a 5 second delay to give users time to read it
+            }
+        }
+
+        // Run the error hiding logic when the page loads
+        window.onload = function () {
+            hideErrorAfterDelay();
+        };
+    </script>
+    <style>
+        /* Set up the page background and font */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; 
+            align-items: center;     
+            min-height: 100vh;       
+            box-sizing: border-box;
+        }
+
+        /* Style for the error message label */
+        .error-message {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
 </head>
-<body style="height: 398px">
+<body>
     <form id="form1" runat="server">
- &nbsp;<div>
-            <asp:TextBox ID="txtItemID" runat="server" style="z-index: 1; left: 102px; top: 24px; position: absolute; " BorderStyle="Solid" width="128"></asp:TextBox>
-           <asp:Button ID="btnFind" runat="server" Text="Find" Style="position:relative; left:286px; top: -4px; height: 30px; width: 60px;" OnClick="btnFind_Click" />
+        <asp:ScriptManager ID="ScriptManager1" runat="server" />
 
+        <div style="position: relative; width: 504px; height: 556px; margin: 20px auto; background-color: #ffffff; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); overflow: hidden; top: -50px; left: -22px;">
 
+            <h2 style="position: absolute; left: 20px; top: 20px; font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0;">Product Management System</h2>
+
+            <asp:Label ID="lblItemId" runat="server" Text="Item ID" style="position: absolute; left: 20px; top: 70px; font-family: Arial, sans-serif;"></asp:Label>
+            <asp:TextBox ID="txtItemID" runat="server" style="position: absolute; left: 140px; top: 65px; width: 150px; border: 1px solid #ccc; padding: 5px; border-radius: 4px;"></asp:TextBox>
+
+            <asp:Button ID="btnFind" runat="server" Text="Find" OnClick="btnFind_Click" style="border-style: none; border-color: inherit; border-width: medium; position: absolute; left: 320px; top: 65px; height: 39px; width: 71px; background-color: #007bff; color: white; border-radius: 4px; cursor: pointer;"></asp:Button>
+            <asp:Button ID="btnFClear" runat="server" Text="Clear" OnClick="btnFClear_Click" style="border-style: none; border-color: inherit; border-width: medium; position: absolute; left: 399px; top: 65px; height: 39px; width: 75px; background-color: #007bff; color: white; border-radius: 4px; cursor: pointer;"></asp:Button>
+
+            <asp:Label ID="lblProductTitle" runat="server" Text="Product Title" style="position: absolute; left: 20px; top: 110px; font-family: Arial, sans-serif;"></asp:Label>
+            <asp:TextBox ID="txtProductTitle" runat="server" style="position: absolute; left: 140px; top: 105px; width: 148px; border: 1px solid #ccc; padding: 5px; border-radius: 4px;"></asp:TextBox>
+
+            <asp:Label ID="lblProductDescription" runat="server" Text="Product Description" style="position: absolute; left: 15px; top: 150px; font-family: Arial, sans-serif;"></asp:Label>
+            <asp:TextBox ID="txtProductDescription" runat="server" TextMode="MultiLine" style="position: absolute; left: 16px; top: 176px; height: 75px; width: 290px; border: 1px solid #ccc; padding: 5px; border-radius: 4px;"></asp:TextBox>
+
+            <asp:Label ID="lblPrice" runat="server" Text="Price" style="position: absolute; left: 21px; top: 285px; font-family: Arial, sans-serif;"></asp:Label>
+            <asp:TextBox ID="txtPrice" runat="server" style="position: absolute; left: 154px; top: 278px; width: 150px; border: 1px solid #ccc; padding: 5px; border-radius: 4px;"></asp:TextBox>
+
+            <asp:Label ID="lblStockNumber" runat="server" Text="Stock Number" style="position: absolute; left: 19px; top: 330px; font-family: Arial, sans-serif;"></asp:Label>
+            <asp:TextBox ID="txtStockNumber" runat="server" style="position: absolute; left: 153px; top: 321px; width: 150px; border: 1px solid #ccc; padding: 5px; border-radius: 4px;"></asp:TextBox>
+
+            <asp:Label ID="lblDateAdded" runat="server" Text="Date Added" style="position: absolute; left: 20px; top: 363px; font-family: Arial, sans-serif;"></asp:Label>
+           <asp:TextBox ID="txtDateAdded" runat="server" TextMode="Date" style="position: absolute; left: 153px; top: 357px; width: 150px; border: 1px solid #ccc; padding: 5px; border-radius: 4px;"></asp:TextBox>
+
+            <asp:CheckBox ID="chkIsPublished" runat="server" Text="Is Published" style="position: absolute; left: 315px; top: 397px; font-family: Arial, sans-serif;"></asp:CheckBox>
+
+            <asp:Button ID="btnOk" runat="server" OnClick="btnOk_Click" Text="OK" style="border-style: none; border-color: inherit; border-width: medium; position: absolute; left: 293px; top: 431px; height: 34px; width: 65px; background-color: #28a745; color: white; border-radius: 4px; cursor: pointer;"></asp:Button>
+            <asp:Button ID="btnCancel" runat="server" Text="Cancel" style="border-style: none; border-color: inherit; border-width: medium; position: absolute; left: 373px; top: 432px; height: 33px; width: 62px; background-color: #dc3545; color: white; border-radius: 4px; cursor: pointer;" OnClick="btnCancel_Click"></asp:Button>
+
+            <asp:Label ID="lblError" runat="server" Text="" CssClass="error-message" Visible="False" style="position: absolute; left: 42px; top: 504px; width: calc(100% - 40px);"></asp:Label>
         </div>
-
-        <div>
-            <asp:Label ID="lblItemId" runat="server" style="z-index: 1; left: 13px; top: 33px; position: absolute" Text="Item ID"></asp:Label>
-        </div>
-
-        <div style="margin-top: 2px">
-            <asp:TextBox ID="txtProductTitle" runat="server" style="z-index: 1; left: 102px; top: 53px; position: absolute; width: 128px" BorderStyle="Solid"></asp:TextBox>
-            <asp:Label ID="lblProductDescription" runat="server" style="z-index: 1; left: 9px; top: 74px; position: absolute; height: 16px; width: 129px" Text="Product Description"></asp:Label>
-        </div>
-
-        <div style="height: 84px; width: 1561px; margin-top: 0px;" dir="auto">
-            <asp:Label ID="lblProductTitle" runat="server" style="z-index: 1; left: 10px; top: 53px; position: absolute; bottom: 598px" Text="Product Title"></asp:Label>
-            <asp:TextBox ID="txtProductDescription" runat="server" style="z-index: 1; left: 7px; top: 99px; position: absolute; height: 89px; width: 340px" BorderStyle="Solid"></asp:TextBox>
-            <asp:TextBox ID="txtPrice" runat="server" style="z-index: 1; left: 102px; top: 200px; position: absolute; margin-top: 0px; width: 129px;" BorderStyle="Solid"></asp:TextBox>
-        </div>
-
-        <asp:Label ID="lblPrice" runat="server" style="z-index: 1; left: 14px; top: 199px; position: absolute" Text="Price"></asp:Label>
-        <div>
-            <asp:Label ID="lblDateAdded" runat="server" style="z-index: 1; left: 11px; top: 249px; position: absolute" Text="Date Added"></asp:Label>
-            <asp:TextBox ID="txtDateAdded" runat="server"
-    Style="z-index: 1; left: 102px; top: 250px; position: absolute; width: 128px;"
-    BorderStyle="Solid" TextMode="DateTime"></asp:TextBox>
-
-        <asp:Button ID="btnOk" runat="server" OnClick="btnOk_Click"
-    Style="position: absolute; left: 245px; top: 279px; height: 30px; width: 60px;"
-    Text="OK" />
-
-        </div>
-
-        <div>
-        <asp:CheckBox ID="chkIsPublished" runat="server" style="z-index: 1; left: 15px; top: 284px; position: absolute" Text="IsPublished" />
-        </div>
-
-        <asp:Label ID="lblStockNumber" runat="server" style="z-index: 1; left: 8px; top: 228px; position: absolute" Text="Stock Number"></asp:Label>
-        <asp:TextBox ID="txtStockNumber" runat="server" style="z-index: 1; left: 102px; top: 226px; position: absolute" BorderStyle="Solid" width="128px"></asp:TextBox>
-        <asp:Label ID="lblError" runat="server" style="z-index: 1; left: 10px; top: 329px; position: absolute"></asp:Label>
-        <p>
-        <asp:Button ID="btnCancel" runat="server" style= "left: 317px; top: 279px; position: absolute; " Text="Cancel" width="60px" height="30px" />
-        </p>
     </form>
-
 </body>
 </html>

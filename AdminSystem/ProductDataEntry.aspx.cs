@@ -5,37 +5,41 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using ASP;
 using ClassLibrary;
 
 public partial class _1_DataEntry : System.Web.UI.Page
-{   
-    // variable to store the primary key value
+{
+    // Store the ID of the product (if editing an existing one)
     Int32 ItemID;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        // get the number of the product to be processed
-        ItemID = Convert.ToInt32(Session["ItemID"]);
-        // if this is the first time the page is displayed
-        if (IsPostBack == false)
+        // Try to retrieve the ItemID from the session safely
+        int tempItemID;
+        if (Session["ItemID"] != null && int.TryParse(Session["ItemID"].ToString(), out tempItemID))
         {
-            // populate the list of products
+            ItemID = tempItemID;
+        }
+        else
+        {
+            ItemID = -1; // New product
+        }
+
+        if (!IsPostBack)
+        {
             DisplayProducts();
-            // if this is not a new record
-            if (ItemID != -1)
+
+            if (lblError.Visible)
             {
-                // display the current product details
-                DisplayProducts();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "HideErrorOnLoad", "hideErrorAfterDelay();", true);
             }
         }
     }
 
     protected void btnOk_Click(object sender, EventArgs e)
     {
-        // create a new instance of clsProduct
         clsProduct AnProduct = new clsProduct();
 
-        // capture all inputs as strings
         string itemIDText = txtItemID.Text.Trim();
         string productTitleText = txtProductTitle.Text.Trim();
         string productDescText = txtProductDescription.Text.Trim();
@@ -44,121 +48,168 @@ public partial class _1_DataEntry : System.Web.UI.Page
         string dateAddedText = txtDateAdded.Text.Trim();
         string isPublishedText = chkIsPublished.Checked ? "true" : "false";
 
-        // variable to store any error messages
         string Error = "";
 
-        // validate the data
-        Error = AnProduct.Valid(
-            productTitleText,
-            productDescText,
-            priceText,
-            stockNumberText,
-            dateAddedText,
-            isPublishedText
-        );
+        int parsedItemID;
+        if (!int.TryParse(itemIDText, out parsedItemID))
+        {
+            Error += "Invalid Item ID.<br />";
+        }
+        else
+        {
+            AnProduct.ItemID = parsedItemID;
+        }
+
+        Error += AnProduct.Valid(productTitleText, productDescText, priceText, stockNumberText, dateAddedText, isPublishedText);
 
         if (Error == "")
         {
-            // capture the itemID
-            AnProduct.ItemID = Convert.ToInt32(itemIDText);
-            // capture other fields
             AnProduct.ProductTitle = productTitleText;
             AnProduct.ProductDescription = productDescText;
             AnProduct.Price = Convert.ToSingle(priceText);
             AnProduct.StockNumber = Convert.ToInt32(stockNumberText);
             AnProduct.DateAdded = Convert.ToDateTime(dateAddedText);
             AnProduct.IsPublished = chkIsPublished.Checked;
-            // create a new instance of the product collection
+
             clsProductCollection ProductList = new clsProductCollection();
-            // If this is a new record i.e. ItemID = -1 then add the data
+
             if (ItemID == -1)
             {
-                // set the ThisProduct property to the new record
                 ProductList.ThisProduct = AnProduct;
-                // add the new record
                 ProductList.Add();
             }
             else
             {
-                // find the record to update
                 ProductList.ThisProduct.Find(ItemID);
-                // set the ThisProduct property to the new record
                 ProductList.ThisProduct = AnProduct;
-                // update the record
                 ProductList.Update();
             }
-            // redirect back to the list page
-            Response.Redirect("ProductList.aspx");  
 
-
+            Response.Redirect("ProductList.aspx");
         }
         else
         {
-            // if there are validation errors, show them
             lblError.Text = Error;
             lblError.Visible = true;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "HideErrorOk", "hideErrorAfterDelay();", true);
         }
     }
-
 
     protected void btnFind_Click(object sender, EventArgs e)
     {
-        // create and instance of the product class
         clsProduct AnProduct = new clsProduct();
-        // create varuable to store the primary key
-        Int32 ItemID;
-        // create a variable to store the result of the find operation
+        Int32 findItemID;
         Boolean Found = false;
-        // get the primary key entered by the user
-        ItemID = Convert.ToInt32(txtItemID.Text);
-        // find the record
-        Found = AnProduct.Find(ItemID);
-        // if found
-        if (Found == true)
+
+        if (Int32.TryParse(txtItemID.Text.Trim(), out findItemID))
         {
-            // display the values of the properties in the form
-            txtProductTitle.Text = AnProduct.ProductTitle;
-            txtProductDescription.Text = AnProduct.ProductDescription;
-            txtPrice.Text = AnProduct.Price.ToString();
-            txtStockNumber.Text = AnProduct.StockNumber.ToString();
-            txtDateAdded.Text = AnProduct.DateAdded.ToString("yyyy-MM-ddTHH:mm");
-            chkIsPublished.Checked = AnProduct.IsPublished;
+            Found = AnProduct.Find(findItemID);
+            if (Found)
+            {
+                txtProductTitle.Text = AnProduct.ProductTitle;
+                txtProductDescription.Text = AnProduct.ProductDescription;
+                txtPrice.Text = AnProduct.Price.ToString();
+                txtStockNumber.Text = AnProduct.StockNumber.ToString();
+                txtDateAdded.Text = AnProduct.DateAdded.ToString("yyyy-MM-dd"); // fixed the date format so that once it reterieved from the data
+                chkIsPublished.Checked = AnProduct.IsPublished;
+                lblError.Visible = false;
+                lblError.Text = "";
+            }
+            else
+            {
+                lblError.Text = "Item not found.";
+                lblError.Visible = true;
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "HideErrorFind", "hideErrorAfterDelay();", true);
+                ClearFields();
+            }
         }
         else
         {
-            // display an error message
-            lblError.Text = "Item not found";
+            lblError.Text = "Please enter a valid Item ID to find.";
+            lblError.Visible = true;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "HideErrorInvalidFindID", "hideErrorAfterDelay();", true);
+            ClearFields();
         }
-
     }
+
     void DisplayProducts()
     {
-        // create an instance of the product collectionb
         clsProductCollection ProductList = new clsProductCollection();
-        // variable to store the result of the find operation
         Boolean Found = false;
-        // find the record to update
-        Found = ProductList.ThisProduct.Find(ItemID);
-        // if the record is found
-        if (Found == true)
+
+        if (ItemID != -1)
         {
-            // display the data for this record
-            txtItemID.Text = ProductList.ThisProduct.ItemID.ToString();
-            txtProductTitle.Text = ProductList.ThisProduct.ProductTitle;
-            txtProductDescription.Text = ProductList.ThisProduct.ProductDescription;
-            txtPrice.Text = ProductList.ThisProduct.Price.ToString();
-            txtStockNumber.Text = ProductList.ThisProduct.StockNumber.ToString();
-            txtDateAdded.Text = ProductList.ThisProduct.DateAdded.ToString("yyyy-MM-ddTHH:mm");
-            chkIsPublished.Checked = ProductList.ThisProduct.IsPublished;
+            Found = ProductList.ThisProduct.Find(ItemID);
+            if (Found)
+            {
+                txtItemID.Text = ProductList.ThisProduct.ItemID.ToString();
+                txtProductTitle.Text = ProductList.ThisProduct.ProductTitle;
+                txtProductDescription.Text = ProductList.ThisProduct.ProductDescription;
+                txtPrice.Text = ProductList.ThisProduct.Price.ToString();
+                txtStockNumber.Text = ProductList.ThisProduct.StockNumber.ToString();
+       
+                txtDateAdded.Text = ProductList.ThisProduct.DateAdded.ToString("yyyy-MM-dd");
+                chkIsPublished.Checked = ProductList.ThisProduct.IsPublished;
+                lblError.Visible = false;
+                lblError.Text = "";
+            }
+            else
+            {
+                lblError.Text = "Record not found for initial display (ItemID: " + ItemID + ").";
+                lblError.Visible = true;
+            }
         }
         else
         {
-            // display an error message
-            lblError.Text = "Record not found";
-            lblError.Visible = true;
+            ClearFields();
+            lblError.Text = "";
+            lblError.Visible = false;
         }
     }
 
-}
+    protected void btnFClear_Click(object sender, EventArgs e)
+    {
+        // Check if all fields are already empty
+        bool isAlreadyEmpty =
+            string.IsNullOrWhiteSpace(txtItemID.Text) &&
+            string.IsNullOrWhiteSpace(txtProductTitle.Text) &&
+            string.IsNullOrWhiteSpace(txtProductDescription.Text) &&
+            string.IsNullOrWhiteSpace(txtPrice.Text) &&
+            string.IsNullOrWhiteSpace(txtStockNumber.Text) &&
+            string.IsNullOrWhiteSpace(txtDateAdded.Text) &&
+            !chkIsPublished.Checked;
 
- 
+        if (isAlreadyEmpty)
+        {
+            // Optional: Show a subtle message or do nothing at all
+            lblError.Text = "Form is already empty.";
+            lblError.Visible = true;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "HideErrorClear", "hideErrorAfterDelay();", true);
+        }
+        else
+        {
+            // Clear the form fields
+            ClearFields();
+            lblError.Text = "";
+            lblError.Visible = false;
+        }
+    }
+
+
+    private void ClearFields()
+    {
+        txtItemID.Text = "";
+        txtProductTitle.Text = "";
+        txtProductDescription.Text = "";
+        txtPrice.Text = "";
+        txtStockNumber.Text = "";
+        txtDateAdded.Text = "";
+        chkIsPublished.Checked = false;
+    }
+
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        // redirect to the product list page
+        Response.Redirect("ProductList.aspx");
+    }
+}
