@@ -24,8 +24,9 @@ public partial class _1_DataEntry : System.Web.UI.Page
     protected void btnOk_Click(object sender, EventArgs e)
     {
         clsShoppingCart myShoppingCart = FetchShoppingCart();
+        clsCustomer clsCustomer = Session["CustomerUser"] as clsCustomer;
 
-        clsOrder newOrder = new clsOrder(Convert.ToInt32(txtAccountId.Text), 
+        clsOrder newOrder = new clsOrder(Convert.ToInt32(clsCustomer.AccountID), 
                                          Convert.ToDateTime((DateTime.Now).AddDays(14)),
                                          false,
                                          txtDeliveryInstructions.Text);
@@ -35,7 +36,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
 
         foreach (clsShoppingCartItem item in myShoppingCart.GetShoppingCart())
         {
-            clsOrderLine newOrderLine = new clsOrderLine(item.ProductId, DateTime.Now, "Pending", item.Cost * item.Quantity, item.Quantity);
+            clsOrderLine newOrderLine = new clsOrderLine(item.ProductId, DateTime.Now, "Pending", item.Cost, item.Quantity);
             orderLineCollection.AddOrderline(newOrderLine);
         }
 
@@ -44,6 +45,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
         orderCollection.Add();
 
         orderLineCollection.Add(myShoppingCart, newOrder);
+        lblError.Text = "Order created.";
     }
 
     private clsShoppingCart FetchShoppingCart()
@@ -53,8 +55,8 @@ public partial class _1_DataEntry : System.Web.UI.Page
         if (shoppingCart == null)
         {
             shoppingCart = new clsShoppingCart();
-            shoppingCart.AddItem(new clsShoppingCartItem(6, 1, 1200.0f));
-            shoppingCart.AddItem(new clsShoppingCartItem(8, 2, 600.0f));
+            shoppingCart.AddItem(new clsShoppingCartItem(55, 1, 1200.0f));
+            shoppingCart.AddItem(new clsShoppingCartItem(56, 2, 600.0f));
         }
 
         return shoppingCart;
