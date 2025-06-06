@@ -146,7 +146,13 @@ namespace ClassLibrary
             //if no record was found
             else
             {
-
+                //clear the private data members
+                mAccountID = 0;
+                mDateRegistered = DateTime.MinValue;
+                mIsVerified = false;
+                mName = string.Empty;
+                mEmail = string.Empty;
+                mPassword = string.Empty;
                 //return false indicating there is a problem
                 return false;
             }

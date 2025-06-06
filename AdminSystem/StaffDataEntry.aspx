@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="StaffDataEntry.aspx.cs" Inherits="_1_DataEntry" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="StaffDataEntry.aspx.cs" Inherits="_1_DataEntry" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -60,6 +60,11 @@
                             </div>
                         </div>
 
+
+        <div>
+            <asp:Button ID="Button1" runat="server" Style="left: 15px; top: 570px; position: absolute; width: 66px;" Text="OK" OnClick="btnOK_Click" />
+            <asp:Button ID="Button2" runat="server" Style="left: 109px; top: 568px; position: absolute; width: 69px;" Text="Cancel" OnClick="BtnCancel_Click" />
+
                         <div class="mb-3 row">
                             <label for="txtLastLogin" class="col-sm-3 col-form-label">Last Login</label>
                             <div class="col-sm-9">
@@ -78,6 +83,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </form>
 
