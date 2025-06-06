@@ -54,4 +54,10 @@ public partial class _1_List : System.Web.UI.Page
             lblError.Text = "Please select an Activity Log to view.";
         }
     }
+
+    protected void BtnLogout_Click(object sender, EventArgs e)
+    {
+
+        Response.Redirect("TeamMainMenu.aspx");
+    }
 }

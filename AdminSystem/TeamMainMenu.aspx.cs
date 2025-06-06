@@ -27,13 +27,15 @@ public partial class TeamMainMenu : System.Web.UI.Page
     protected void btnStaff_Click(object sender, EventArgs e)
     {
         //redirect it to your login page
-        Response.Redirect("StaffList.aspx");
+        Session["StaffLogin"] = 1;
+        Response.Redirect("StaffLogin.aspx");
     }
 
     protected void btnActivityLog_Click(object sender, EventArgs e)
     {
         //redirect it to your login page
-        Response.Redirect("ActivityLogList.aspx");
+        Session["StaffLogin"] = 2;
+        Response.Redirect("StaffLogin.aspx");
     }
 
     protected void btnCreateOrder_Click(object sender, EventArgs e)
